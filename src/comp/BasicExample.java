@@ -1,10 +1,10 @@
 package comp;
 
 public class BasicExample {
-	static IModel m;
+	static IModifiableModel m;
 
 	// stuff for metametamodel
-	final static IIdentity ELEMENTNAME = m.makeIdentity("ElementName");
+	final static IIdentity NODE_SCHEMA = m.makeIdentity("NodeSchema");
 	
 	// this would be metamodel/schema things, to be set up elsewhere
 	final static IIdentity ASSIGN = m.makeIdentity("Assign");
@@ -17,27 +17,27 @@ public class BasicExample {
 
 }
 	
-	public static void createTree(IModel m) {
+	public static void createTree(IModel m1) {
 		// make the tree  x = x + y
 		
 		
 		
 		// basic interface for creating things is probably pretty clunky
-		m.beginTransaction();
-		IIdentity root = m.makeElement(ROOT);
-		IIdentity a = m.makeElement(ASSIGN, root);
-		IIdentity v = m.makeElement(VAR, a);
-		m.setData(v, "x");  // these would normally be links to declarations rather than names
-		IIdentity p = m.makeElement(PLUS, a);
-		IIdentity x = m.makeElement(VAR, p);
-		m.setData(x, "x");
-		IIdentity y = m.makeElement(VAR, p);
-		m.setData(y, "y");
-		m.commitTransaction();
+		IModifiableModel mm = m1.beginTransaction();
+		IIdentity root = mm.makeElement(ROOT);
+		IIdentity a = mm.makeElement(ASSIGN, root);
+		IIdentity v = mm.makeElement(VAR, a);
+		mm.setData(v, "x");  // these would normally be links to declarations rather than names
+		IIdentity p = mm.makeElement(PLUS, a);
+		IIdentity x = mm.makeElement(VAR, p);
+		mm.setData(x, "x");
+		IIdentity y = mm.makeElement(VAR, p);
+		mm.setData(y, "y");
+		IModel m2 = mm.commitTransaction();
 	}
 	
 	public static void traverse(IElementHandle elt) {
-		System.out.print(m.get(ELEMENTNAME).getIdentity() + "(");
+		System.out.print(m.get(NODE_SCHEMA).getIdentity() + "(");
 		for(IElementHandle h : elt.getChildren()) {
 			traverse(h);
 			System.out.print(" ");
