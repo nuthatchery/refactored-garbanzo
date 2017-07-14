@@ -17,11 +17,4 @@
       </plugin>
     </plugins>
   </build>
-  <dependencies>
-  	<dependency>
-  		<groupId>io.usethesource</groupId>
-  		<artifactId>vallang</artifactId>
-  		<version>0.7.15-SNAPSHOT</version>
-  	</dependency>
-  </dependencies>
 </project>
