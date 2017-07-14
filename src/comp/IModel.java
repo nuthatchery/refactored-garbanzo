@@ -2,35 +2,41 @@ package comp;
 
 public interface IModel {
 
-	IElementHandle get(IIdentity element);
+	IElementHandle get(Node element);
 	
-	Iterable<IIdentity> getChildren(IIdentity element);
+	Iterable<Node> getChildren(Node element);
 	
-	int getNumChildren(IIdentity element);
+	int getNumChildren(Node element);
 	
-	Iterable<IIdentity> getLinks(IIdentity element);
+	Iterable<Node> getLinks(Node element);
 	
-	boolean isDescendantOf(IIdentity parentElement, IIdentity descendantElement);
+	boolean isDescendantOf(Node parentElement, Node descendantElement);
 	
-	boolean hasData(IIdentity element, Class<?> type);
+	boolean hasData(Node element, Class<?> type);
 
-	<T> T getData(IIdentity element, Class<T> type);
+	<T> T getData(Node element, Class<T> type);
 
-	<T> void setData(IIdentity element, T data);
+	<T> void setData(Node element, T data);
 
-	IIdentity makeIdentity();
+	Node makeIdentity();
 	
-	IIdentity makeIdentity(String name);
+	Node makeIdentity(String name);
 	
-	IIdentity makeElement(IIdentity schema);
+	Node makeElement(Node schema);
 	
-	IIdentity makeElement(IIdentity schema, IIdentity parent);
+	Node makeElement(Node schema, Node parent);
 
-	IIdentity makeElement(IIdentity schema, IIdentity parent, IIdentity label);
+	Node makeElement(Node schema, Node parent, Node label);
 	
 	void beginTransaction();
 	
 	void commitTransaction();
 	
 	void rollbackTransaction();
+
+	Node getRoot();
+
+	IModel addChild(Node tree, Node root);
+
+	int getVersion();
 }

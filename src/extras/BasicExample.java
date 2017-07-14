@@ -1,4 +1,6 @@
-package comp;
+package extras;
+
+import comp.IElementHandle;
 
 public class BasicExample {
 	static IModel m;
