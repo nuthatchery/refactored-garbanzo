@@ -19,8 +19,9 @@ public class Identity implements IIdentity {
 		path ="";
 	}
 	
-	public Identity(String path){
-		this.path = path;
+	public Identity(String name){
+		this();
+		this.name = name;
 	}
 	
 	public Identity(String path, String name){
@@ -62,4 +63,8 @@ public class Identity implements IIdentity {
 		return id.hashCode();
 	}
 
+	@Override
+	public String toString(){
+		return name;
+	}
 }

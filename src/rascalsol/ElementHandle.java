@@ -4,9 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ElementHandle implements IElementHandle {
+	/**
+	 * The model this handle belongs to 
+	 */
 	private IModel m;
+	/**
+	 * the identity this handle belongs to 
+	 */
 	private IIdentity n;
 
+	public ElementHandle(IModel m, IIdentity n){
+		this.m = m;
+		this.n = n;
+	}
+	
 	@Override
 	public Iterable<IElementHandle> getChildren() {
 		List<IElementHandle> ls = new ArrayList<>();
@@ -17,8 +28,13 @@ public class ElementHandle implements IElementHandle {
 
 	@Override
 	public IIdentity getIdentity() {
-		// TODO Auto-generated method stub
-		return null;
+		return n;
 	}
+
+	@Override
+	public IElementHandle getHandle(IIdentity id) {
+		return new ElementHandle(m, id);
+	}
+
 
 }
