@@ -1,4 +1,4 @@
-package rascalsol;
+package adevpck;
 
 public class Data {
 

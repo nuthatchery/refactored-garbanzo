@@ -1,4 +1,4 @@
-package rascalsol;
+package adevpck;
 
 import org.junit.Test; 
 

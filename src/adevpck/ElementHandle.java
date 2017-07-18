@@ -1,4 +1,4 @@
-package rascalsol;
+package adevpck;
 
 import java.util.ArrayList;
 import java.util.List;

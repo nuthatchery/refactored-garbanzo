@@ -1,4 +1,4 @@
-package rascalsol;
+package adevpck;
 
 /**
  * Each node or element in the system has an identity.
