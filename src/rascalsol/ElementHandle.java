@@ -2,6 +2,7 @@ package rascalsol;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class ElementHandle implements IElementHandle {
 	/**
@@ -22,6 +23,8 @@ public class ElementHandle implements IElementHandle {
 	public Iterable<IElementHandle> getChildren() {
 		List<IElementHandle> ls = new ArrayList<>();
 		m.getChildren(n).forEach(i->{ls.add(m.get(i));});
+		// XXX: kanskje bruke Streams i stedet? bortsett fra at de ikke er Iterable
+		// return m.getChildren(n).map(i->m.get(i));
 		return ls;
 	}
 

@@ -174,6 +174,9 @@ public class ModelTree {
 	}
 	
 	private void datainvariant(){
+		// XXX: for boolean går det an å bruke noe slikt:
+		// bindex.entrySet().stream().allMatch(predicate)
+		
 		orderednodes.forEach(item -> {assert bindex.containsKey(item) : "All nodes should be found in bindex: " + item;});
 
 		bindex.forEach((item, i) -> {assert orderednodes.contains(item): "all parent nodes of model should be recorded in the model's list of nodes: " + item;});
