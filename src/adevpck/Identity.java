@@ -17,6 +17,7 @@ public class Identity implements IIdentity {
 	
 	public Identity(){
 		path ="";
+		name = "noname";
 	}
 	
 	public Identity(String name){

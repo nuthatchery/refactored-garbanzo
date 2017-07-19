@@ -162,7 +162,7 @@ public class ModelTree implements IIdentity{
 		}
 				);
 		m.lindex.put(from, parentIndex);
-		m.lindex.put(to, m.l.size());
+		m.lindex.put(to, toIndex+3);
 		//			m.lindex.forEach((a, b) -> System.out.println(a + " -> " + b));
 
 		copyAllOrderedNodesTo(m);
@@ -271,7 +271,7 @@ public class ModelTree implements IIdentity{
 	 * @return the new model
 	 */
 	public ModelTree addLink(IIdentity from, IIdentity to) {
-		return addLink(to, new Identity(), from);
+		return addLink(from, new Identity("link"), to);
 	}
 
 	public Iterable<IIdentity> getChildren(IIdentity parent){
@@ -293,8 +293,23 @@ public class ModelTree implements IIdentity{
 		return ret;
 	}
 
-	public Iterable<IIdentity> getLinks(IIdentity node){
-		return null;
+	public HashMap<IIdentity, IIdentity> getLinks(IIdentity node){
+		int next = orderednodes.indexOf(node);
+		if(next<0)
+			throw new IllegalArgumentException("Identity is not a node in this model " + node);
+		next++;
+		int toIndex;
+		if(next<orderednodes.size())
+			toIndex = lindex.get(orderednodes.get(next));
+		else
+			toIndex = l.size();
+		
+		HashMap<IIdentity, IIdentity> ret = new HashMap<>();
+		for(int i = lindex.get(node); i<toIndex; i+=3){
+			assert l.get(i).equals(node);
+			ret.put(l.get(i+1), l.get(i+2));
+		}
+		return ret;
 	}
 	
 	/**

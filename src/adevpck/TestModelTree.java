@@ -1,6 +1,7 @@
 package adevpck;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Test; 
@@ -68,6 +69,28 @@ public class TestModelTree {
 		m.getChildren(pluss).forEach(child -> {children.add(child);});
 		children.forEach(item -> {assert ls.contains(item) : "missing item " + item + " in " + ls;});
 		ls.forEach(item -> {assert children.contains(item) : "missing item " + item + " in " + children;});
+	}
+	
+	@Test
+	public void testAddGetLinksSmall(){
+		IIdentity one = new Identity("1");
+		IIdentity linktwo = new Identity();
+		IIdentity two = new Identity("2");
+		IIdentity linkthree = new Identity();
+		IIdentity three = new Identity("3");
+		ModelTree m = new ModelTree(one);
+		m = m.addLink(one, linktwo, two);
+		m = m.addLink(one, linkthree, three);
+		System.out.println("testprint m.getLinks(one): " + m.getLinks(one));
+		
+		HashMap<IIdentity, IIdentity> map = new HashMap<>();
+		map.put(linktwo, two);
+		map.put(linkthree, three);
+		HashMap<IIdentity, IIdentity> links = m.getLinks(one);
+		links.forEach((linkid, to) -> {assert map.containsKey(linkid): "missing item " + linkid + " in " + map;});
+		links.forEach((linkid, to) -> {assert map.get(linkid).equals(to): "missing item " + linkid + "," + to + " in " + map;});
+		map.forEach((linkid, to) -> {assert links.containsKey(linkid) : "missing item " + linkid + " in " + links;});
+		map.forEach((linkid, to) -> {assert links.get(linkid).equals(to) : "missing item " + linkid + "," + to + " in " + links;});
 	}
 	
 //	@Test
