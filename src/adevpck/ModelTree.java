@@ -104,11 +104,19 @@ public class ModelTree implements IIdentity{
 		m.bindex.put(child, toIndex+3);
 		//			m.bindex.forEach((a, b) -> System.out.println(a + " -> " + b));
 
-		m.orderednodes.clear(); 
-		m.getAll().forEach(elem-> m.orderednodes.add(elem));
+		copyAllOrderedNodesTo(m);
 		datainvariant(); //TODO not really needed
 		m.datainvariant();
 		return m;
+	}
+
+	/**
+	 * Copies all nodes in existing order from {@link this} to the parameter model
+	 * @param m the model to copy to 
+	 */
+	private void copyAllOrderedNodesTo(ModelTree m) {
+		m.orderednodes.clear(); 
+		m.getAll().forEach(elem-> m.orderednodes.add(elem));
 	}
 
 	private void cloneLinksTo(ModelTree m) {
@@ -131,29 +139,33 @@ public class ModelTree implements IIdentity{
 		//Collections.addAll(b, [])
 		//List.addAll(b)
 
-		int parentIndexB = lindex.get(from);
-		Integer toIndex = lindex.get(next);
-		if(toIndex == null)
+		int parentIndex = lindex.get(from);
+		Integer toIndex; 
+		if(next<orderednodes.size()){
+			toIndex = lindex.get(orderednodes.get(next));
+		}
+		else {
 			toIndex = l.size();
-		m.b = new ArrayList<IIdentity>(l.subList(0, toIndex));
+		}
+		
+		m.l = new ArrayList<IIdentity>(l.subList(0, toIndex));
 		m.l.add(from);
 		m.l.add(link);
 		m.l.add(to);
 
 		l.subList(toIndex, l.size()).forEach(elem->m.l.add(elem));
 
-		m.lindex = new HashMap<IIdentity, Integer>();
-		lindex.forEach((id, bi)->{
-			if(bi<parentIndexB) m.lindex.put(id, bi); 
-			else m.lindex.put(id,  bi+3);
+		m.bindex = new HashMap<IIdentity, Integer>();
+		bindex.forEach((id, bi)->{
+			if(bi<parentIndex) m.bindex.put(id, bi); 
+			else m.bindex.put(id,  bi+3);
 		}
 				);
-		m.lindex.put(from, parentIndexB);
+		m.lindex.put(from, parentIndex);
 		m.lindex.put(to, m.l.size());
 		//			m.lindex.forEach((a, b) -> System.out.println(a + " -> " + b));
 
-		m.orderednodes.clear(); 
-		m.getAll().forEach(elem-> m.orderednodes.add(elem));
+		copyAllOrderedNodesTo(m);
 		datainvariant(); //TODO not really needed
 		m.datainvariant();
 		return m;
