@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ModelTree {
+public class ModelTree implements IIdentity{
 	/**
 	 * flat edges: such that for any 0<=i<b.size() we have b(i) = parent, b(i+1) = edge, b(i+2) = child
 	 */
 	private ArrayList<IIdentity> b;
 
 	/**
-	 * map: Node -> first entry of children in B such that 
+	 * map: Node -> first entry of children in l such that 
 	 * bindex.get(n) = i where i is the smallest index 0<=i<b.size such that (i+1) % 3 = 1 and b(i)=n
 	 */
 	private HashMap<IIdentity, Integer> bindex = new HashMap<>();
 
 	private ArrayList<IIdentity> l;
 	/**
-	 * map: Node -> first entry of links in L such that 
-	 * lindex.get(n) = i where 0<=i<L.length such that L[i][0] points to n, and there is no j<i such that L[j][0] points to n
+	 * map: Node -> first entry of children in l such that 
+	 * lindex.get(n) = i where i is the smallest index 0<=i<l.size such that (i+1) % 3 = 1 and l(i)=n
 	 */
 	private HashMap<IIdentity, Integer> lindex = new HashMap<>();
 	/**
@@ -31,6 +31,10 @@ public class ModelTree {
 	 */
 	private List<IIdentity> orderednodes = new ArrayList<>();
 
+	/**
+	 * id of this model
+	 */
+	private IIdentity id = new Identity();
 
 	public ModelTree(IIdentity root){
 
@@ -47,6 +51,7 @@ public class ModelTree {
 
 	public ModelTree(ModelTree m){
 		this(m.getRoot());
+		Register.addModelVersion(m.id, this);
 		//add to register as ++version of m
 	}
 
@@ -191,5 +196,29 @@ public class ModelTree {
 				}
 			}
 		}
+	}
+
+	@Override
+	public String getId() {
+		return this.id.getId();
+	}
+
+	@Override
+	public String getName() {
+		return id.getName();
+	}
+
+	@Override
+	public IIdentity setName(String name) {
+		this.id.setName(name);
+		return this;
+	}
+
+	public IIdentity getIdObject() {
+		return id;
+	}
+
+	public boolean containsNode(IIdentity node) {
+		return orderednodes.contains(node);
 	}
 }
