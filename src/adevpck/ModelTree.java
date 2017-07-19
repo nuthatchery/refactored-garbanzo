@@ -1,6 +1,7 @@
 package adevpck;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,25 +75,33 @@ public class ModelTree implements IIdentity{
 		//Collections.addAll(b, [])
 		//List.addAll(b)
 
-		int parentIndexB = bindex.get(parent);
-		Integer toIndex = bindex.get(next);
-		if(toIndex == null)
+		int parentIndex = bindex.get(parent);
+		Integer toIndex; 
+		if(next<orderednodes.size()){
+			toIndex = bindex.get(orderednodes.get(next));
+			m.lindex.put(child, m.lindex.get(orderednodes.get(next)));
+		}
+		else {
 			toIndex = b.size();
-		m.b = new ArrayList<IIdentity>(b.subList(0, toIndex));
+			m.lindex.put(child, m.l.size());
+		}
+		
+
+		m.b = new ArrayList<IIdentity>(b.subList(0, parentIndex));
 		m.b.add(parent);
 		m.b.add(edge);
 		m.b.add(child);
-		
-		b.subList(toIndex, b.size()).forEach(elem->m.b.add(elem));
+
+		b.subList(parentIndex, b.size()).forEach(elem->m.b.add(elem));
 
 		m.bindex = new HashMap<IIdentity, Integer>();
 		bindex.forEach((id, bi)->{
-			if(bi<parentIndexB) m.bindex.put(id, bi); 
+			if(bi<parentIndex) m.bindex.put(id, bi); 
 			else m.bindex.put(id,  bi+3);
 		}
 				);
-		m.bindex.put(parent, parentIndexB);
-		m.bindex.put(child, m.b.size());
+		m.bindex.put(parent, parentIndex);
+		m.bindex.put(child, toIndex+3);
 		//			m.bindex.forEach((a, b) -> System.out.println(a + " -> " + b));
 
 		m.orderednodes.clear(); 
@@ -130,7 +139,7 @@ public class ModelTree implements IIdentity{
 		m.l.add(from);
 		m.l.add(link);
 		m.l.add(to);
-		
+
 		l.subList(toIndex, l.size()).forEach(elem->m.l.add(elem));
 
 		m.lindex = new HashMap<IIdentity, Integer>();
@@ -154,7 +163,7 @@ public class ModelTree implements IIdentity{
 		m.b = (ArrayList<IIdentity>) b.clone();
 		m.bindex = (HashMap<IIdentity, Integer>) bindex.clone();
 	}
-	
+
 	/**
 	 * @return an iterable of the nodes in prefix traversal
 	 */
@@ -177,14 +186,18 @@ public class ModelTree implements IIdentity{
 		//		System.out.println();
 		return ls;
 	}
-	
+
 	private void datainvariant(){
 		// XXX: for boolean går det an å bruke noe slikt:
 		// bindex.entrySet().stream().allMatch(predicate)
-		
+//		System.out.println("printing ordered nodes " + orderednodes);
+//		System.out.println("printing bindex " + bindex);
+//		System.out.println("printing b " + b);
+//		System.out.println();
+
 		orderednodes.forEach(item -> {assert bindex.containsKey(item) : "All nodes should be found in bindex: " + item;});
 
-		bindex.forEach((item, i) -> {assert orderednodes.contains(item): "all parent nodes of model should be recorded in the model's list of nodes: " + item;});
+		bindex.forEach((item, i) -> {assert orderednodes.contains(item): "all parent nodes of model should be recorded in the model's list of nodes: " + item + ": from " + bindex.toString() + " in " + Arrays.toString(orderednodes.toArray());});
 
 		orderednodes.forEach(item -> {assert bindex.get(item)!=null: "No nodes should have index null: " + item;});
 
@@ -193,6 +206,15 @@ public class ModelTree implements IIdentity{
 			if(bindex.get(n)!=b.size()){
 				for(int j = i+3; j<orderednodes.size(); j+=3){
 					assert bindex.get(n) <= bindex.get(orderednodes.get(j)) : "Ordered nodes should have increasing branch-index: " + n + "->" + bindex.get(n) + " <= " + orderednodes.get(j) + "->" + bindex.get(orderednodes.get(j));
+				}
+			}
+		}
+
+		for(int i=0; i<orderednodes.size(); i++){
+			IIdentity n = orderednodes.get(i);
+			if(lindex.get(n)!=l.size()){
+				for(int j = i+3; j<orderednodes.size(); j+=3){
+					assert lindex.get(n) <= lindex.get(orderednodes.get(j)) : "Ordered nodes should have increasing branch-index: " + n + "->" + lindex.get(n) + " <= " + orderednodes.get(j) + "->" + lindex.get(orderednodes.get(j));
 				}
 			}
 		}
@@ -220,5 +242,56 @@ public class ModelTree implements IIdentity{
 
 	public boolean containsNode(IIdentity node) {
 		return orderednodes.contains(node);
+	}
+
+	/**
+	 * Adds a child to the "last" node of the tree respective to the preorder traversalusing an unlabeled edge
+	 * @param child
+	 */
+	public void addChild(IIdentity child) {
+		addChild(child, new Identity(), orderednodes.get(orderednodes.size()-1));
+	}
+
+	/**
+	 * Adds an unlabeled link from node {@link from} to identity {@link to}  
+	 * @param from
+	 * @param to
+	 * @return the new model
+	 */
+	public ModelTree addLink(IIdentity from, IIdentity to) {
+		return addLink(to, new Identity(), from);
+	}
+
+	public Iterable<IIdentity> getChildren(IIdentity parent){
+		int next = orderednodes.indexOf(parent);
+		if(next<0)
+			throw new IllegalArgumentException("Identity is not a node in this model " + parent);
+		next++;
+		int toIndex;
+		if(next<orderednodes.size())
+			toIndex = bindex.get(orderednodes.get(next));
+		else
+			toIndex = b.size();
+		
+		List<IIdentity> ret = new ArrayList<>();
+		for(int i = bindex.get(parent); i<toIndex; i+=3){
+			assert b.get(i).equals(parent);
+			ret.add(b.get(i+2));
+		}
+		return ret;
+	}
+
+	public Iterable<IIdentity> getLinks(IIdentity node){
+		return null;
+	}
+	
+	/**
+	 * Adds an unlabeled edge from node {@link from} to identity {@link to}  
+	 * @param from
+	 * @param to
+	 * @return the new model
+	 */
+	public ModelTree addChild(IIdentity from, IIdentity to) {
+		return addChild(from, new Identity(), to);
 	}
 }
