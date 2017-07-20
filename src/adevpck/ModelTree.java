@@ -61,6 +61,7 @@ public class ModelTree implements IIdentity{
 	}
 
 	public ModelTree addChild(final IIdentity child,final IIdentity edge, final IIdentity parent){
+		System.out.println("Adding child " + child + " to " + parent);
 		int next = orderednodes.indexOf(parent);
 		if (next<0) throw new IllegalArgumentException("parent must be a node in this model: " + parent);
 		next = next+1;
@@ -158,10 +159,10 @@ public class ModelTree implements IIdentity{
 
 		l.subList(toIndex, l.size()).forEach(elem->m.l.add(elem));
 
-		m.bindex = new HashMap<IIdentity, Integer>();
-		bindex.forEach((id, bi)->{
-			if(bi<parentIndex) m.bindex.put(id, bi); 
-			else m.bindex.put(id,  bi+3);
+		m.lindex = new HashMap<IIdentity, Integer>();
+		lindex.forEach((id, bi)->{
+			if(bi<parentIndex) m.lindex.put(id, bi); 
+			else m.lindex.put(id,  bi+3);
 		}
 				);
 		m.lindex.put(from, parentIndex);
