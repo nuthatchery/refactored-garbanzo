@@ -60,7 +60,7 @@ public class ModelTree implements IIdentity{
 		return root;
 	}
 
-	public ModelTree addChild(IIdentity child, IIdentity edge, IIdentity parent){
+	public ModelTree addChild(final IIdentity child,final IIdentity edge, final IIdentity parent){
 		int next = orderednodes.indexOf(parent);
 		if (next<0) throw new IllegalArgumentException("parent must be a node in this model: " + parent);
 		next = next+1;
@@ -102,8 +102,11 @@ public class ModelTree implements IIdentity{
 				);
 		m.bindex.put(parent, parentIndex);
 		m.bindex.put(child, toIndex+3);
-		//			m.bindex.forEach((a, b) -> System.out.println(a + " -> " + b));
 
+		System.out.println("added child " + child + " to " + parent);
+		System.out.println(bindex + " -> " +m.bindex);
+		System.out.println(b + " -> " + m.b);
+		
 		copyAllOrderedNodesTo(m);
 		datainvariant(); //TODO not really needed
 		m.datainvariant();
@@ -162,7 +165,7 @@ public class ModelTree implements IIdentity{
 		}
 				);
 		m.lindex.put(from, parentIndex);
-		m.lindex.put(to, toIndex+3);
+		//m.lindex.put(to, toIndex+3);
 		//			m.lindex.forEach((a, b) -> System.out.println(a + " -> " + b));
 
 		copyAllOrderedNodesTo(m);
@@ -202,10 +205,10 @@ public class ModelTree implements IIdentity{
 	private void datainvariant(){
 		// XXX: for boolean går det an å bruke noe slikt:
 		// bindex.entrySet().stream().allMatch(predicate)
-//		System.out.println("printing ordered nodes " + orderednodes);
-//		System.out.println("printing bindex " + bindex);
-//		System.out.println("printing b " + b);
-//		System.out.println();
+		System.out.println("printing ordered nodes " + orderednodes);
+		System.out.println("printing bindex " + bindex);
+		System.out.println("printing b " + b);
+		System.out.println();
 
 		orderednodes.forEach(item -> {assert bindex.containsKey(item) : "All nodes should be found in bindex: " + item;});
 
@@ -259,18 +262,21 @@ public class ModelTree implements IIdentity{
 	/**
 	 * Adds a child to the "last" node of the tree respective to the preorder traversalusing an unlabeled edge
 	 * @param child
+	 * @return 
 	 */
-	public void addChild(IIdentity child) {
-		addChild(child, new Identity(), orderednodes.get(orderednodes.size()-1));
+	public ModelTree addChild(IIdentity child) {
+		System.out.println("addChild(child): child=" + child);
+		return addChild(child, new Identity("edge"), orderednodes.get(orderednodes.size()-1));
 	}
 
 	/**
 	 * Adds an unlabeled link from node {@link from} to identity {@link to}  
-	 * @param from
-	 * @param to
+	 * @param from a node in this model
+	 * @param to a node in some model
 	 * @return the new model
 	 */
 	public ModelTree addLink(IIdentity from, IIdentity to) {
+		System.out.println("addLink(from, to): from=" + from + ", to=" + to);
 		return addLink(from, new Identity("link"), to);
 	}
 
@@ -320,5 +326,33 @@ public class ModelTree implements IIdentity{
 	 */
 	public ModelTree addChild(IIdentity from, IIdentity to) {
 		return addChild(from, new Identity(), to);
+	}
+
+	/**
+	 * Debugging method: 
+	 * 
+	 * Gets all nodes where if a node doesn't have a label, but it has a link, 
+	 * the node will be replaced with the linked to node in returnobject 
+	 * If a node has several links, only the first one will be used 
+	 * @return  
+	 */
+	public Iterable<IIdentity> getAllWithLinkEval() {
+		List<IIdentity> ret = new ArrayList<>();
+		for(IIdentity node : getAll()){
+			if(node.getName() == null || node.getName().isEmpty()){
+				HashMap<IIdentity, IIdentity> links = getLinks(node);
+				if(links==null || links.isEmpty())ret.add(node);
+				else{
+					IIdentity[] valuearr = (IIdentity[]) links.values().toArray();
+					if(valuearr.length==0)
+						ret.add(node);
+					else
+						ret.add(valuearr[0]);
+				}
+			}
+			else
+				ret.add(node);
+		}
+		return ret;
 	}
 }

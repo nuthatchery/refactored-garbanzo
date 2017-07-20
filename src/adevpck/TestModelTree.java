@@ -93,7 +93,26 @@ public class TestModelTree {
 		map.forEach((linkid, to) -> {assert links.get(linkid).equals(to) : "missing item " + linkid + "," + to + " in " + links;});
 	}
 	
-//	@Test
+	@Test
+	public void testDeepOneChildThree(){
+		/* Number tree */
+		IIdentity zero = new Identity("0");
+		IIdentity one = new Identity("1");
+		IIdentity two = new Identity("2");
+		IIdentity three = new Identity("3");
+		
+		ModelTree numbers = new ModelTree(zero);
+		numbers = numbers.addChild(one);
+		numbers = numbers.addChild(two);
+		numbers = numbers.addChild(three);
+		
+		assert numbers.getChildren(zero).iterator().next().equals(one);
+		assert numbers.getChildren(one).iterator().next().equals(two);
+		assert numbers.getChildren(two).iterator().next().equals(three);
+		assert !numbers.getChildren(three).iterator().hasNext();
+	}
+	
+	@Test
 	public void testRegisterWithTwoModelTreesUseLink(){
 		/* Number tree */
 		IIdentity zero = new Identity("0");
@@ -102,18 +121,20 @@ public class TestModelTree {
 		IIdentity three = new Identity("3");
 		
 		ModelTree numbers = new ModelTree(zero);
-		numbers.addChild(zero);
-		numbers.addChild(one);
-		numbers.addChild(two);
-		numbers.addChild(three);
+		numbers = numbers.addChild(one);
+		numbers = numbers.addChild(two);
+		numbers = numbers.addChild(three);
 		
+		/* Expression tree */
 		IIdentity pluss = new Identity("+");
 		IIdentity minus = new Identity("-");
 		
-		IIdentity en = new Identity();
-		IIdentity to = new Identity();
-		IIdentity tre = new Identity();
+		IIdentity en = new Identity("abstr1");
+		IIdentity to = new Identity("abstr2");
+		IIdentity tre = new Identity("abstr3");
+		
 		ModelTree m = new ModelTree(pluss);
+		
 		m = m.addChild(tre, new Identity("left"), pluss);	//+ 3
 		m = m.addLink(tre, three);
 		m = m.addChild(minus, new Identity("right"), pluss); // + 3 -
@@ -121,6 +142,6 @@ public class TestModelTree {
 		m = m.addLink(to, two);
 		m = m.addChild(en, new Identity("right"), minus); // + 3 - 2 1
 		m = m.addLink(en, one);
-		m.getAll().forEach(elem->System.out.print(elem + " "));
+		m.getAllWithLinkEval().forEach(elem->System.out.print(elem + " "));
 	}
 }
