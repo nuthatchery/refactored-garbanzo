@@ -61,7 +61,7 @@ public class ModelTree implements IIdentity{
 	}
 
 	public ModelTree addChild(final IIdentity child,final IIdentity edge, final IIdentity parent){
-		System.out.println("Adding child " + child + " to " + parent);
+//		System.out.println("Adding child " + child + " to " + parent);
 		int next = orderednodes.indexOf(parent);
 		if (next<0) throw new IllegalArgumentException("parent must be a node in this model: " + parent);
 		next = next+1;
@@ -104,9 +104,9 @@ public class ModelTree implements IIdentity{
 		m.bindex.put(parent, parentIndex);
 		m.bindex.put(child, toIndex+3);
 
-		System.out.println("added child " + child + " to " + parent);
-		System.out.println(bindex + " -> " +m.bindex);
-		System.out.println(b + " -> " + m.b);
+//		System.out.println("added child " + child + " to " + parent);
+//		System.out.println(bindex + " -> " +m.bindex);
+//		System.out.println(b + " -> " + m.b);
 		
 		copyAllOrderedNodesTo(m);
 		datainvariant(); //TODO not really needed
@@ -206,10 +206,11 @@ public class ModelTree implements IIdentity{
 	private void datainvariant(){
 		// XXX: for boolean går det an å bruke noe slikt:
 		// bindex.entrySet().stream().allMatch(predicate)
-		System.out.println("printing ordered nodes " + orderednodes);
-		System.out.println("printing bindex " + bindex);
-		System.out.println("printing b " + b);
-		System.out.println();
+		
+//		System.out.println("printing ordered nodes " + orderednodes);
+//		System.out.println("printing bindex " + bindex);
+//		System.out.println("printing b " + b);
+//		System.out.println();
 
 		orderednodes.forEach(item -> {assert bindex.containsKey(item) : "All nodes should be found in bindex: " + item;});
 
@@ -266,7 +267,7 @@ public class ModelTree implements IIdentity{
 	 * @return 
 	 */
 	public ModelTree addChild(IIdentity child) {
-		System.out.println("addChild(child): child=" + child);
+//		System.out.println("addChild(child): child=" + child);
 		return addChild(child, new Identity("edge"), orderednodes.get(orderednodes.size()-1));
 	}
 
@@ -277,7 +278,7 @@ public class ModelTree implements IIdentity{
 	 * @return the new model
 	 */
 	public ModelTree addLink(IIdentity from, IIdentity to) {
-		System.out.println("addLink(from, to): from=" + from + ", to=" + to);
+//		System.out.println("addLink(from, to): from=" + from + ", to=" + to);
 		return addLink(from, new Identity("link"), to);
 	}
 
