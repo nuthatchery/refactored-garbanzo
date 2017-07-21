@@ -300,19 +300,27 @@ public class ModelTree implements IIdentity{
 		
 		for(int i=nodeIndex; i<toIndex; i+=3)
 			assert l.get(i).equals(node);
-		l.subList(nodeIndex, toIndex).clear();
+		m.l.subList(nodeIndex, toIndex).clear();
+		m.lindex.remove(node);
 		
 		nodeIndex = bindex.get(node);
 		toIndex = getToIndex(next, b, bindex);
 		
 		for(int i=nodeIndex; i<toIndex; i+=3)
 			assert b.get(i).equals(node);
-		b.subList(nodeIndex, toIndex).clear();
+		m.b.subList(nodeIndex, toIndex).clear();
+		m.bindex.remove(node);
 		
+		for(int i=0; i<m.b.size(); i+=3)
+			if(m.b.get(i+2).equals(node)){
+				m.b.subList(i, i+3).clear();
+				i-=3;
+			}
 		
+		m.orderednodes.remove(node);
 		
-		
-		return null;
+		m.datainvariant();
+		return m;
 	}
 
 	public ModelTree copy() {
