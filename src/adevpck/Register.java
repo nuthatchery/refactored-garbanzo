@@ -1,6 +1,5 @@
 package adevpck;
 
-import java.awt.RenderingHints.Key;
 import java.util.HashMap;
 
 public class Register {
@@ -12,6 +11,7 @@ public class Register {
 
 	public static void addModelVersion(ModelTree modelTree){
 		addModelVersion(modelTree.getIdObject(), modelTree);
+		datainvariant();
 	}
 
 	public static void addModelVersion(IIdentity modelid, ModelTree modelTree) {
@@ -21,6 +21,7 @@ public class Register {
 		else{
 			reg.put(modelid, new VersionMap(0, modelTree));
 		}
+		datainvariant();
 	}
 
 	/**
@@ -62,7 +63,10 @@ public class Register {
 	 * @return
 	 */
 	public static VersionMap removeAllVersionsOf(IIdentity modelId){
-		return reg.remove(modelId);
+		VersionMap removed = reg.remove(modelId);
+		datainvariant();
+		return removed;
+		
 	}
 	
 	/**
@@ -71,17 +75,19 @@ public class Register {
 	 * @return
 	 */
 	public static ModelTree removeLastVersion(IIdentity modelId){
-		return reg.get(modelId).removeLast();
+		ModelTree m = reg.get(modelId).removeLast();
+		datainvariant();
+		return m;
 	}
 	
 	
-	public void datainvariant(){
+	public static void datainvariant(){
 		allVersionHasSameIdAsKey();
 	}
 
-	private void allVersionHasSameIdAsKey() {
+	private static void allVersionHasSameIdAsKey() {
 		reg.forEach(
-				(key, value) -> {value.forEach((versionnr, model) -> {assert key.equals(model.getId());});}
+				(key, value) -> {value.forEach((versionnr, model) -> {assert key.equals(model) : "keys should be equal: " + key.getId() + " = " + model.getId();});}
 				);
 	}
 	

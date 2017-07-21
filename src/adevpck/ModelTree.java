@@ -35,11 +35,10 @@ public class ModelTree implements IIdentity{
 	/**
 	 * id of this model
 	 */
-	private IIdentity id;
+	private final IIdentity id;
 
 	public ModelTree(IIdentity root){
-		if(id==null)
-			id = new Identity();
+		id = new Identity();
 
 		b = new ArrayList<IIdentity>();
 		l = new ArrayList<IIdentity>();
@@ -49,13 +48,22 @@ public class ModelTree implements IIdentity{
 
 		orderednodes.add(root);
 		this.root = root;
+		Register.addModelVersion(id, this);
 		datainvariant();
 	}
 
 	public ModelTree(ModelTree m){
-		this(m.getRoot());
+		id = m.id;
+		b = new ArrayList<IIdentity>();
+		l = new ArrayList<IIdentity>();
+
+		bindex.put(root, b.size());
+		lindex.put(root, l.size());
+
+		orderednodes.add(root);
+		this.root = m.root;
 		Register.addModelVersion(m.id, this);
-		//add to register as ++version of m
+		datainvariant();
 	}
 
 	private IIdentity getRoot() {
@@ -311,7 +319,6 @@ public class ModelTree implements IIdentity{
 
 	public ModelTree copy() {
 		ModelTree m = new ModelTree(this);
-		m.id = id;
 		m.orderednodes = new ArrayList<>(orderednodes);
 		cloneEdgesTo(m);
 		cloneLinksTo(m);

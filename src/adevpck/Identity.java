@@ -54,9 +54,9 @@ public class Identity implements IIdentity {
 	public boolean equals(Object o) {
 		if(o==null)return false;
 		if(this==o)return true;
-		if(!( o instanceof Identity)) return false;
-		Identity other = (Identity) o;
-		return this.id == other.id;
+		if(!( o instanceof IIdentity)) return false;
+		IIdentity other = (IIdentity) o;
+		return this.id.equals(other.getId());
 	}
 
 	@Override
