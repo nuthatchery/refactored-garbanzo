@@ -85,7 +85,7 @@ public class ModelTree implements IIdentity{
 		//List.addAll(b)
 
 		int parentIndex = bindex.get(parent);
-		Integer toIndex = getToIndex(next, b, bindex);
+		int toIndex = getToIndex(next, b, bindex);
 		if(next<orderednodes.size()){
 			m.lindex.put(child, m.lindex.get(orderednodes.get(next)));
 		}
@@ -149,8 +149,7 @@ public class ModelTree implements IIdentity{
 		//List.addAll(b)
 
 		int parentIndex = lindex.get(from);
-		Integer toIndex; 
-		toIndex = getToIndex(next, l, lindex);
+		int toIndex = getToIndex(next, l, lindex);
 		
 		m.l = new ArrayList<IIdentity>(l.subList(0, toIndex));
 		m.l.add(from);
@@ -192,7 +191,7 @@ public class ModelTree implements IIdentity{
 	}
 
 	/**
-	 * @return an iterable of the nodes in prefix traversal
+	 * @return all nodes in this model
 	 */
 	public Iterable<IIdentity> getAll(){
 		List<IIdentity> ls = new ArrayList<>();
@@ -299,11 +298,18 @@ public class ModelTree implements IIdentity{
 		
 		int nodeIndex = lindex.get(node);
 		int toIndex = getToIndex(next, l, lindex);
+		int diff = toIndex-nodeIndex;
 		
 		for(int i=nodeIndex; i<toIndex; i+=3)
 			assert l.get(i).equals(node);
-		m.l.subList(nodeIndex, toIndex).clear();
+		if(nodeIndex<m.l.size())
+			m.l.subList(nodeIndex, toIndex).clear();
 		m.lindex.remove(node);
+		for(IIdentity n : m.orderednodes.subList(next, m.orderednodes.size())){
+			HashMap<IIdentity, Integer> lindex2 = m.lindex;
+			Integer nindex = m.lindex.get(n);
+			lindex2.put(n, nindex+diff);
+		}
 		
 		nodeIndex = bindex.get(node);
 		toIndex = getToIndex(next, b, bindex);
@@ -313,6 +319,9 @@ public class ModelTree implements IIdentity{
 		if(nodeIndex<m.b.size())
 			m.b.subList(nodeIndex, toIndex).clear();
 		m.bindex.remove(node);
+		for(IIdentity n : m.orderednodes.subList(next, m.orderednodes.size())){
+			m.bindex.put(n, m.bindex.get(n)+diff);
+		}
 		
 		for(int i=0; i<m.b.size(); i+=3)
 			if(m.b.get(i+2).equals(node)){
@@ -326,6 +335,19 @@ public class ModelTree implements IIdentity{
 		return m;
 	}
 
+	public ModelTree deleteEdge(IIdentity parent, IIdentity edge, IIdentity child){
+		int next = orderednodes.indexOf(parent);
+		if(next<0)
+			throw new IllegalArgumentException("Parent must be a node in this model: " + parent);
+		next=next+1;
+		
+		
+		ModelTree m = this.copy();
+	
+		m.datainvariant();
+		return m;
+	}
+	
 	public ModelTree copy() {
 		ModelTree m = new ModelTree(this);
 		m.orderednodes = new ArrayList<>(orderednodes);
