@@ -68,10 +68,10 @@ public class ModelTree implements IIdentity{
 		return root;
 	}
 
-	public ModelTree addChild(final IIdentity child,final IIdentity edge, final IIdentity parent){
+	public ModelTree addChild(final IIdentity parent,final IIdentity edge, final IIdentity child){
 //		System.out.println("Adding child " + child + " to " + parent);
 		int next = orderednodes.indexOf(parent);
-		if (next<0) throw new IllegalArgumentException("parent must be a node in this model: " + parent);
+		if (next<0) throw new IllegalArgumentException("parent must be a node in this model (" + orderednodes + ": " + parent);
 		next = next+1;
 
 		//		System.out.println("Adding " + child);
@@ -279,7 +279,7 @@ public class ModelTree implements IIdentity{
 	 */
 	public ModelTree addChild(IIdentity child) {
 //		System.out.println("addChild(child): child=" + child);
-		return addChild(child, new Identity("edge"), orderednodes.get(orderednodes.size()-1));
+		return addChild(orderednodes.get(orderednodes.size()-1), new Identity("edge"), child);
 	}
 	
 	/**
@@ -287,13 +287,15 @@ public class ModelTree implements IIdentity{
 	 * @param node the node and endpoint of edges to be deleted 
 	 * @return
 	 */
-	public ModelTree deleteNode(IIdentity node){
+	public ModelTree deleteSubtree(IIdentity node){
 		int next = orderednodes.indexOf(node);
 		if(next<0)
 			throw new IllegalArgumentException("Id must be a node in this model: " + node);
 		next=next+1;
 		
 		ModelTree m = this.copy();
+		for(IIdentity child : getChildren(node))
+			m = deleteSubtree(child);
 		
 		int nodeIndex = lindex.get(node);
 		int toIndex = getToIndex(next, l, lindex);
@@ -308,7 +310,8 @@ public class ModelTree implements IIdentity{
 		
 		for(int i=nodeIndex; i<toIndex; i+=3)
 			assert b.get(i).equals(node);
-		m.b.subList(nodeIndex, toIndex).clear();
+		if(nodeIndex<m.b.size())
+			m.b.subList(nodeIndex, toIndex).clear();
 		m.bindex.remove(node);
 		
 		for(int i=0; i<m.b.size(); i+=3)
@@ -388,7 +391,7 @@ public class ModelTree implements IIdentity{
 	 * @return the new model
 	 */
 	public ModelTree addChild(IIdentity from, IIdentity to) {
-		return addChild(from, new Identity(), to);
+		return addChild(to, new Identity(), from);
 	}
 
 	/**
@@ -427,6 +430,16 @@ public class ModelTree implements IIdentity{
 		Register.addModelVersion(id, this);
 		return this;
 	}
+	
+	public String toString(){
+		String m = "Id: " + id + "\n";
+		m += "orderednodes: " + orderednodes + "\n";
+		m += "b: " + b + "\n";
+		m += "bindex" + bindex + "\n";
+		m += "l: " + l + "\n";
+		m += "lindex: " + lindex + "\n";
+		return m;
+	}
 
 	@Override
 	public int hashCode() {
@@ -454,8 +467,9 @@ public class ModelTree implements IIdentity{
 		if (b == null) {
 			if (other.b != null)
 				return false;
-		} else if (!b.equals(other.b))
+		} else if (!b.equals(other.b)){
 			return false;
+		}
 		if (bindex == null) {
 			if (other.bindex != null)
 				return false;
@@ -488,4 +502,5 @@ public class ModelTree implements IIdentity{
 			return false;
 		return true;
 	}
+	
 }

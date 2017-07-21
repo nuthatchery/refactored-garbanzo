@@ -22,8 +22,8 @@ public class TestModelTree {
 		IIdentity en = new Identity("1");
 		IIdentity to = new Identity("2");
 		ModelTree m = new ModelTree(pluss);
-		m = m.addChild(en, new Identity("left"), pluss);
-		m = m.addChild(to, new Identity("right"), pluss);
+		m = m.addChild(pluss, new Identity("left"), en);
+		m = m.addChild(pluss, new Identity("right"), to);
 		m.getAll().forEach(elem->System.out.print(elem + " "));
 		System.out.println();
 	}
@@ -36,16 +36,16 @@ public class TestModelTree {
 		IIdentity to = new Identity("2");
 		IIdentity tre = new Identity("3");
 		ModelTree m = new ModelTree(pluss);
-		m = m.addChild(tre, new Identity("left"), pluss);	//+ 3
+		m = m.addChild(pluss, new Identity("left"), tre);	//+ 3
 //		m.getAll().forEach(elem->System.out.print(elem + " "));
 //		System.out.println();
-		m = m.addChild(minus, new Identity("right"), pluss); // + 3 -
+		m = m.addChild(pluss, new Identity("right"), minus); // + 3 -
 //		m.getAll().forEach(elem->System.out.print(elem + " "));
 //		System.out.println();
-		m = m.addChild(to, new Identity("left"), minus);	// + 3 - 2 
+		m = m.addChild(minus, new Identity("left"), to);	// + 3 - 2 
 //		m.getAll().forEach(elem->System.out.print(elem + " "));
 //		System.out.println();
-		m = m.addChild(en, new Identity("right"), minus); // + 3 - 2 1 
+		m = m.addChild(minus, new Identity("right"), en); // + 3 - 2 1 
 		m.getAll().forEach(elem->System.out.print(elem + " "));
 	}
 	
@@ -135,12 +135,12 @@ public class TestModelTree {
 		
 		ModelTree m = new ModelTree(pluss);
 		
-		m = m.addChild(tre, new Identity("left"), pluss);	//+ 3
+		m = m.addChild(pluss, new Identity("left"), tre);	//+ 3
 		m = m.addLink(tre, three);
-		m = m.addChild(minus, new Identity("right"), pluss); // + 3 -
-		m = m.addChild(to, new Identity("left"), minus);	// + 3 - 2
+		m = m.addChild(pluss, new Identity("right"), minus); // + 3 -
+		m = m.addChild(minus, new Identity("left"), to);	// + 3 - 2
 		m = m.addLink(to, two);
-		m = m.addChild(en, new Identity("right"), minus); // + 3 - 2 1
+		m = m.addChild(minus, new Identity("right"), en); // + 3 - 2 1
 		m = m.addLink(en, one);
 		m.getAllWithLinkEval().forEach(elem->System.out.print(elem + " "));
 	}
@@ -177,8 +177,37 @@ public class TestModelTree {
 		
 		ModelTree numberCopy = numbers.copy();
 		assert numberCopy.equals(numbers);
-		numbers = numbers.deleteNode(three);
+		numbers = numbers.deleteSubtree(three);
 		assert !numberCopy.equals(numbers) : "Should be not equal: " + numbers.getAll() + " and " + numberCopy.getAll();
+		for(IIdentity node : numbers.getAll()){
+			if(node.equals(three))
+				assert !numberCopy.containsNode(node) : "this node should be removed " + node;
+			else
+				assert numberCopy.containsNode(node) : "this node should be found in the copy " + node;
+		}
+	}
+	
+	@Test
+	public void testCopyDeleteAdd(){
+		IIdentity zero = new Identity("0");
+		IIdentity one = new Identity("1");
+		IIdentity two = new Identity("2");
+		IIdentity three = new Identity("3");
+		
+		IIdentity succ = new Identity("succ");
+		
+		ModelTree numbers = new ModelTree(zero);
+		numbers = numbers.addChild(zero, succ, one);
+		numbers = numbers.addChild(one, succ, two);
+		numbers = numbers.addChild(two, succ, three);
+		
+		ModelTree numberCopy = numbers.copy();
+		assert numberCopy.equals(numbers);
+		numbers = numbers.deleteSubtree(two);
+		assert !numberCopy.equals(numbers) : "Should be not equal: " + numbers.getAll() + " and " + numberCopy.getAll();
+		numbers = numbers.addChild(one, succ, two);
+		numbers = numbers.addChild(two, succ, three);
+		assert numberCopy.equals(numbers) : "Should be equal: " + numbers + " and " + numberCopy	;
 	}
 		
 }
