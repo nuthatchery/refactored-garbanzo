@@ -48,7 +48,6 @@ public class ModelTree implements IIdentity{
 
 		orderednodes.add(root);
 		this.root = root;
-		Register.addModelVersion(id, this);
 		datainvariant();
 	}
 
@@ -62,7 +61,6 @@ public class ModelTree implements IIdentity{
 
 		orderednodes.add(root);
 		this.root = m.root;
-		Register.addModelVersion(m.id, this);
 		datainvariant();
 	}
 
@@ -411,6 +409,15 @@ public class ModelTree implements IIdentity{
 				ret.add(node);
 		}
 		return ret;
+	}
+	
+	/**
+	 * Registers this modelTree in the register as the last version of its id
+	 * @return this modeltree
+	 */
+	public ModelTree register(){
+		Register.addModelVersion(id, this);
+		return this;
 	}
 
 	@Override

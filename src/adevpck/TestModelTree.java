@@ -120,7 +120,7 @@ public class TestModelTree {
 		IIdentity two = new Identity("2");
 		IIdentity three = new Identity("3");
 		
-		ModelTree numbers = new ModelTree(zero);
+		ModelTree numbers = new ModelTree(zero).register();
 		numbers = numbers.addChild(one);
 		numbers = numbers.addChild(two);
 		numbers = numbers.addChild(three);
