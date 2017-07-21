@@ -12,7 +12,7 @@ public class ModelTree implements IIdentity{
 	private ArrayList<IIdentity> b;
 
 	/**
-	 * map: Node -> first entry of children in l such that 
+	 * map: Node -> first entry of children in b such that 
 	 * bindex.get(n) = i where i is the smallest index 0<=i<b.size such that (i+1) % 3 = 1 and b(i)=n
 	 */
 	private HashMap<IIdentity, Integer> bindex = new HashMap<>();
@@ -35,9 +35,11 @@ public class ModelTree implements IIdentity{
 	/**
 	 * id of this model
 	 */
-	private IIdentity id = new Identity();
+	private IIdentity id;
 
 	public ModelTree(IIdentity root){
+		if(id==null)
+			id = new Identity();
 
 		b = new ArrayList<IIdentity>();
 		l = new ArrayList<IIdentity>();
@@ -77,17 +79,14 @@ public class ModelTree implements IIdentity{
 		//List.addAll(b)
 
 		int parentIndex = bindex.get(parent);
-		Integer toIndex; 
+		Integer toIndex = getToIndex(next, b, bindex);
 		if(next<orderednodes.size()){
-			toIndex = bindex.get(orderednodes.get(next));
 			m.lindex.put(child, m.lindex.get(orderednodes.get(next)));
 		}
 		else {
-			toIndex = b.size();
 			m.lindex.put(child, m.l.size());
 		}
 		
-
 		m.b = new ArrayList<IIdentity>(b.subList(0, parentIndex));
 		m.b.add(parent);
 		m.b.add(edge);
@@ -145,12 +144,7 @@ public class ModelTree implements IIdentity{
 
 		int parentIndex = lindex.get(from);
 		Integer toIndex; 
-		if(next<orderednodes.size()){
-			toIndex = lindex.get(orderednodes.get(next));
-		}
-		else {
-			toIndex = l.size();
-		}
+		toIndex = getToIndex(next, l, lindex);
 		
 		m.l = new ArrayList<IIdentity>(l.subList(0, toIndex));
 		m.l.add(from);
@@ -173,6 +167,17 @@ public class ModelTree implements IIdentity{
 		datainvariant(); //TODO not really needed
 		m.datainvariant();
 		return m;
+	}
+
+	private Integer getToIndex(int next, ArrayList<IIdentity> targetList, HashMap<IIdentity, Integer> indexmap) {
+		Integer toIndex;
+		if(next<orderednodes.size()){
+			toIndex = indexmap.get(orderednodes.get(next));
+		}
+		else {
+			toIndex = targetList.size();
+		}
+		return toIndex;
 	}
 
 	private void cloneEdgesTo(ModelTree m) {
@@ -270,6 +275,49 @@ public class ModelTree implements IIdentity{
 //		System.out.println("addChild(child): child=" + child);
 		return addChild(child, new Identity("edge"), orderednodes.get(orderednodes.size()-1));
 	}
+	
+	/**
+	 * Deletes a node from the model and all edges pointing to it 
+	 * @param node the node and endpoint of edges to be deleted 
+	 * @return
+	 */
+	public ModelTree deleteNode(IIdentity node){
+		int next = orderednodes.indexOf(node);
+		if(next<0)
+			throw new IllegalArgumentException("Id must be a node in this model: " + node);
+		next=next+1;
+		
+		ModelTree m = this.copy();
+		
+		int nodeIndex = lindex.get(node);
+		int toIndex = getToIndex(next, l, lindex);
+		
+		for(int i=nodeIndex; i<toIndex; i+=3)
+			assert l.get(i).equals(node);
+		l.subList(nodeIndex, toIndex).clear();
+		
+		nodeIndex = bindex.get(node);
+		toIndex = getToIndex(next, b, bindex);
+		
+		for(int i=nodeIndex; i<toIndex; i+=3)
+			assert b.get(i).equals(node);
+		b.subList(nodeIndex, toIndex).clear();
+		
+		
+		
+		
+		return null;
+	}
+
+	public ModelTree copy() {
+		ModelTree m = new ModelTree(this);
+		m.id = id;
+		m.orderednodes = new ArrayList<>(orderednodes);
+		cloneEdgesTo(m);
+		cloneLinksTo(m);
+		m.datainvariant();
+		return m;
+	}
 
 	/**
 	 * Adds an unlabeled link from node {@link from} to identity {@link to}  
@@ -356,5 +404,66 @@ public class ModelTree implements IIdentity{
 				ret.add(node);
 		}
 		return ret;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((b == null) ? 0 : b.hashCode());
+		result = prime * result + ((bindex == null) ? 0 : bindex.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((l == null) ? 0 : l.hashCode());
+		result = prime * result + ((lindex == null) ? 0 : lindex.hashCode());
+		result = prime * result + ((orderednodes == null) ? 0 : orderednodes.hashCode());
+		result = prime * result + ((root == null) ? 0 : root.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ModelTree other = (ModelTree) obj;
+		if (b == null) {
+			if (other.b != null)
+				return false;
+		} else if (!b.equals(other.b))
+			return false;
+		if (bindex == null) {
+			if (other.bindex != null)
+				return false;
+		} else if (!bindex.equals(other.bindex))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (l == null) {
+			if (other.l != null)
+				return false;
+		} else if (!l.equals(other.l))
+			return false;
+		if (lindex == null) {
+			if (other.lindex != null)
+				return false;
+		} else if (!lindex.equals(other.lindex))
+			return false;
+		if (orderednodes == null) {
+			if (other.orderednodes != null)
+				return false;
+		} else if (!orderednodes.equals(other.orderednodes))
+			return false;
+		if (root == null) {
+			if (other.root != null)
+				return false;
+		} else if (!root.equals(other.root))
+			return false;
+		return true;
 	}
 }

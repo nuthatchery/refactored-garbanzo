@@ -1,5 +1,6 @@
 package adevpck;
 
+import java.awt.RenderingHints.Key;
 import java.util.HashMap;
 
 public class Register {
@@ -71,6 +72,17 @@ public class Register {
 	 */
 	public static ModelTree removeLastVersion(IIdentity modelId){
 		return reg.get(modelId).removeLast();
+	}
+	
+	
+	public void datainvariant(){
+		allVersionHasSameIdAsKey();
+	}
+
+	private void allVersionHasSameIdAsKey() {
+		reg.forEach(
+				(key, value) -> {value.forEach((versionnr, model) -> {assert key.equals(model.getId());});}
+				);
 	}
 	
 	

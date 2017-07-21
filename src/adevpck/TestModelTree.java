@@ -144,4 +144,23 @@ public class TestModelTree {
 		m = m.addLink(en, one);
 		m.getAllWithLinkEval().forEach(elem->System.out.print(elem + " "));
 	}
+	
+	@Test
+	public void testCopy(){
+		IIdentity zero = new Identity("0");
+		IIdentity one = new Identity("1");
+		IIdentity two = new Identity("2");
+		IIdentity three = new Identity("3");
+		
+		ModelTree numbers = new ModelTree(zero);
+		numbers = numbers.addChild(one);
+		numbers = numbers.addChild(two);
+		numbers = numbers.addChild(three);
+		
+		ModelTree numberCopy = numbers.copy();
+		assert numberCopy.equals(numbers);
+		numbers = numbers.addChild(new Identity("4"));
+		assert !numberCopy.equals(numbers) : "Should be not equal: " + numbers.getAll() + " and " + numberCopy.getAll();
+	}
+		
 }
