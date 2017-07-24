@@ -536,5 +536,19 @@ public class ModelTree implements IIdentity{
 			return false;
 		return true;
 	}
+
+	public boolean hasLink(IIdentity parent, IIdentity conformsTo, IIdentity node) {
+		return true;
+	}
+
+	public IIdentity getLink(IIdentity constructor, IIdentity type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean hasPath(IIdentity childType, IIdentity subtypeOf, IIdentity destType) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }
