@@ -199,10 +199,14 @@ public class ModelTree implements IIdentity{
 		class LocalListNodeAdder{
 			void addNode(IIdentity n){
 				ls.add(n);
-				if(bindex.get(n)==null||bindex.get(n)>=b.size())return;
+				if(isLeaf(n))return;
 				for(int i=bindex.get(n); i<b.size() && b.get(i) != null && b.get(i).equals(n); i+=3){
 					addNode(b.get(i+2));
 				}
+			}
+
+			private boolean isLeaf(IIdentity n) {
+				return bindex.get(n)==null||bindex.get(n)>=b.size();
 			}
 		};
 
@@ -211,40 +215,6 @@ public class ModelTree implements IIdentity{
 		//		ls.forEach(l->System.out.print(l));
 		//		System.out.println();
 		return ls;
-	}
-
-	private void datainvariant(){
-		// XXX: for boolean går det an å bruke noe slikt:
-		// bindex.entrySet().stream().allMatch(predicate)
-		
-//		System.out.println("printing ordered nodes " + orderednodes);
-//		System.out.println("printing bindex " + bindex);
-//		System.out.println("printing b " + b);
-//		System.out.println();
-
-		orderednodes.forEach(item -> {assert bindex.containsKey(item) : "All nodes should be found in bindex: " + item;});
-
-		bindex.forEach((item, i) -> {assert orderednodes.contains(item): "all parent nodes of model should be recorded in the model's list of nodes: " + item + ": from " + bindex.toString() + " in " + Arrays.toString(orderednodes.toArray());});
-
-		orderednodes.forEach(item -> {assert bindex.get(item)!=null: "No nodes should have index null: " + item;});
-
-		for(int i=0; i<orderednodes.size(); i++){
-			IIdentity n = orderednodes.get(i);
-			if(bindex.get(n)!=b.size()){
-				for(int j = i+3; j<orderednodes.size(); j+=3){
-					assert bindex.get(n) <= bindex.get(orderednodes.get(j)) : "Ordered nodes should have increasing branch-index: " + n + "->" + bindex.get(n) + " <= " + orderednodes.get(j) + "->" + bindex.get(orderednodes.get(j));
-				}
-			}
-		}
-
-		for(int i=0; i<orderednodes.size(); i++){
-			IIdentity n = orderednodes.get(i);
-			if(lindex.get(n)!=l.size()){
-				for(int j = i+3; j<orderednodes.size(); j+=3){
-					assert lindex.get(n) <= lindex.get(orderednodes.get(j)) : "Ordered nodes should have increasing branch-index: " + n + "->" + lindex.get(n) + " <= " + orderednodes.get(j) + "->" + lindex.get(orderednodes.get(j));
-				}
-			}
-		}
 	}
 
 	@Override
@@ -298,7 +268,7 @@ public class ModelTree implements IIdentity{
 		
 		int nodeIndex = lindex.get(node);
 		int toIndex = getToIndex(next, l, lindex);
-		int diff = toIndex-nodeIndex;
+		int diff = nodeIndex-toIndex;
 		
 		for(int i=nodeIndex; i<toIndex; i+=3)
 			assert l.get(i).equals(node);
@@ -312,7 +282,7 @@ public class ModelTree implements IIdentity{
 		}
 		
 		nodeIndex = bindex.get(node);
-		toIndex = getToIndex(next, b, bindex);
+		toIndex = getToIndex(next, m.b, m.bindex);
 		
 		for(int i=nodeIndex; i<toIndex; i+=3)
 			assert b.get(i).equals(node);
@@ -453,6 +423,48 @@ public class ModelTree implements IIdentity{
 		return this;
 	}
 	
+	private void datainvariant(){
+			// XXX: for boolean går det an å bruke noe slikt:
+			// bindex.entrySet().stream().allMatch(predicate)
+			
+			System.out.println("printing ordered nodes " + orderednodes);
+			System.out.println("printing bindex " + bindex);
+			System.out.println("printing b " + b);
+			System.out.println();
+	
+			orderednodes.forEach(item -> {assert bindex.containsKey(item) : "All nodes should be found in bindex: " + item;});
+	
+			bindex.forEach((item, i) -> {assert orderednodes.contains(item): "all parent nodes of model should be recorded in the model's list of nodes: " + item + ": from " + bindex.toString() + " in " + Arrays.toString(orderednodes.toArray());});
+			
+			bindex.forEach((item, i) -> {assert i<=b.size(): "index must be <= b.size() " + i ;});
+			
+			lindex.forEach((item, i) -> {assert i<=l.size(): "index must be <= l.size() " + i ;});
+	
+			orderednodes.forEach(item -> {assert bindex.get(item)!=null: "No nodes should have index null: " + item;});
+	
+//			orderednoesInDecresingBIndex();
+	
+			for(int i=0; i<orderednodes.size(); i++){
+				IIdentity n = orderednodes.get(i);
+				if(lindex.get(n)!=l.size()){
+					for(int j = i+3; j<orderednodes.size(); j+=3){
+						assert lindex.get(n) <= lindex.get(orderednodes.get(j)) : "Ordered nodes should have increasing branch-index: " + n + "->" + lindex.get(n) + " <= " + orderednodes.get(j) + "->" + lindex.get(orderednodes.get(j));
+					}
+				}
+			}
+		}
+
+	private void orderednoesInDecresingBIndex() {
+		for(int i=0; i<orderednodes.size(); i++){
+			IIdentity n = orderednodes.get(i);
+			if(bindex.get(n)!=b.size()){
+				for(int j = i+3; j<orderednodes.size(); j+=3){
+					assert bindex.get(n) <= bindex.get(orderednodes.get(j)) : "Ordered nodes should have increasing branch-index: " + n + "->" + bindex.get(n) + " <= " + orderednodes.get(j) + "->" + bindex.get(orderednodes.get(j));
+				}
+			}
+		}
+	}
+
 	public String toString(){
 		String m = "Id: " + id + "\n";
 		m += "orderednodes: " + orderednodes + "\n";
