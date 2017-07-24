@@ -5,7 +5,7 @@ import adevpck.IModel;
 import adevpck.Identity;
 import adevpck.ModelTree;
 
-public class Tree {
+public class MetaMeta {
 	public static ModelTree model;
 	
 	// basic metametamodelling
@@ -72,7 +72,7 @@ public class Tree {
 	
 	
 	private static IIdentity id(String string) {
-		return new Identity("Tree::" + string);
+		return new Identity("MetaMeta::" + string);
 	}
 	
 }
