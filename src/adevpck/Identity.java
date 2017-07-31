@@ -15,13 +15,29 @@ public class Identity implements IIdentity {
 	 */
 	private String name;
 	
+	/**
+	 * Id of the one and only model this id is a node in
+	 */
+	private IIdentity modelId; //TODO make final 
+	
 	public Identity(){
 		path ="";
 		name = "noname";
 	}
 	
+	public Identity(IIdentity modelId){
+		this.modelId = modelId;
+		path = "";
+	}
+	
 	public Identity(String name){
 		this();
+		this.name = name;
+	}
+	
+	public Identity(String name, IIdentity modelId){
+		this();
+		this.modelId = modelId;
 		this.name = name;
 	}
 	
@@ -67,5 +83,10 @@ public class Identity implements IIdentity {
 	@Override
 	public String toString(){
 		return name;
+	}
+
+	@Override
+	public IIdentity getModelId() {
+		return modelId;
 	}
 }

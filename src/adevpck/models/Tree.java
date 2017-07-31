@@ -55,7 +55,10 @@ public class Tree {
 		// constructor must be known in metamodel
 		assert mm.containsNode(constructor);
 		assert mm.hasLink(constructor, MetaMeta.CONFORMS_TO, NODE);
-
+		assert children.length==Integers.intValueOf(mm.getLink(constructor, ARITY));
+		
+		// m.beginTransaction();
+		
 		IIdentity identity = new Identity();
 		// add the new node
 		m.addChild(identity);
@@ -69,8 +72,9 @@ public class Tree {
 			IIdentity childCons = m.getLink(children[i], MetaMeta.CONFORMS_TO);
 			IIdentity childType = mm.getLink(childCons, TYPE);
 			assert mm.hasPath(childType, SUBTYPE_OF, destType);
-			m.addChild(identity, label, children[i]);
+			m = m.addChild(identity, label, children[i]);
 		}
+		// m.endTransaction();
 		return identity;
 	}
 }

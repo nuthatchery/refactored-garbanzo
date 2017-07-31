@@ -22,4 +22,6 @@ public interface IIdentity {
 	 * @return this
 	 */
 	IIdentity setName(String name);
+
+	public IIdentity getModelId();
 }

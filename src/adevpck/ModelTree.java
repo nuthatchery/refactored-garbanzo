@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class ModelTree implements IIdentity{
+public class ModelTree{
 	/**
 	 * flat edges: such that for any 0<=i<b.size() we have b(i) = parent, b(i+1) = edge, b(i+2) = child
 	 */
@@ -16,6 +16,13 @@ public class ModelTree implements IIdentity{
 	 * bindex.get(n) = i where i is the smallest index 0<=i<b.size such that (i+1) % 3 = 1 and b(i)=n
 	 */
 	private HashMap<IIdentity, Integer> bindex = new HashMap<>();
+	
+	
+	/**
+	 * map: node -> {(edge, target), ..., }
+	 * map.get(node) gives a (sorted?) set of tuples of edges and child  
+	 */
+	private HashMap<IIdentity, Tuple> children = new HashMap<>();
 
 	private ArrayList<IIdentity> l;
 	/**
@@ -217,20 +224,17 @@ public class ModelTree implements IIdentity{
 		return ls;
 	}
 
-	@Override
 	public String getId() {
 		return this.id.getId();
 	}
 
-	@Override
 	public String getName() {
 		return id.getName();
 	}
 
-	@Override
 	public IIdentity setName(String name) {
 		this.id.setName(name);
-		return this;
+		return id;
 	}
 
 	public IIdentity getIdObject() {
@@ -546,6 +550,13 @@ public class ModelTree implements IIdentity{
 		return null;
 	}
 
+	/**
+	 * a -st-> b -st-> c 
+	 * @param childType
+	 * @param subtypeOf
+	 * @param destType
+	 * @return
+	 */
 	public boolean hasPath(IIdentity childType, IIdentity subtypeOf, IIdentity destType) {
 		// TODO Auto-generated method stub
 		return false;

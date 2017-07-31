@@ -9,6 +9,9 @@ public class MetaMeta {
 	public static ModelTree model;
 	
 	// basic metametamodelling
+	/**
+	 * reflexive, transitive, 
+	 */
 	public static final IIdentity CONFORMS_TO = id("conformsTo");
 	public static final IIdentity SRC_CONFORMS_TO = id("srcConformsTo");
 	public static final IIdentity DEST_CONFORMS_TO = id("destConformsTo");
@@ -20,6 +23,9 @@ public class MetaMeta {
 	public static final IIdentity ZERO_OR_MORE = id("zeroOrMore");
 	public static final IIdentity ZERO_OR_ONE = id("zeroOrOne");
 	public static final IIdentity ONE_OR_MORE = id("oneOrMore");
+	/**
+	 * reflexive, transitive, sorta like subtype of 
+	 */
 	public static final IIdentity IS = id("is");
 	public static final IIdentity LINK = id("link");
 	public static final IIdentity MULTILINK = id("multilink");
@@ -48,6 +54,7 @@ public class MetaMeta {
 		model.addLink(BRANCH, IS, FUNCTION);
 		model.addLink(BRANCH, SRC_CONFORMS_TO, NODE);
 		model.addLink(BRANCH, DEST_CONFORMS_TO, NODE);
+		/*Number of branches should be equal to arity*/
 		model.addLink(ARITY, IS, FUNCTION);
 		model.addLink(ARITY, SRC_CONFORMS_TO, NODE);
 		model.addLink(ARITY, DEST_CONFORMS_TO, Integers.INT_MODEL_ID); // TODO

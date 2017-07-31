@@ -41,6 +41,8 @@ public class Register {
 	/**
 	 * Gets the only model in which this id is node, if any.
 	 * If there are several versions of that model, gets the last version containing the node 
+	 * 
+	 * TODO added modelid to nodes, don't need traversal any more 
 	 * @param node
 	 * @return
 	 */
@@ -49,6 +51,7 @@ public class Register {
 			for(int i=v.getLastVersionNr(); i>=0; i--){
 				if(v.get(i)!=null){
 					if(v.get(i).containsNode(node)){
+						assert node.getModelId().equals(v.get(i));
 						return v.get(i);
 					}
 				}
