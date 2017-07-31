@@ -1,7 +1,6 @@
 package adevpck;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Test; 
@@ -12,8 +11,9 @@ public class TestModelTree {
 	public void testSingleton(){
 		IIdentity en = new Identity("1");
 		ModelTree m = new ModelTree(en);
-		m.getAll().forEach(elem->System.out.print(elem + " "));
-		System.out.println();
+		assert m.containsNode(en);
+		m.getAll().forEach(element -> {assert element.equals(en);});
+		assert ! m.getChildren(en).iterator().hasNext() : "There should be no children";
 	}
 	
 	@Test
@@ -61,7 +61,7 @@ public class TestModelTree {
 		copy = copy.addChild(tre, edge, åtte);
 		copy = copy.addChild(en, edge, fem);
 		
-		assert copy.equals(m);
+		assert copy.equals(m) : "should be eq regardless of order: " + copy + " eq " + m;
 	}
 	
 	@Test
@@ -108,28 +108,6 @@ public class TestModelTree {
 	}
 	
 	@Test
-	public void testAddGetLinksSmall(){
-		IIdentity one = new Identity("1");
-		IIdentity linktwo = new Identity();
-		IIdentity two = new Identity("2");
-		IIdentity linkthree = new Identity();
-		IIdentity three = new Identity("3");
-		ModelTree m = new ModelTree(one);
-		m = m.addLink(one, linktwo, two);
-		m = m.addLink(one, linkthree, three);
-		System.out.println("testprint m.getLinks(one): " + m.getLinks(one));
-		
-		HashMap<IIdentity, IIdentity> map = new HashMap<>();
-		map.put(linktwo, two);
-		map.put(linkthree, three);
-		HashMap<IIdentity, IIdentity> links = m.getLinks(one);
-		links.forEach((linkid, to) -> {assert map.containsKey(linkid): "missing item " + linkid + " in " + map;});
-		links.forEach((linkid, to) -> {assert map.get(linkid).equals(to): "missing item " + linkid + "," + to + " in " + map;});
-		map.forEach((linkid, to) -> {assert links.containsKey(linkid) : "missing item " + linkid + " in " + links;});
-		map.forEach((linkid, to) -> {assert links.get(linkid).equals(to) : "missing item " + linkid + "," + to + " in " + links;});
-	}
-	
-	@Test
 	public void testDeepOneChildThree(){
 		/* Number tree */
 		IIdentity zero = new Identity("0");
@@ -138,47 +116,14 @@ public class TestModelTree {
 		IIdentity three = new Identity("3");
 		
 		ModelTree numbers = new ModelTree(zero);
-		numbers = numbers.addChild(one);
-		numbers = numbers.addChild(two);
-		numbers = numbers.addChild(three);
+		numbers = numbers.addChild(zero, one);
+		numbers = numbers.addChild(one, two);
+		numbers = numbers.addChild(two, three);
 		
 		assert numbers.getChildren(zero).iterator().next().equals(one);
 		assert numbers.getChildren(one).iterator().next().equals(two);
 		assert numbers.getChildren(two).iterator().next().equals(three);
 		assert !numbers.getChildren(three).iterator().hasNext();
-	}
-	
-	@Test
-	public void testRegisterWithTwoModelTreesUseLink(){
-		/* Number tree */
-		IIdentity zero = new Identity("0");
-		IIdentity one = new Identity("1");
-		IIdentity two = new Identity("2");
-		IIdentity three = new Identity("3");
-		
-		ModelTree numbers = new ModelTree(zero).register();
-		numbers = numbers.addChild(one);
-		numbers = numbers.addChild(two);
-		numbers = numbers.addChild(three);
-		
-		/* Expression tree */
-		IIdentity pluss = new Identity("+");
-		IIdentity minus = new Identity("-");
-		
-		IIdentity en = new Identity("abstr1");
-		IIdentity to = new Identity("abstr2");
-		IIdentity tre = new Identity("abstr3");
-		
-		ModelTree m = new ModelTree(pluss);
-		
-		m = m.addChild(pluss, new Identity("left"), tre);	//+ 3
-		m = m.addLink(tre, three);
-		m = m.addChild(pluss, new Identity("right"), minus); // + 3 -
-		m = m.addChild(minus, new Identity("left"), to);	// + 3 - 2
-		m = m.addLink(to, two);
-		m = m.addChild(minus, new Identity("right"), en); // + 3 - 2 1
-		m = m.addLink(en, one);
-		m.getAllWithLinkEval().forEach(elem->System.out.print(elem + " "));
 	}
 	
 	@Test
@@ -189,13 +134,13 @@ public class TestModelTree {
 		IIdentity three = new Identity("3");
 		
 		ModelTree numbers = new ModelTree(zero);
-		numbers = numbers.addChild(one);
-		numbers = numbers.addChild(two);
-		numbers = numbers.addChild(three);
+		numbers = numbers.addChild(zero, one);
+		numbers = numbers.addChild(one, two);
+		numbers = numbers.addChild(two, three);
 		
 		ModelTree numberCopy = numbers.copy();
 		assert numberCopy.equals(numbers);
-		numbers = numbers.addChild(new Identity("4"));
+		numbers = numbers.addChild(three, new Identity("4"));
 		assert !numberCopy.equals(numbers) : "Should be not equal: " + numbers.getAll() + " and " + numberCopy.getAll();
 	}
 	
@@ -207,12 +152,12 @@ public class TestModelTree {
 		IIdentity three = new Identity("3");
 		
 		ModelTree numbers = new ModelTree(zero);
-		numbers = numbers.addChild(one);
-		numbers = numbers.addChild(two);
-		numbers = numbers.addChild(three);
+		numbers = numbers.addChild(zero, one);
+		numbers = numbers.addChild(one, two);
+		numbers = numbers.addChild(two, three);
 		
 		ModelTree numberCopy = numbers.copy();
-		assert numberCopy.equals(numbers);
+		assert numberCopy.equals(numbers) : numberCopy + " should be equal to " + numbers;
 		numbers = numbers.deleteSubtree(three);
 		assert !numberCopy.equals(numbers) : "Should be not equal: " + numbers.getAll() + " and " + numberCopy.getAll();
 		for(IIdentity node : numbers.getAll()){

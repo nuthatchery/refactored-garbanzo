@@ -10,7 +10,7 @@ public class Register {
 	private static HashMap<IIdentity, VersionMap> reg = new HashMap<>();
 
 	public static void addModelVersion(ModelTree modelTree){
-		addModelVersion(modelTree.getIdObject(), modelTree);
+		addModelVersion(modelTree.getId(), modelTree);
 		datainvariant();
 	}
 

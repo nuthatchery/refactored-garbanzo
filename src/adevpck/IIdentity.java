@@ -3,7 +3,7 @@ package adevpck;
 /**
  * Each node or element in the system has an identity.
  */
-public interface IIdentity {
+public interface IIdentity extends Comparable<IIdentity> {
 	
 	public String getId();
 	

@@ -2,7 +2,11 @@ package adevpck;
 
 import java.util.UUID;
 
-public class Identity implements IIdentity {
+/**
+ * Immutable Identity class 
+ * @author anna
+ */
+public class Identity implements IIdentity{
 	private final String id = UUID.randomUUID().toString();
 	/**
 	 * Info about model this id elem belongs to. 
@@ -18,11 +22,11 @@ public class Identity implements IIdentity {
 	/**
 	 * Id of the one and only model this id is a node in
 	 */
-	private IIdentity modelId; //TODO make final 
+	private final IIdentity modelId; //TODO make final 
 	
-	public Identity(){
-		path ="";
-		name = "noname";
+	public Identity(IModel model){
+		this.modelId = this;
+		path = "";
 	}
 	
 	public Identity(IIdentity modelId){
@@ -30,23 +34,19 @@ public class Identity implements IIdentity {
 		path = "";
 	}
 	
-	public Identity(String name){
-		this();
-		this.name = name;
-	}
-	
-	public Identity(String name, IIdentity modelId){
-		this();
+	public Identity(IIdentity modelId, String name){
 		this.modelId = modelId;
 		this.name = name;
+		this.path = "";
 	}
 	
-	public Identity(String path, String name){
-		this.path = path;
+
+	public Identity(String name) {
+		this.modelId = this;
 		this.name = name;
+		this.path = "";
 	}
-	
-	
+
 	@Override
 	public String getId() {
 		return id;
@@ -88,5 +88,10 @@ public class Identity implements IIdentity {
 	@Override
 	public IIdentity getModelId() {
 		return modelId;
+	}
+	
+	@Override 
+	public int compareTo(IIdentity other){
+		return this.id.compareTo(other.getId());
 	}
 }

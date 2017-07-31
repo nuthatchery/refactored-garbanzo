@@ -41,8 +41,8 @@ public class Tree {
 	}
 
 	private static IIdentity id(String string) {
-		IIdentity identity = new Identity("Tree::" + string);
-		model.addChild(identity);
+		IIdentity identity = new Identity(model.getId(), "Tree::" + string);
+		model.addChild(identity); //Anna: hva er meningen her?
 		return identity;
 	}
 
@@ -51,7 +51,7 @@ public class Tree {
 	}
 
 	public static IIdentity makeNode(ModelTree m, ModelTree mm, IIdentity constructor, IIdentity... children) {
-		assert m.hasLink(m.getIdObject(), MetaMeta.CONFORMS_TO, mm.getIdObject());
+		assert m.hasLink(m.getId(), MetaMeta.CONFORMS_TO, mm.getId());
 		// constructor must be known in metamodel
 		assert mm.containsNode(constructor);
 		assert mm.hasLink(constructor, MetaMeta.CONFORMS_TO, NODE);
@@ -59,9 +59,9 @@ public class Tree {
 		
 		// m.beginTransaction();
 		
-		IIdentity identity = new Identity();
+		IIdentity identity = new Identity(m.getId());
 		// add the new node
-		m.addChild(identity);
+		m.addChild(identity); //Anna: erstatt med riktig kall
 		// state that it is a node
 		m.addLink(identity, MetaMeta.CONFORMS_TO, constructor);
 

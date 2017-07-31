@@ -7,7 +7,7 @@ public class Model implements IModel{
 	private IElementHandle modelHandle;
 
 	public Model(){
-		id = new Identity();
+		id = new Identity(this);
 		modelHandle = new ElementHandle(this, id);
 	}
 	
