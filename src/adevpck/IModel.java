@@ -29,7 +29,7 @@ public interface IModel {
 
 	IIdentity makeElement(IIdentity schema, IIdentity parent, IIdentity label);
 	
-	void beginTransaction();
+	IModel beginTransaction();
 	
 	void commitTransaction();
 	

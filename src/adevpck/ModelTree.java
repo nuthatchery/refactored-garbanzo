@@ -2,11 +2,12 @@ package adevpck;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class ModelTree implements IModel{	
+	private boolean mutable = false; 
+
 	/**
 	 * map: node -> {(edge, target), ..., }
 	 * map.get(node) gives a (sorted?) set of tuples of edges and child  
@@ -25,12 +26,11 @@ public class ModelTree implements IModel{
 	private Set<IIdentity> N = new TreeSet<>();
 
 	private IIdentity root;
-	
+
 	/**
 	 * id of this model
 	 */
 	private final IIdentity id;
-
 
 	public ModelTree(IIdentity root){
 		id = new Identity(this);
@@ -88,14 +88,23 @@ public class ModelTree implements IModel{
 		assert children.get(parent)!=null : "inconsistent datainvariant";
 		assert links.get(parent)!=null : "inconsistent datainvariant";
 
-		ModelTree m = new ModelTree(this);
-		m.children.get(parent).add(new Tuple(edge, child));
-		if(!m.containsNode(child))
-			m.addNewNodeToModel(child);
+		if(mutable){
+			children.get(parent).add(new Tuple(edge, child));
+			if(!containsNode(child))
+				addNewNodeToModel(child);
+			datainvariant();
+			return this;
+		}
+		else{
+			ModelTree m = new ModelTree(this);
+			m.children.get(parent).add(new Tuple(edge, child));
+			if(!m.containsNode(child))
+				m.addNewNodeToModel(child);
 
-		datainvariant(); //TODO not really needed
-		m.datainvariant();
-		return m;
+			datainvariant(); //TODO not really needed
+			m.datainvariant();
+			return m;
+		}
 	}
 
 
@@ -108,13 +117,19 @@ public class ModelTree implements IModel{
 	 */
 	public ModelTree addLink(IIdentity from, IIdentity link, IIdentity to){
 		assert links.get(from)!=null : "the from-id must be a node or edge of this model " + from ;
+		if(mutable){
+			links.get(from).add(new Tuple(link, to));
+			datainvariant();
+			return this;
+		}
+		else{
+			ModelTree m = new ModelTree(this);
+			m.links.get(from).add(new Tuple(link, to));
 
-		ModelTree m = new ModelTree(this);
-		m.links.get(from).add(new Tuple(link, to));
-
-		datainvariant(); //TODO not really needed
-		m.datainvariant();
-		return m;
+			datainvariant(); //TODO not really needed
+			m.datainvariant();
+			return m;
+		}
 	}
 
 
@@ -132,14 +147,16 @@ public class ModelTree implements IModel{
 	public boolean containsNode(IIdentity node) {
 		return N.contains(node);
 	}
-	
+
 	/**
 	 * Deletes a node from the model and all edges pointing to it 
 	 * @param node the node and endpoint of edges to be deleted 
 	 * @return
 	 */
 	public ModelTree deleteSubtree(IIdentity node){
+		assert N.contains(node) : "node must belong in this model " + N + " : " + node;
 		ModelTree m = this.copy();
+		TreeSet<Tuple> childrenOf = m.children.remove(node);
 		m.datainvariant();
 		return m;
 	}
@@ -157,7 +174,6 @@ public class ModelTree implements IModel{
 	 * @return the new model
 	 */
 	public ModelTree addLink(IIdentity from, IIdentity to) {
-//		System.out.println("addLink(from, to): from=" + from + ", to=" + to);
 		return addLink(from, new Identity(this.id, "link"), to);
 	}
 
@@ -174,18 +190,18 @@ public class ModelTree implements IModel{
 		links.get(from).forEach(tuple -> fromlinks.add(tuple.getArrow()));
 		return fromlinks;
 	}
-	
+
 	/**
-	 * Adds an unlabeled edge from node {@link from} to identity {@link to}  
-	 * @param from
-	 * @param to
+	 * Adds an unlabeled edge from node {@link parent} to identity {@link child}  
+	 * @param parent
+	 * @param child
 	 * @return the new model
 	 */
-	public ModelTree addChild(IIdentity from, IIdentity to) {
-		return addChild(to, new Identity(id, "edge"), from);
+	public ModelTree addChild(IIdentity parent, IIdentity child) {
+		return addChild(parent, new Identity(id, "edge"), child);
 	}
 
-	
+
 	/**
 	 * Registers this modelTree in the register as the last version of its id
 	 * @return this modeltree
@@ -194,11 +210,11 @@ public class ModelTree implements IModel{
 		Register.addModelVersion(id, this);
 		return this;
 	}
-	
+
 	private void datainvariant(){
-			// XXX: for boolean går det an å bruke noe slikt:
-			// bindex.entrySet().stream().allMatch(predicate)
-	
+		// XXX: for boolean går det an å bruke noe slikt:
+		// bindex.entrySet().stream().allMatch(predicate)
+
 	}
 
 
@@ -234,8 +250,8 @@ public class ModelTree implements IModel{
 
 	@Override
 	public int getNumChildren(IIdentity node) {
-		// TODO Auto-generated method stub
-		return 0;
+		assert children.containsKey(node) : "argument must be a node in this model " + node;
+		return children.get(node).size();
 	}
 
 	@Override
@@ -259,7 +275,7 @@ public class ModelTree implements IModel{
 	@Override
 	public <T> void setData(IIdentity node, T data) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -293,21 +309,20 @@ public class ModelTree implements IModel{
 	}
 
 	@Override
-	public void beginTransaction() {
-		// TODO Auto-generated method stub
-		
+	public ModelTree beginTransaction() {
+		mutable = true;
+		return this;
 	}
 
 	@Override
 	public void commitTransaction() {
-		// TODO Auto-generated method stub
-		
+		mutable = false;
 	}
 
 	@Override
 	public void rollbackTransaction() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

@@ -140,9 +140,9 @@ public class Model implements IModel{
 	}
 
 	@Override
-	public void beginTransaction() {
+	public IModel beginTransaction() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override

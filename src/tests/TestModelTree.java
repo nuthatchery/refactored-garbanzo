@@ -1,9 +1,13 @@
-package adevpck;
+package tests;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test; 
+import org.junit.Test;
+
+import adevpck.IIdentity;
+import adevpck.Identity;
+import adevpck.ModelTree; 
 
 public class TestModelTree {
 
@@ -11,25 +15,32 @@ public class TestModelTree {
 	public void testSingleton(){
 		IIdentity en = new Identity("1");
 		ModelTree m = new ModelTree(en);
+		
 		assert m.containsNode(en);
 		m.getAll().forEach(element -> {assert element.equals(en);});
 		assert ! m.getChildren(en).iterator().hasNext() : "There should be no children";
 	}
 	
 	@Test
-	public void testEdgeVerySmallTree(){
+	public void testVerySmallTree(){
+		// + 2 3 
 		IIdentity pluss = new Identity("+");
 		IIdentity en = new Identity("1");
 		IIdentity to = new Identity("2");
+		
 		ModelTree m = new ModelTree(pluss);
 		m = m.addChild(pluss, new Identity("left"), en);
 		m = m.addChild(pluss, new Identity("right"), to);
-		m.getAll().forEach(elem->System.out.print(elem + " "));
-		System.out.println();
+		
+		assert m.containsNode(pluss);
+		assert m.containsNode(en);
+		assert m.containsNode(to);
+		assert m.getNumChildren(pluss) == 2;
+		m.getChildren(pluss).forEach((item) -> {assert item.equals(en) || item.equals(to);});
 	}
 	
 	@Test
-	public void testOrderedNodes(){
+	public void testSetEqualityOfN(){
 		IIdentity en= new Identity("1");
 		IIdentity to = new Identity("2");
 		IIdentity tre = new Identity("3");
@@ -50,8 +61,6 @@ public class TestModelTree {
 		m = m.addChild(to, edge, seks);
 		m = m.addChild(seks, edge, sju);
 		m = m.addChild(tre, edge, åtte);
-		m.getAll().forEach(elem->System.out.print(elem + " "));
-		System.out.println();
 		
 		copy = copy.addChild(en, edge, to);
 		copy = copy.addChild(to, edge, seks);
@@ -109,7 +118,7 @@ public class TestModelTree {
 	
 	@Test
 	public void testDeepOneChildThree(){
-		/* Number tree */
+		/* Number tree: 0 -edge-> 1 -edge-> 2 -edge-> 3 */
 		IIdentity zero = new Identity("0");
 		IIdentity one = new Identity("1");
 		IIdentity two = new Identity("2");
@@ -169,7 +178,7 @@ public class TestModelTree {
 	}
 	
 	@Test
-	public void testCopyDeleteAddSimple(){
+	public void testCopyDeleteAddEqualitySimple(){
 		IIdentity zero = new Identity("0");
 		IIdentity one = new Identity("1");
 		IIdentity two = new Identity("2");
