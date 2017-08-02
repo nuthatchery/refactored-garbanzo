@@ -212,21 +212,27 @@ public class ModelTree implements IModel{
 		return this;
 	}
 
-	private void datainvariant(){
+	private boolean datainvariant(){
 		// XXX: for boolean går det an å bruke noe slikt:
 		// bindex.entrySet().stream().allMatch(predicate)
 
 		/* could use N more, but consider not keeping N at all*/
-		assert rootIsParent() : "Root must have a (possibly empty) child set: " + root + ", " + children;
-		assert linkFunctionCoversAllParents() : "All nodes must have a (possibly empty) link set: " + links.keySet();
-		assert childrenClosedUnderN() : "Children must be closed under N" + children;
+		return rootIsParent() && linkFunctionCoversAllParents() && childrenClosedUnderN(); 
 
 	}
 
+	/**
+	 * Root must have a (possibly empty) child set
+	 * @return
+	 */
 	private boolean rootIsParent() {
 		return children.containsKey(root);
 	}
 
+	/**
+	 * All nodes must have a (possibly empty) link set
+	 * @return
+	 */
 	private boolean linkFunctionCoversAllParents() {
 		for(IIdentity key : children.keySet()){
 			if(!links.containsKey(key))
@@ -235,6 +241,10 @@ public class ModelTree implements IModel{
 		return true;
 	}
 
+	/**
+	 * Children must be closed under N
+	 * @return
+	 */
 	private boolean childrenClosedUnderN() {
 		for(IIdentity key : children.keySet()){
 			for(Tuple t : children.get(key)){
