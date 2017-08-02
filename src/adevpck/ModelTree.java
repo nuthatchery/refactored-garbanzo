@@ -2,6 +2,7 @@ package adevpck;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -215,6 +216,33 @@ public class ModelTree implements IModel{
 		// XXX: for boolean går det an å bruke noe slikt:
 		// bindex.entrySet().stream().allMatch(predicate)
 
+		/* could use N more, but consider not keeping N at all*/
+		assert rootIsParent() : "Root must have a (possibly empty) child set: " + root + ", " + children;
+		assert linkFunctionCoversAllParents() : "All nodes must have a (possibly empty) link set: " + links.keySet();
+		assert childrenClosedUnderN() : "Children must be closed under N" + children;
+
+	}
+
+	private boolean rootIsParent() {
+		return children.containsKey(root);
+	}
+
+	private boolean linkFunctionCoversAllParents() {
+		for(IIdentity key : children.keySet()){
+			if(!links.containsKey(key))
+				return false;
+		}
+		return true;
+	}
+
+	private boolean childrenClosedUnderN() {
+		for(IIdentity key : children.keySet()){
+			for(Tuple t : children.get(key)){
+				if(!children.containsKey(t.getTarget()))
+					return false;
+			}
+		}
+		return true;
 	}
 
 
