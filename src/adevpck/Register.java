@@ -94,7 +94,7 @@ public class Register {
 
 	private static void allVersionHasSameIdAsKey() {
 		reg.forEach(
-				(key, value) -> {value.forEach((versionnr, model) -> {assert key.equals(model) : "keys should be equal: " + key.getId() + " = " + model.getId();});}
+				(key, value) -> {value.forEach((versionnr, model) -> {assert key.equals(model.getId()) : "keys should be equal: " + key.getId() + " = " + model.getId();});}
 				);
 	}
 

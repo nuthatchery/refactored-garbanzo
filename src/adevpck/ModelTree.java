@@ -216,47 +216,48 @@ public class ModelTree implements IModel{
 		// XXX: for boolean går det an å bruke noe slikt:
 		// bindex.entrySet().stream().allMatch(predicate)
 
-		/* could use N more, but considering not keeping N at all*/
-		return 	rootIsParent() && 
-				linkFunctionCoversAllParents() && 
-				childrenClosedUnderN(); 
+		class ModelProperties{
+			/**
+			 * Root must have a (possibly empty) child set
+			 * @return
+			 */
+			private boolean rootIsParent() {
+				return children.containsKey(root);
+			}
 
-	}
+			/**
+			 * All nodes must have a (possibly empty) link set
+			 * @return
+			 */
+			private boolean linkFunctionCoversAllParents() {
+				for(IIdentity key : children.keySet()){
+					if(!links.containsKey(key))
+						return false;
+				}
+				return true;
+			}
 
-	/**
-	 * Root must have a (possibly empty) child set
-	 * @return
-	 */
-	private boolean rootIsParent() {
-		return children.containsKey(root);
-	}
-
-	/**
-	 * All nodes must have a (possibly empty) link set
-	 * @return
-	 */
-	private boolean linkFunctionCoversAllParents() {
-		for(IIdentity key : children.keySet()){
-			if(!links.containsKey(key))
-				return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Children must be closed under N
-	 * @return
-	 */
-	private boolean childrenClosedUnderN() {
-		for(IIdentity key : children.keySet()){
-			for(Tuple t : children.get(key)){
-				if(!children.containsKey(t.getTarget()))
-					return false;
+			/**
+			 * Children must be closed under N
+			 * @return
+			 */
+			private boolean childrenClosedUnderN() {
+				for(IIdentity key : children.keySet()){
+					for(Tuple t : children.get(key)){
+						if(!children.containsKey(t.getTarget()))
+							return false;
+					}
+				}
+				return true;
 			}
 		}
-		return true;
-	}
+		ModelProperties p = new ModelProperties();
+		/* could use N more, but considering not keeping N at all*/
+		return 	p.rootIsParent() && 
+				p.linkFunctionCoversAllParents() && 
+				p.childrenClosedUnderN(); 
 
+	}
 
 	public boolean hasLink(IIdentity parent, IIdentity conformsTo, IIdentity node) {
 		TreeSet<Tuple> parentlinks = links.get(parent);
@@ -356,6 +357,7 @@ public class ModelTree implements IModel{
 	@Override
 	public void commitTransaction() {
 		mutable = false;
+		datainvariant();
 	}
 
 	@Override
