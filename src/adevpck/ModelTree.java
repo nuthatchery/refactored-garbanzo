@@ -180,15 +180,12 @@ public class ModelTree implements IModel{
 		}
 		else{
 			//delete all edges to current node 
-			ArrayList<Tuple> delete = new ArrayList<>();
 			for(IIdentity n : children.keySet()){
 				for(Iterator<Tuple> iter = children.get(n).iterator(); iter.hasNext();){
 					Tuple t = iter.next();
 					if(t.getTarget().equals(node))
-						delete.add(t);
+						iter.remove();
 				}
-				delete.forEach(tuple -> {children.get(n).remove(tuple);});
-				delete.clear();
 			}
 			
 			// for all children c of n, delete subtree starting on c, then delete edge n->c  
