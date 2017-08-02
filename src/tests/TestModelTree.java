@@ -101,9 +101,9 @@ public class TestModelTree {
 		IIdentity two = new Identity("2");
 		IIdentity three = new Identity("3");
 		ModelTree m = new ModelTree(pluss);
-		m = m.addChild(one, pluss);
-		m = m.addChild(two, pluss);
-		m = m.addChild(three, pluss);
+		m = m.addChild(pluss, one);
+		m = m.addChild(pluss, two);
+		m = m.addChild(pluss, three);
 		m.getChildren(pluss).forEach(elem->System.out.print(elem + " "));
 		
 		List<IIdentity> ls = new ArrayList<IIdentity>();
