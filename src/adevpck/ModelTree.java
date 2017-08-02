@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.swing.plaf.synth.SynthSplitPaneUI;
 
 public class ModelTree implements IModel{	
 	private boolean mutable = false; 
