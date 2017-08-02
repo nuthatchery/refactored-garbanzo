@@ -27,6 +27,24 @@ public class Register {
 		datainvariant();
 		return version;
 	}
+	
+	/**
+	 * Searches the register for a version of the given model id that is equal to the given version
+	 * @param m
+	 * @return the non-negative versionnr if the model is found, -1 otherwise 
+	 */
+	public static int getVersionNrOf(IIdentity modelId, ModelTree m){
+		if(!reg.containsKey(modelId))
+			return -1;
+		
+		VersionMap versionMap = reg.get(modelId);
+		for(Integer i : versionMap.keySet()){
+			if(versionMap.get(i).equals(m))
+				return i;
+		}
+		
+		return -1;
+	}
 
 	/**
 	 * Gets the last version of the given model
@@ -98,9 +116,17 @@ public class Register {
 				);
 	}
 
-	public static ModelTree get(IIdentity id, int previousVersion) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * 
+	 * @param id
+	 * @param version
+	 * @return
+	 */
+	public static ModelTree getVersion(IIdentity id, int version) {
+		if(reg.containsKey(id) && reg.get(id)!=null)
+			return reg.get(id).get(version);
+		else 
+			return null;
 	}
 	
 	

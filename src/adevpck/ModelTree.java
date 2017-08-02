@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.swing.plaf.synth.SynthSplitPaneUI;
+
 public class ModelTree implements IModel{	
 	private boolean mutable = false; 
 	private int previousVersion = -1; 
@@ -52,6 +54,17 @@ public class ModelTree implements IModel{
 		datainvariant();
 	}
 
+	/**
+	 * 
+	 * @param modelTree
+	 * @param mutable
+	 */
+	public ModelTree(ModelTree modelTree, boolean mutable) {
+		this(modelTree);
+		this.mutable=mutable;
+		datainvariant();
+	}
+
 	private void addNewNodeToModel(IIdentity node) {
 		assert ! N.contains(node);
 		assert children.get(node) == null;
@@ -59,6 +72,7 @@ public class ModelTree implements IModel{
 		N.add(node);
 		children.put(node, new TreeSet<>());
 		links.put(node, new TreeSet<>());
+		datainvariant();
 	}
 
 	private void cloneEdgesOf(ModelTree m) {
@@ -349,9 +363,10 @@ public class ModelTree implements IModel{
 
 	@Override
 	public ModelTree beginTransaction() {
-		mutable = true;
-		Register.addModelVersion(this);
-		return this;
+		ModelTree mutableTree = new ModelTree(this, true);
+		mutableTree.mutable = true;
+		mutableTree.previousVersion = Register.addModelVersion(this);
+		return mutableTree;
 	}
 
 	@Override
@@ -364,11 +379,13 @@ public class ModelTree implements IModel{
 	public ModelTree rollbackTransaction() {
 		if(previousVersion == -1 )
 			return this;
+		assert Register.getVersion(id, previousVersion)!=null : "Previous version missing from register";
+		
 		if(!mutable){
-			return Register.get(id, previousVersion);
+			return Register.getVersion(id, previousVersion);
 		}
 		else {
-			copyAllFrom(Register.get(id, previousVersion));
+			copyAllFrom(Register.getVersion(id, previousVersion));
 			return this;
 		}
 	}
