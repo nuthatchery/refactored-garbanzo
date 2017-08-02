@@ -2,12 +2,12 @@ package adevpck;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class ModelTree implements IModel{	
 	private boolean mutable = false; 
+	private int previousVersion = -1; 
 
 	/**
 	 * map: node -> {(edge, target), ..., }
@@ -216,8 +216,10 @@ public class ModelTree implements IModel{
 		// XXX: for boolean går det an å bruke noe slikt:
 		// bindex.entrySet().stream().allMatch(predicate)
 
-		/* could use N more, but consider not keeping N at all*/
-		return rootIsParent() && linkFunctionCoversAllParents() && childrenClosedUnderN(); 
+		/* could use N more, but considering not keeping N at all*/
+		return 	rootIsParent() && 
+				linkFunctionCoversAllParents() && 
+				childrenClosedUnderN(); 
 
 	}
 
@@ -318,14 +320,12 @@ public class ModelTree implements IModel{
 
 	@Override
 	public IIdentity makeIdentity() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Identity(this);
 	}
 
 	@Override
 	public IIdentity makeIdentity(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Identity(this.id, name);
 	}
 
 	@Override
@@ -349,6 +349,7 @@ public class ModelTree implements IModel{
 	@Override
 	public ModelTree beginTransaction() {
 		mutable = true;
+		Register.addModelVersion(this);
 		return this;
 	}
 
@@ -358,9 +359,25 @@ public class ModelTree implements IModel{
 	}
 
 	@Override
-	public void rollbackTransaction() {
-		// TODO Auto-generated method stub
+	public ModelTree rollbackTransaction() {
+		if(previousVersion == -1 )
+			return this;
+		if(!mutable){
+			return Register.get(id, previousVersion);
+		}
+		else {
+			copyAllFrom(Register.get(id, previousVersion));
+			return this;
+		}
+	}
 
+	private void copyAllFrom(ModelTree m) {
+		children = m.children;
+		links = m.links;
+		root = m.root;
+		N = m.N;
+		previousVersion = m.previousVersion; 
+		mutable = m.mutable;
 	}
 
 	@Override

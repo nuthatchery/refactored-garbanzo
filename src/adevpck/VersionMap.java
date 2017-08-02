@@ -24,8 +24,9 @@ public class VersionMap extends HashMap<Integer, ModelTree> {
 		return last;
 	}
 
-	public ModelTree put(ModelTree modelTree) {
-		return super.put(++last, modelTree);
+	public int put(ModelTree modelTree) {
+		super.put(++last, modelTree);
+		return last;
 	}
 
 	public ModelTree getLast() {

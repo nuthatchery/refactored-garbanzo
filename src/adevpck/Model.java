@@ -152,8 +152,8 @@ public class Model implements IModel{
 	}
 
 	@Override
-	public void rollbackTransaction() {
+	public IModel rollbackTransaction() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 }

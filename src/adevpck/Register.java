@@ -9,19 +9,23 @@ public class Register {
 	 */
 	private static HashMap<IIdentity, VersionMap> reg = new HashMap<>();
 
-	public static void addModelVersion(ModelTree modelTree){
-		addModelVersion(modelTree.getId(), modelTree);
+	public static int addModelVersion(ModelTree modelTree){
+		int version = addModelVersion(modelTree.getId(), modelTree);
 		datainvariant();
+		return version;
 	}
 
-	public static void addModelVersion(IIdentity modelid, ModelTree modelTree) {
+	public static int addModelVersion(IIdentity modelid, ModelTree modelTree) {
+		int version;
 		if(reg.containsKey(modelid) && reg.get(modelid)!=null){
-			reg.get(modelid).put(modelTree);
+			version = reg.get(modelid).put(modelTree);
 		}
 		else{
-			reg.put(modelid, new VersionMap(0, modelTree));
+			version = 0;
+			reg.put(modelid, new VersionMap(version, modelTree));
 		}
 		datainvariant();
+		return version;
 	}
 
 	/**
@@ -92,6 +96,11 @@ public class Register {
 		reg.forEach(
 				(key, value) -> {value.forEach((versionnr, model) -> {assert key.equals(model) : "keys should be equal: " + key.getId() + " = " + model.getId();});}
 				);
+	}
+
+	public static ModelTree get(IIdentity id, int previousVersion) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

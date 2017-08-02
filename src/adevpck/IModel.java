@@ -33,6 +33,6 @@ public interface IModel {
 	
 	void commitTransaction();
 	
-	void rollbackTransaction();
+	IModel rollbackTransaction();
 
 }
