@@ -2,6 +2,7 @@ package adevpck;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -163,16 +164,46 @@ public class ModelTree implements IModel{
 	}
 
 	/**
-	 * Deletes a node from the model and all edges pointing to it 
+	 * Deletes a node from the model, and all edges pointing to and from it, and its descendants 
 	 * @param node the node and endpoint of edges to be deleted 
 	 * @return
 	 */
 	public ModelTree deleteSubtree(IIdentity node){
 		assert N.contains(node) : "node must belong in this model " + N + " : " + node;
-		ModelTree m = this.copy();
-		TreeSet<Tuple> childrenOf = m.children.remove(node);
-		m.datainvariant();
-		return m;
+		if(!mutable){
+			ModelTree m = new ModelTree(this);
+			m.mutable = true;
+			m.deleteSubtree(node);
+			m.mutable = false;
+			m.datainvariant();
+			return m;
+		}
+		else{
+			//delete all edges to current node 
+			ArrayList<Tuple> delete = new ArrayList<>();
+			for(IIdentity n : children.keySet()){
+				for(Iterator<Tuple> iter = children.get(n).iterator(); iter.hasNext();){
+					Tuple t = iter.next();
+					if(t.getTarget().equals(node))
+						delete.add(t);
+				}
+				delete.forEach(tuple -> {children.get(n).remove(tuple);});
+				delete.clear();
+			}
+			
+			// for all children c of n, delete subtree starting on c, then delete edge n->c  
+			for(Iterator<Tuple> iter = children.get(node).iterator(); iter.hasNext();){
+				Tuple edge = iter.next();
+				iter.remove();
+				deleteSubtree(edge.getTarget());
+			}
+			
+			links.remove(node);
+			children.remove(node);
+			N.remove(node);
+			datainvariant();
+			return this;
+		}
 	}
 
 	public ModelTree copy() {
@@ -315,7 +346,7 @@ public class ModelTree implements IModel{
 			return false;
 		if(parentNode.equals(descendantNode))
 			return false;
-		
+
 		for(Tuple edge: children.get(parentNode)){
 			if(descendantNode.equals(edge.getTarget()))
 				return true;
@@ -390,7 +421,7 @@ public class ModelTree implements IModel{
 		if(previousVersion == -1 )
 			return this;
 		assert Register.getVersion(id, previousVersion)!=null : "Previous version missing from register";
-		
+
 		if(!mutable){
 			return Register.getVersion(id, previousVersion);
 		}
