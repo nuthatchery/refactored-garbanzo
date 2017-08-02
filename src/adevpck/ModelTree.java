@@ -86,7 +86,7 @@ public class ModelTree implements IModel{
 		m.N.forEach(item -> N.add(item));
 	}
 
-	private IIdentity getRoot() {
+	public IIdentity getRoot() {
 		return root;
 	}
 
@@ -311,7 +311,17 @@ public class ModelTree implements IModel{
 
 	@Override
 	public boolean isDescendantOf(IIdentity parentNode, IIdentity descendantNode) {
-		// TODO Auto-generated method stub
+		if(!children.containsKey(parentNode) || !children.containsKey(descendantNode))
+			return false;
+		if(parentNode.equals(descendantNode))
+			return false;
+		
+		for(Tuple edge: children.get(parentNode)){
+			if(descendantNode.equals(edge.getTarget()))
+				return true;
+			if(isDescendantOf(edge.getTarget(), descendantNode))
+				return true;
+		}
 		return false;
 	}
 

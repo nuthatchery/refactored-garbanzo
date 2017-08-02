@@ -26,6 +26,12 @@ public interface IModel {
 	 */
 	Iterable<IIdentity> getLinks(IIdentity node);
 	
+	/**
+	 * Searches the model for a path starting at the parentNode and ending in descendantNode
+	 * @param parentNode the startnode of the path
+	 * @param descendantNode the endnode of the path
+	 * @return true if such a path exists, false otherwise 
+	 */
 	boolean isDescendantOf(IIdentity parentNode, IIdentity descendantNode);
 	
 	boolean hasData(IIdentity node, Class<?> type);

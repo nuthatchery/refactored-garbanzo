@@ -229,4 +229,30 @@ public class TestModelTree {
 		assert afteradd.equals(m) : "should be eq: " + afteradd + " and " + m;
 		
 	}		
+	
+	@Test
+	public void testIsDescendantOf(){
+		/* build tree */
+		IIdentity pluss = new Identity("+");
+		IIdentity minus = new Identity("-");
+		IIdentity en = new Identity("1");
+		IIdentity to = new Identity("2");
+		IIdentity tre = new Identity("3");
+		IIdentity left = new Identity("left");
+		IIdentity right = new Identity("right");
+		ModelTree m = new ModelTree(pluss);
+		m = m.addChild(pluss, left, tre);	//+ 3
+		m = m.addChild(pluss, right, minus); // + 3 -
+		m = m.addChild(minus, left, to);	// + 3 - 2 
+		m = m.addChild(minus, right, en); // + 3 - 2 1 
+		
+		for(IIdentity node: m.getAll())
+			assert !m.isDescendantOf(node, node) : "Nodes are not descendants of themselves : " + node;
+		
+		for(IIdentity node : m.getAll()){
+			if(!m.getRoot().equals(node))
+				assert m.isDescendantOf(m.getRoot(), node) : "All nodes except root is descendants of root: " + node;
+		}
+		
+	}
 }
