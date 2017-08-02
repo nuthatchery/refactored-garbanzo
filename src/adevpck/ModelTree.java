@@ -285,11 +285,12 @@ public class ModelTree implements IModel{
 	}
 
 	/**
-	 * a -st-> b -st-> c 
-	 * @param childType
-	 * @param subtypeOf
-	 * @param destType
-	 * @return
+	 * Searches the model for path of arbitrary length such that for nodes n0, .., ni, .., nk in N we have a path  
+	 * n0 -sto-> ... -sto-> ni ... -sto-> nk 
+	 * @param childType 
+	 * @param subtypeOf  
+	 * @param destType 
+	 * @return true if such a path exists, false otherwise 
 	 */
 	public boolean hasPath(IIdentity childType, IIdentity subtypeOf, IIdentity destType) {
 		// TODO Auto-generated method stub

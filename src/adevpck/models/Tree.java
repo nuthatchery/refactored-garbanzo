@@ -50,6 +50,14 @@ public class Tree {
 		return model;
 	}
 
+	/**
+	 * Adds a new node and a list of its children to a model according to its metamodel and constructor rules
+	 * @param m Model the node should be added to 
+	 * @param mm MetaModel of m
+	 * @param constructor of the new Node
+	 * @param children Node's children, should conform to constructor structure
+	 * @return the new node
+	 */
 	public static IIdentity makeNode(ModelTree m, ModelTree mm, IIdentity constructor, IIdentity... children) {
 		assert m.hasLink(m.getId(), MetaMeta.CONFORMS_TO, mm.getId());
 		// constructor must be known in metamodel

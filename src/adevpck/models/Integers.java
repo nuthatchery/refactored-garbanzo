@@ -10,7 +10,6 @@ import adevpck.IElementHandle;
 import adevpck.IIdentity;
 import adevpck.IModel;
 import adevpck.Identity;
-import adevpck.MutableModel;
 
 public class Integers implements IModel {
 	public static final IIdentity INT_MODEL_ID = new Identity("integer");
@@ -143,7 +142,7 @@ public class Integers implements IModel {
 	}
 
 	@Override
-	public MutableModel beginTransaction() {
+	public IModel beginTransaction() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -153,7 +152,7 @@ public class Integers implements IModel {
 	}
 
 	@Override
-	public void rollbackTransaction() {
+	public IModel rollbackTransaction() {
 		throw new UnsupportedOperationException();
 	}
 }
