@@ -117,7 +117,7 @@ public class TestModelTree {
 	}
 	
 	@Test
-	public void testDeepOneChildThree(){
+	public void testDeepOneChildTree(){
 		/* Number tree: 0 -edge-> 1 -edge-> 2 -edge-> 3 */
 		IIdentity zero = new Identity("0");
 		IIdentity one = new Identity("1");
@@ -246,6 +246,13 @@ public class TestModelTree {
 		m = m.addChild(minus, left, to);	// + 3 - 2 
 		m = m.addChild(minus, right, en); // + 3 - 2 1 
 		
+		assert m.containsNode(pluss);
+		assert m.containsNode(minus);
+		assert m.containsNode(en);
+		assert m.containsNode(to);
+		assert m.containsNode(tre);
+		
+		
 		for(IIdentity node: m.getAll())
 			assert !m.isDescendantOf(node, node) : "Nodes are not descendants of themselves : " + node;
 		
@@ -254,5 +261,56 @@ public class TestModelTree {
 				assert m.isDescendantOf(m.getRoot(), node) : "All nodes except root is descendants of root: " + node;
 		}
 		
+	}
+	
+	
+	
+	@Test
+	public void testHasPathArithmetic(){
+		/* build tree */
+		IIdentity pluss = new Identity("+");
+		IIdentity minus = new Identity("-");
+		IIdentity en = new Identity("1");
+		IIdentity to = new Identity("2");
+		IIdentity tre = new Identity("3");
+		IIdentity left = new Identity("left");
+		IIdentity right = new Identity("right");
+		ModelTree m = new ModelTree(pluss);
+		m = m.addChild(pluss, left, tre);	//+ 3
+		m = m.addChild(pluss, right, minus); // + 3 -
+		m = m.addChild(minus, left, to);	// + 3 - 2 
+		m = m.addChild(minus, right, en); // + 3 - 2 1 
+		
+		/* basic check on tree builing */ 
+		assert m.containsNode(pluss);
+		assert m.containsNode(minus);
+		assert m.containsNode(en);
+		assert m.containsNode(to);
+		assert m.containsNode(tre);
+		
+		/* testing hasPath of depth 1*/ 
+		assert m.hasPath(pluss, left, tre) : "Model should have path from " + pluss + " to " + tre + " via " + left;
+		assert !m.hasPath(tre, left, pluss) : "Model should not have path from " + tre + " to " + pluss + " via " + left;
+		
+	}
+	
+	@Test
+	public void testHasPathDeepOneChildTree(){
+		/* Number tree: 0 -edge-> 1 -edge-> 2 -edge-> 3 */
+		IIdentity zero = new Identity("0");
+		IIdentity one = new Identity("1");
+		IIdentity two = new Identity("2");
+		IIdentity three = new Identity("3");
+		IIdentity succ = new Identity("succ");
+		
+		ModelTree numbers = new ModelTree(zero);
+		numbers = numbers.addChild(zero, succ,  one);
+		numbers = numbers.addChild(one, succ, two);
+		numbers = numbers.addChild(two, succ, three);
+		
+		assert numbers.hasPath(zero, succ, three) : "should have deep path";
+		assert !numbers.hasPath(zero, succ, zero) : "should not have path to self";
+		assert !numbers.hasPath(three, succ, zero) : "should not have reverse path";
+		assert !numbers.hasPath(zero, new Identity("edge"), three) : "should not have wrongly labeled path";
 	}
 }
