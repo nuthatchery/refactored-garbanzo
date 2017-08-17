@@ -308,7 +308,9 @@ public class TestModelTree {
 		numbers = numbers.addChild(one, succ, two);
 		numbers = numbers.addChild(two, succ, three);
 		
-		assert numbers.hasPath(zero, succ, three) : "should have deep path";
+		assert numbers.hasPath(zero, succ, one) : "should have succ path";
+		assert numbers.hasPath(zero, succ, two) : "should have deep succ path";
+		assert numbers.hasPath(zero, succ, three) : "should have deep succ path";
 		assert !numbers.hasPath(zero, succ, zero) : "should not have path to self";
 		assert !numbers.hasPath(three, succ, zero) : "should not have reverse path";
 		assert !numbers.hasPath(zero, new Identity("edge"), three) : "should not have wrongly labeled path";
