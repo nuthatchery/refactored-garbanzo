@@ -44,6 +44,11 @@ public interface IModel {
 	
 	IIdentity makeIdentity(String name);
 	
+	/**
+	 * Creates a new nodes belonging to the model with a link "CONFORMS_TO" schema
+	 * @param schema
+	 * @return
+	 */
 	IIdentity makeElement(IIdentity schema);
 	
 	IIdentity makeElement(IIdentity schema, IIdentity parent);

@@ -291,20 +291,29 @@ public class ModelTree implements IModel{
 				}
 				return true;
 			}
+			
+			private boolean allNsInChildren(){
+				for(IIdentity n : N){
+					if(!children.containsKey(n))
+						return false;
+				}
+				return true;
+			}
 		}
 		ModelProperties p = new ModelProperties();
 		/* could use N more, but considering not keeping N at all*/
 		return 	p.rootIsParent() && 
 				p.linkFunctionCoversAllParents() && 
-				p.childrenClosedUnderN(); 
+				p.childrenClosedUnderN() &&
+				p.allNsInChildren(); 
 
 	}
 
-	public boolean hasLink(IIdentity parent, IIdentity conformsTo, IIdentity node) {
-		TreeSet<Tuple> parentlinks = links.get(parent);
+	public boolean hasLink(IIdentity fromNode, IIdentity label, IIdentity toNode) {
+		TreeSet<Tuple> parentlinks = links.get(fromNode);
 		if(parentlinks==null || parentlinks.isEmpty())
 			return false;
-		return parentlinks.contains(new Tuple(conformsTo, node));
+		return parentlinks.contains(new Tuple(label, toNode));
 	}
 
 	public IIdentity getLink(IIdentity constructor, IIdentity type) {
@@ -313,15 +322,27 @@ public class ModelTree implements IModel{
 	}
 
 	/**
-	 * Searches the model for path of arbitrary length such that for nodes n0, .., ni, .., nk in N we have a path  
-	 * n0 -sto-> ... -sto-> ni ... -sto-> nk 
-	 * @param childType 
-	 * @param subtypeOf  
-	 * @param destType 
+	 * Searches the model for path of arbitrary length such that for nodes n0=from, .., ni, .., nk=to in N we have a path  
+	 * from -label-> ... -label-> ni ... -label-> to 
+	 * 
+	 * There must exist a node from and a node to and a path inbetween such that each edge in the path is equal to label
+	 *  
+	 * @param from a node in this model
+	 * @param label  
+	 * @param to a node in this model
 	 * @return true if such a path exists, false otherwise 
 	 */
-	public boolean hasPath(IIdentity childType, IIdentity subtypeOf, IIdentity destType) {
-		// TODO Auto-generated method stub
+	public boolean hasPath(IIdentity from, IIdentity label, IIdentity to) {
+		assert containsNode(from) : "From parameter must be a node in this model" + from ;
+		assert containsNode(to) : "To parameter must be a node in this model" + to ;
+		for(Tuple child : children.get(from)){
+			if(child.getArrow().equals(label)){
+				if(child.getTarget().equals(to))
+					return true;
+				else if(hasPath(child.getTarget(), label, to))
+					return true;
+			}
+		}
 		return false;
 	}
 
@@ -428,6 +449,10 @@ public class ModelTree implements IModel{
 		}
 	}
 
+	/**
+	 * Copies all attributes from m to this 
+	 * @param m the model to copy from, another version of this 
+	 */
 	private void copyAllFrom(ModelTree m) {
 		children = m.children;
 		links = m.links;
