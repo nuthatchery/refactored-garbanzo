@@ -35,6 +35,11 @@ public class ModelTree implements IModel{
 	 */
 	private final IIdentity id;
 
+	public ModelTree(){
+		id = new Identity(this);
+		datainvariant();
+	}
+
 	public ModelTree(IIdentity root){
 		id = new Identity(this);
 		this.root = root;
@@ -66,13 +71,18 @@ public class ModelTree implements IModel{
 	}
 
 	private void addNewNodeToModel(IIdentity node) {
-		assert ! N.contains(node);
-		assert children.get(node) == null;
-		assert links.get(node) == null;
-		N.add(node);
-		children.put(node, new TreeSet<>());
-		links.put(node, new TreeSet<>());
-		datainvariant();
+		if(!N.contains(node) 
+				&& children.get(node) == null 
+				&& links.get(node) == null){
+			N.add(node);
+			children.put(node, new TreeSet<>());
+			links.put(node, new TreeSet<>());
+		}
+	}
+
+	private void addNewEdgeToModel(IIdentity edge) {
+		if(!links.containsKey(edge))
+			links.put(edge, new TreeSet<Tuple>());
 	}
 
 	private void cloneEdgesOf(ModelTree m) {
@@ -105,19 +115,21 @@ public class ModelTree implements IModel{
 
 		if(mutable){
 			children.get(parent).add(new Tuple(edge, child));
+			addNewEdgeToModel(edge);
 			if(!containsNode(child))
 				addNewNodeToModel(child);
-			datainvariant();
+			assert datainvariant();
 			return this;
 		}
 		else{
 			ModelTree m = new ModelTree(this);
 			m.children.get(parent).add(new Tuple(edge, child));
+			m.addNewEdgeToModel(edge);
 			if(!m.containsNode(child))
 				m.addNewNodeToModel(child);
 
-			datainvariant(); //TODO not really needed
-			m.datainvariant();
+			assert datainvariant(); //TODO not really needed
+			assert m.datainvariant();
 			return m;
 		}
 	}
@@ -187,14 +199,14 @@ public class ModelTree implements IModel{
 						iter.remove();
 				}
 			}
-			
+
 			// for all children c of n, delete subtree starting on c, then delete edge n->c  
 			for(Iterator<Tuple> iter = children.get(node).iterator(); iter.hasNext();){
 				Tuple edge = iter.next();
 				iter.remove();
 				deleteSubtree(edge.getTarget());
 			}
-			
+
 			links.remove(node);
 			children.remove(node);
 			N.remove(node);
@@ -266,6 +278,10 @@ public class ModelTree implements IModel{
 				return children.containsKey(root);
 			}
 
+			private boolean rootIsNode(){
+				return N.contains(root);
+			}
+
 			/**
 			 * All nodes must have a (possibly empty) link set
 			 * @return
@@ -283,15 +299,15 @@ public class ModelTree implements IModel{
 			 * @return
 			 */
 			private boolean childrenClosedUnderN() {
-				for(IIdentity key : children.keySet()){
-					for(Tuple t : children.get(key)){
-						if(!children.containsKey(t.getTarget()))
+				for(IIdentity key : children.keySet()){ //per node
+					for(Tuple t : children.get(key)){	//per edge 
+						if(!children.containsKey(t.getTarget())) //target of edge should be in children
 							return false;
 					}
 				}
 				return true;
 			}
-			
+
 			private boolean allNsInChildren(){
 				for(IIdentity n : N){
 					if(!children.containsKey(n))
@@ -299,13 +315,20 @@ public class ModelTree implements IModel{
 				}
 				return true;
 			}
+
+			public boolean isEmpty() {
+				return root == null && N.isEmpty() && children.isEmpty() && links.isEmpty();
+			}
 		}
 		ModelProperties p = new ModelProperties();
-		/* could use N more, but considering not keeping N at all*/
-		return 	p.rootIsParent() && 
-				p.linkFunctionCoversAllParents() && 
-				p.childrenClosedUnderN() &&
-				p.allNsInChildren(); 
+		if(root == null )
+			return p.isEmpty();
+		else 
+			return 	p.rootIsNode() && 
+					p.rootIsParent() && 
+					p.linkFunctionCoversAllParents() && 
+					p.childrenClosedUnderN() &&
+					p.allNsInChildren(); 
 
 	}
 
@@ -429,9 +452,10 @@ public class ModelTree implements IModel{
 	}
 
 	@Override
-	public void commitTransaction() {
+	public ModelTree commitTransaction() {
 		mutable = false;
 		datainvariant();
+		return this;
 	}
 
 	@Override
@@ -508,6 +532,32 @@ public class ModelTree implements IModel{
 		} else if (!links.equals(other.links))
 			return false;
 		return true;
+	}
+
+	public ModelTree makeRoot(IIdentity root) {
+		assert this.root==null;
+		assert N.isEmpty();
+		assert children.isEmpty();
+		assert links.isEmpty();
+		if(mutable){
+			this.root = root;
+			addNewNodeToModel(root);
+			assert datainvariant();
+			return this;
+		}
+		else 
+			return new ModelTree(root);
+	}
+
+	/**
+	 * Adds child to root without needing root ref 
+	 * Used in particular for oneliners or "anonymous" models 
+	 * @param edge edge id 
+	 * @param arg child id
+	 * @return
+	 */
+	public ModelTree addChildToRoot(IIdentity edge, IIdentity arg) {
+		return addChild(root, edge, arg);
 	}
 
 }

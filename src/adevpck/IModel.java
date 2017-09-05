@@ -63,8 +63,9 @@ public interface IModel {
 	
 	/**
 	 * ends the transaction of this, making it immutable 
+	 * @return 
 	 */
-	void commitTransaction();
+	IModel commitTransaction();
 	
 	/**
 	 * @return the previous version of this model

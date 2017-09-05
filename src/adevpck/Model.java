@@ -146,9 +146,9 @@ public class Model implements IModel{
 	}
 
 	@Override
-	public void commitTransaction() {
+	public IModel commitTransaction() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override

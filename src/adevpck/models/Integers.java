@@ -147,7 +147,7 @@ public class Integers implements IModel {
 	}
 
 	@Override
-	public void commitTransaction() {
+	public IModel commitTransaction() {
 		throw new UnsupportedOperationException();
 	}
 
