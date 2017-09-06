@@ -128,6 +128,15 @@ public class Register {
 		else 
 			return null;
 	}
+
+	public static void addModelVersion(IIdentity id, IModel model) {
+		//TODO 
+	}
+
+	public static int addModelVersion(RelationalModel relationalModel) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 
