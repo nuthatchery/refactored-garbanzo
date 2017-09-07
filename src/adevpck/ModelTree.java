@@ -70,6 +70,11 @@ public class ModelTree implements IModel{
 		datainvariant();
 	}
 
+	public ModelTree(boolean mutable) {
+		this();
+		this.mutable = mutable;
+	}
+
 	private void addNewNodeToModel(IIdentity node) {
 		if(!N.contains(node) 
 				&& children.get(node) == null 
