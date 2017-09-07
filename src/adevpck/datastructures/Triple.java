@@ -25,7 +25,19 @@ public class Triple {
 		return second;
 	}
 	
+	public IIdentity middle(){
+		return second;
+	}
+	
+	public IIdentity arrow(){
+		return second;
+	}
+	
 	public IIdentity third(){
+		return third;
+	}
+	
+	public IIdentity last(){
 		return third;
 	}
 	
