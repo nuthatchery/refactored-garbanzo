@@ -15,6 +15,7 @@ public class Integers implements IModel {
 	public static final IIdentity INT_MODEL_ID = new Identity("integer");
 	private static final Integers intModel = new Integers();
 	private static final List<IIdentity> prevNext = Arrays.asList(new Identity("prev"), new Identity("next"));
+	private static final IIdentity root = new Identity("0");
 
 	private Integers() {
 	}
@@ -52,6 +53,14 @@ public class Integers implements IModel {
 		return new BigInteger(id.getName());
 	}
 
+	public static IIdentity getRoot(){
+		return root;
+	}
+	
+	public static IIdentity succ(IIdentity node){
+		return followLink(node, prevNext.get(1));
+	}
+	
 	public IIdentity getIdentity() {
 		return INT_MODEL_ID;
 	}
@@ -85,7 +94,7 @@ public class Integers implements IModel {
 		return type == Integer.class || type == Long.class || type == BigInteger.class;
 	}
 	
-	public IIdentity followLink(IIdentity node, IIdentity link) {
+	public static IIdentity followLink(IIdentity node, IIdentity link) {
 		if(link.equals(prevNext.get(0))) {
 			return identityOf(bigValueOf(node).subtract(BigInteger.ONE));
 		}

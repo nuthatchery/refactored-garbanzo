@@ -38,6 +38,11 @@ public class RelationalModel implements IModel{
 		this.mutable = mutable;
 	}
 
+	public RelationalModel(boolean mutable) {
+		this();
+		this.mutable = mutable;
+	}
+
 	private void cloneRelationsOf(RelationalModel m) {
 		relations.clear();
 		m.relations.forEach(triple -> relations.add(triple));
@@ -48,8 +53,19 @@ public class RelationalModel implements IModel{
 	 * 
 	 * @param node
 	 */
-	private void addNode(IIdentity node) {
+	public void addNode(IIdentity node) {
 		N.add(node);
+	}
+	
+	/**
+	 * TODO allow duplicates? currently doesn't.
+	 * 
+	 * @param node
+	 */
+	public void addNodes(IIdentity... nodes) {
+		for(IIdentity node : nodes){
+			N.add(node);
+		}
 	}
 
 	private void cloneNodesOf(RelationalModel m) {
