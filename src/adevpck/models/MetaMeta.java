@@ -4,9 +4,10 @@ import adevpck.IIdentity;
 import adevpck.IModel;
 import adevpck.Identity;
 import adevpck.ModelTree;
+import adevpck.RelationalModel;
 
 public class MetaMeta {
-	public static ModelTree model;
+	public static RelationalModel model = new RelationalModel(true);
 	
 	// basic metametamodelling
 	/**
@@ -32,11 +33,11 @@ public class MetaMeta {
 	
 
 	static {
-		model.addLink(CONFORMS_TO, CONFORMS_TO, RELATION);
-		model.addLink(RELATION, CONFORMS_TO, RELATION);
-		model.addLink(ELEMENT_OF, CONFORMS_TO, RELATION);
-		model.addLink(LINK, IS, FUNCTION);
-		model.addLink(MULTILINK, IS, RELATION);
+		model.addEdge(CONFORMS_TO, CONFORMS_TO, RELATION);
+		model.addEdge(RELATION, CONFORMS_TO, RELATION);
+		model.addEdge(ELEMENT_OF, CONFORMS_TO, RELATION);
+		model.addEdge(LINK, IS, FUNCTION);
+		model.addEdge(MULTILINK, IS, RELATION);
 	}
 	// from megamodelling
 	public static final IIdentity IS_REPRESENTATION_OF = id("representationOf");
@@ -49,15 +50,15 @@ public class MetaMeta {
 	public static final IIdentity ARITY = id("arity");
 
 	static {
-		model.addLink(NODE, REQUIRE_ONE, ARITY);
-		model.addLink(NODE, ZERO_OR_MORE, BRANCH);
-		model.addLink(BRANCH, IS, FUNCTION);
-		model.addLink(BRANCH, SRC_CONFORMS_TO, NODE);
-		model.addLink(BRANCH, DEST_CONFORMS_TO, NODE);
+		model.addEdge(NODE, REQUIRE_ONE, ARITY);
+		model.addEdge(NODE, ZERO_OR_MORE, BRANCH);
+		model.addEdge(BRANCH, IS, FUNCTION);
+		model.addEdge(BRANCH, SRC_CONFORMS_TO, NODE);
+		model.addEdge(BRANCH, DEST_CONFORMS_TO, NODE);
 		/*Number of branches should be equal to arity*/
-		model.addLink(ARITY, IS, FUNCTION);
-		model.addLink(ARITY, SRC_CONFORMS_TO, NODE);
-		model.addLink(ARITY, DEST_CONFORMS_TO, Integers.INT_MODEL_ID); // TODO
+		model.addEdge(ARITY, IS, FUNCTION);
+		model.addEdge(ARITY, SRC_CONFORMS_TO, NODE);
+		model.addEdge(ARITY, DEST_CONFORMS_TO, Integers.INT_MODEL_ID); // TODO
 		
 	}
 
@@ -67,14 +68,14 @@ public class MetaMeta {
 
 	static {
 		// a typed node 
-		model.addLink(BRANCH, ZERO_OR_ONE, DEST_TYPE);
-		model.addLink(DEST_TYPE, IS, FUNCTION);
-		model.addLink(DEST_TYPE, DEST_CONFORMS_TO, TYPE);
+		model.addEdge(BRANCH, ZERO_OR_ONE, DEST_TYPE);
+		model.addEdge(DEST_TYPE, IS, FUNCTION);
+		model.addEdge(DEST_TYPE, DEST_CONFORMS_TO, TYPE);
 		
 		// subtypeOf is a relation between two types
-		model.addLink(SUBTYPE_OF, IS, RELATION);
-		model.addLink(SUBTYPE_OF, SRC_CONFORMS_TO, TYPE);
-		model.addLink(SUBTYPE_OF, DEST_CONFORMS_TO, TYPE);
+		model.addEdge(SUBTYPE_OF, IS, RELATION);
+		model.addEdge(SUBTYPE_OF, SRC_CONFORMS_TO, TYPE);
+		model.addEdge(SUBTYPE_OF, DEST_CONFORMS_TO, TYPE);
 	}
 	
 	
