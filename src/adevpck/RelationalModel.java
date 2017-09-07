@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
+import adevpck.datastructures.Triple;
+import adevpck.datastructures.Tuple;
+
 
 public class RelationalModel implements IModel{	
 	private boolean mutable = false; 

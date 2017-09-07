@@ -61,7 +61,7 @@ public class Integers implements IModel {
 		return followLink(node, prevNext.get(1));
 	}
 	
-	public IIdentity getIdentity() {
+	public static IIdentity getIdentity() {
 		return INT_MODEL_ID;
 	}
 	@Override
@@ -164,4 +164,5 @@ public class Integers implements IModel {
 	public IModel rollbackTransaction() {
 		throw new UnsupportedOperationException();
 	}
+
 }

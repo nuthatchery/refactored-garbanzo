@@ -7,7 +7,8 @@ import adevpck.ModelTree;
 import adevpck.RelationalModel;
 
 public class MetaMeta {
-	public static RelationalModel model = new RelationalModel(true);
+	private static final RelationalModel model = new RelationalModel(true);
+	private static final IIdentity modelid = new Identity("MetaMeta");
 	
 	// basic metametamodelling
 	/**
@@ -81,6 +82,11 @@ public class MetaMeta {
 	
 	private static IIdentity id(String string) {
 		return new Identity("MetaMeta::" + string);
+	}
+
+
+	public static IIdentity getIdentity() {
+		return modelid;
 	}
 	
 }

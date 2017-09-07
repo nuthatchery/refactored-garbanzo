@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
+import adevpck.datastructures.Tuple;
+
 
 public class ModelTree implements IModel{	
 	private boolean mutable = false; 

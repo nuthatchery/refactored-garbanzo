@@ -1,4 +1,6 @@
-package adevpck;
+package adevpck.datastructures;
+
+import adevpck.IIdentity;
 
 /**
  * Immutable tuple class 
