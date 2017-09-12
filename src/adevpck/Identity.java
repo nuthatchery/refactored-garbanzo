@@ -96,6 +96,10 @@ public class Identity implements IIdentity{
 		return this.id.compareTo(other.getId());
 	}
 	
+	private boolean datainvariant(){
+		return id != null;
+	}
+	
 	public static boolean bothNullOrEquals(IIdentity a, IIdentity b) {
 		if(a == null && b == null)return true;
 		if(a != null) return a.equals(b);

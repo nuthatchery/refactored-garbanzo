@@ -138,6 +138,16 @@ public class RelationalModel implements ITransactableModel{
 		// bindex.entrySet().stream().allMatch(predicate)
 
 		class ModelProperties{
+			private boolean noNullEdges(){
+				for(Triple t : relations){
+					if(t.first() == null
+							|| t.second() == null
+							|| t.third() == null)
+						return false;
+				}
+				return true;
+			}
+			
 			private boolean allFromNodesBelongToModel(){
 				for(Triple t : relations)
 					if(!N.contains(t.first()))
@@ -146,7 +156,8 @@ public class RelationalModel implements ITransactableModel{
 			}
 		}
 		ModelProperties p = new ModelProperties();
-		return p.allFromNodesBelongToModel();
+		return p.noNullEdges()
+				&& p.allFromNodesBelongToModel();
 
 	}
 
@@ -257,17 +268,17 @@ public class RelationalModel implements ITransactableModel{
 	public IIdentity addNode() {
 		IIdentity newnode = new Identity(this);
 		N.add(newnode);
-		datainvariant();
+		assert datainvariant();
 		return newnode;
 	}
 
 	@Override
 	public IIdentity addNode(String name) {
 		assert mutable : "Can only add node to mutable model";
-	IIdentity newnode = new Identity(this, name);
-	N.add(newnode);
-	datainvariant();
-	return newnode;
+		IIdentity newnode = new Identity(this, name);
+		N.add(newnode);
+		assert datainvariant();
+		return newnode;
 	}
 
 	@Override
@@ -317,7 +328,7 @@ public class RelationalModel implements ITransactableModel{
 		assert containsNode(from) : "from node is not present in model " + from;
 		if(mutable){
 			relations.remove(new Triple(from, label, to));
-			datainvariant();
+			assert datainvariant();
 			return this;
 		}
 		else{
