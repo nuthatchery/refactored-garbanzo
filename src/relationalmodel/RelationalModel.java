@@ -1,15 +1,18 @@
-package adevpck;
+package relationalmodel;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
+import adevpck.IIdentity;
+import adevpck.Identity;
+import adevpck.Register;
 import adevpck.datastructures.Triple;
 import adevpck.datastructures.Tuple;
 
 
-public class RelationalModel implements IModel{	
+public class RelationalModel implements ITransactableModel{	
 	private boolean mutable = false; 
 	private int previousVersion = -1; 
 
@@ -31,6 +34,7 @@ public class RelationalModel implements IModel{
 	 */
 	public RelationalModel(RelationalModel m){
 		id = m.id;
+		mutable = m.mutable;
 		cloneNodesOf(m);
 		cloneRelationsOf(m);
 		datainvariant();
@@ -58,8 +62,9 @@ public class RelationalModel implements IModel{
 	 */
 	public void addNode(IIdentity node) {
 		N.add(node);
+		datainvariant();
 	}
-	
+
 	/**
 	 * TODO allow duplicates? currently doesn't.
 	 * 
@@ -145,11 +150,6 @@ public class RelationalModel implements IModel{
 
 	}
 
-	public IIdentity getLink(IIdentity constructor, IIdentity type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	/**
 	 * Searches the model for path of arbitrary length such that for nodes n0=from, .., ni, .., nk=to in N we have a path  
 	 * from -label-> ... -label-> ni ... -label-> to 
@@ -179,7 +179,7 @@ public class RelationalModel implements IModel{
 	 * @param from
 	 * @return
 	 */
-	private List<Tuple> getEdges(IIdentity from) {
+	public List<Tuple> getEdges(IIdentity from) {
 		assert N.contains(from) : "From node must be a node in the graph: " + from;
 		List<Tuple> edges = new ArrayList<>();
 		relations.forEach(triple -> {if(triple.first().equals(from)){edges.add(new Tuple(triple.second(), triple.third()));};});
@@ -187,34 +187,27 @@ public class RelationalModel implements IModel{
 	}
 
 
-	@Override
-	public RelationalModel beginTransaction() {
-		RelationalModel mutableTree = new RelationalModel(this, true);
-		mutableTree.mutable = true;
-		mutableTree.previousVersion = Register.addModelVersion(this);
-		return mutableTree;
-	}
-
-	@Override
-	public RelationalModel commitTransaction() {
-		mutable = false;
-		datainvariant();
-		return this;
-	}
-
-	@Override
-	public RelationalModel rollbackTransaction() {
-		if(previousVersion == -1 )
-			return this;
-		assert Register.getVersion(id, previousVersion)!=null : "Previous version missing from register";
-
-		//TODO
-		return null;
-	}
+	//
+	//	@Override
+	//	public RelationalModel commitTransaction() {
+	//		mutable = false;
+	//		datainvariant();
+	//		return this;
+	//	}
+	//
+	//	@Override
+	//	public RelationalModel rollbackTransaction() {
+	//		if(previousVersion == -1 )
+	//			return this;
+	//		assert Register.getVersion(id, previousVersion)!=null : "Previous version missing from register";
+	//
+	//		//TODO
+	//		return null;
+	//	}
 
 	@Override
 	public String toString() {
-		return "ModelTree\n[relations=" + relations + ",\nN=" + N + ",\nid=" + id + "]";
+		return "RelationalModel\n[relations=" + relations + ",\nN=" + N + ",\nid=" + id + "]";
 	}
 
 	@Override
@@ -254,83 +247,101 @@ public class RelationalModel implements IModel{
 		return true;
 	}
 
-	
-	// Stupid methods: 
-	
-	@Override
-	public IElementHandle get(IIdentity element) {
-		// TODO Auto-generated method stub
-		return null;
+	public IIdentity newNode() {
+		IIdentity node = new Identity(this);
+		N.add(node);
+		return node;
 	}
 
 	@Override
-	public Iterable<IIdentity> getChildren(IIdentity node) {
-		// TODO Auto-generated method stub
-		return null;
+	public IIdentity addNode() {
+		IIdentity newnode = new Identity(this);
+		N.add(newnode);
+		datainvariant();
+		return newnode;
 	}
 
 	@Override
-	public int getNumChildren(IIdentity node) {
-		// TODO Auto-generated method stub
-		return 0;
+	public IIdentity addNode(String name) {
+		assert mutable : "Can only add node to mutable model";
+	IIdentity newnode = new Identity(this, name);
+	N.add(newnode);
+	datainvariant();
+	return newnode;
 	}
 
 	@Override
-	public Iterable<IIdentity> getLinks(IIdentity node) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<IIdentity> getNodes() {
+		return new ArrayList<>(N);
 	}
 
 	@Override
-	public boolean isDescendantOf(IIdentity parentNode, IIdentity descendantNode) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean hasNode(IIdentity node) {
+		return N.contains(node);
 	}
 
 	@Override
-	public boolean hasData(IIdentity node, Class<?> type) {
-		// TODO Auto-generated method stub
-		return false;
+	public IModel removeNode(IIdentity node) {
+		assert containsNode(node) : "Node is not present in model " + node;
+		if(mutable){
+			N.remove(node);
+			removeEdgesFrom(node);
+			datainvariant();
+			return this;
+		}
+		else{
+			RelationalModel m = new RelationalModel(this, true);
+			m.removeNode(node);
+			m.mutable = false;
+			return m;
+		}
+	}
+
+	/**
+	 * Removes all edges of this model starting at the argument node
+	 * NB: will change this even if immutable 
+	 * @param node a node in this model 
+	 */
+	private void removeEdgesFrom(IIdentity node) {
+		assert containsNode(node) : "Node is not present in model " + node;
+		relations.removeIf(triple -> triple.first().equals(node));
 	}
 
 	@Override
-	public <T> T getData(IIdentity node, Class<T> type) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Triple> getEdges() {
+		return new ArrayList<>(relations);
 	}
 
 	@Override
-	public <T> void setData(IIdentity node, T data) {
-		// TODO Auto-generated method stub
-		
+	public IModel removeEdge(IIdentity from, IIdentity label, IIdentity to) {
+		assert containsNode(from) : "from node is not present in model " + from;
+		if(mutable){
+			relations.remove(new Triple(from, label, to));
+			datainvariant();
+			return this;
+		}
+		else{
+			RelationalModel m = new RelationalModel(this, true);
+			m.removeEdge(from, label, to);
+			m.mutable = true;
+			return m;
+		}
+	}
+
+	public RelationalModel beginTransaction() {
+		RelationalModel mutableTree = new MutableModel(this);
+		mutableTree.mutable = true;
+		mutableTree.previousVersion = Register.addModelVersion(this);
+		return mutableTree;
 	}
 
 	@Override
-	public IIdentity makeIdentity() {
-		// TODO Auto-generated method stub
-		return null;
+	public IModel commitTransaction() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public IIdentity makeIdentity(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IIdentity makeElement(IIdentity schema) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IIdentity makeElement(IIdentity schema, IIdentity parent) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IIdentity makeElement(IIdentity schema, IIdentity parent, IIdentity label) {
+	public IModel rollbackTransaction() {
 		// TODO Auto-generated method stub
 		return null;
 	}
