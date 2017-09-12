@@ -60,17 +60,8 @@ public class RelationalModel implements ITransactableModel{
 	 * 
 	 * @param node
 	 */
-	public void addNode(IIdentity node) {
-		N.add(node);
-		datainvariant();
-	}
-
-	/**
-	 * TODO allow duplicates? currently doesn't.
-	 * 
-	 * @param node
-	 */
 	public void addNodes(IIdentity... nodes) {
+		assert mutable : "Can only add nodes to mutable model";
 		for(IIdentity node : nodes){
 			N.add(node);
 		}
@@ -101,13 +92,6 @@ public class RelationalModel implements ITransactableModel{
 			assert m.datainvariant();
 			return m;
 		}
-	}
-
-	/**
-	 * @return all nodes in this model
-	 */
-	public Set<IIdentity> getAll(){
-		return N;
 	}
 
 	public IIdentity getId() {
@@ -196,26 +180,7 @@ public class RelationalModel implements ITransactableModel{
 		relations.forEach(triple -> {if(triple.first().equals(from)){edges.add(new Tuple(triple.second(), triple.third()));};});
 		return edges;
 	}
-
-
-	//
-	//	@Override
-	//	public RelationalModel commitTransaction() {
-	//		mutable = false;
-	//		datainvariant();
-	//		return this;
-	//	}
-	//
-	//	@Override
-	//	public RelationalModel rollbackTransaction() {
-	//		if(previousVersion == -1 )
-	//			return this;
-	//		assert Register.getVersion(id, previousVersion)!=null : "Previous version missing from register";
-	//
-	//		//TODO
-	//		return null;
-	//	}
-
+	
 	@Override
 	public String toString() {
 		return "RelationalModel\n[relations=" + relations + ",\nN=" + N + ",\nid=" + id + "]";
@@ -353,7 +318,6 @@ public class RelationalModel implements ITransactableModel{
 
 	@Override
 	public IModel rollbackTransaction() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 }
