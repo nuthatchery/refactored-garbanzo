@@ -1,6 +1,7 @@
 package adevpck.datastructures;
 
 import adevpck.IIdentity;
+import adevpck.Identity;
 
 /**
  * Immutable tuple class 
@@ -11,20 +12,20 @@ public class Tuple implements Comparable<Tuple>{
 
 	private final IIdentity arrow;
 	private final IIdentity target;
-	
+
 	public Tuple(IIdentity arrow, IIdentity target){
 		this.arrow = arrow;
 		this.target = target;
 	}
-	
+
 	public IIdentity getArrow(){
 		return arrow;
 	}
-	
+
 	public IIdentity getTarget(){
 		return target;
 	}
-	
+
 	/**
 	 * Does not change {@link this}
 	 * @param target the new target 
@@ -33,7 +34,7 @@ public class Tuple implements Comparable<Tuple>{
 	public Tuple setTarget(IIdentity target){
 		return new Tuple(arrow, target);
 	}
-	
+
 	/**
 	 * Does not change {@link this}
 	 * @param arrow the new arrow 
@@ -42,16 +43,19 @@ public class Tuple implements Comparable<Tuple>{
 	public Tuple setArrow(IIdentity arrow){
 		return new Tuple(arrow, target);
 	}
-	
+
 	@Override
 	public boolean equals(Object o){
 		if(o==null)return false;
 		if(o==this)return true;
-		if(! (o instanceof Tuple)) return false;
-		Tuple t = (Tuple) o;
-		return t.arrow.equals(arrow) && t.target.equals(target);
+		if(o instanceof Tuple){
+		Tuple other = (Tuple) o;
+		return Identity.bothNullOrEquals(target, other.target)
+				&& Identity.bothNullOrEquals(arrow, other.arrow);
+		}
+		return false;
 	}
-	
+
 	@Override
 	public String toString(){
 		return "(" + arrow + ", " + target + ")";
