@@ -1,6 +1,7 @@
 package adevpck;
 
 import java.util.UUID;
+import relationalmodel.IModel;
 
 /**
  * Immutable Identity class 
@@ -25,7 +26,7 @@ public class Identity implements IIdentity{
 	private final IIdentity modelId; //TODO make final 
 	
 	public Identity(IModel model){
-		this.modelId = this;
+		this.modelId = model.getId();
 		path = "";
 	}
 	
@@ -34,8 +35,8 @@ public class Identity implements IIdentity{
 		path = "";
 	}
 	
-	public Identity(IIdentity modelId, String name){
-		this.modelId = modelId;
+	public Identity(IModel model, String name){
+		this.modelId = model.getId();
 		this.name = name;
 		this.path = "";
 	}
@@ -93,5 +94,11 @@ public class Identity implements IIdentity{
 	@Override 
 	public int compareTo(IIdentity other){
 		return this.id.compareTo(other.getId());
+	}
+	
+	public static boolean bothNullOrEquals(IIdentity a, IIdentity b) {
+		if(a == null && b == null)return true;
+		if(a != null) return a.equals(b);
+		return false;
 	}
 }
