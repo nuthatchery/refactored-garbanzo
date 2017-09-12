@@ -2,6 +2,9 @@ package adevpck;
 
 import java.util.HashMap;
 
+import relationalmodel.RelationalModel;
+import relationalmodel.IModel;
+
 public class Register {
 
 	/**
@@ -9,13 +12,13 @@ public class Register {
 	 */
 	private static HashMap<IIdentity, VersionMap> reg = new HashMap<>();
 
-	public static int addModelVersion(ModelTree modelTree){
+	public static int addModelVersion(IModel modelTree){
 		int version = addModelVersion(modelTree.getId(), modelTree);
 		datainvariant();
 		return version;
 	}
 
-	public static int addModelVersion(IIdentity modelid, ModelTree modelTree) {
+	public static int addModelVersion(IIdentity modelid, IModel modelTree) {
 		int version;
 		if(reg.containsKey(modelid) && reg.get(modelid)!=null){
 			version = reg.get(modelid).put(modelTree);
@@ -33,7 +36,7 @@ public class Register {
 	 * @param m
 	 * @return the non-negative versionnr if the model is found, -1 otherwise 
 	 */
-	public static int getVersionNrOf(IIdentity modelId, ModelTree m){
+	public static int getVersionNrOf(IIdentity modelId, IModel m){
 		if(!reg.containsKey(modelId))
 			return -1;
 		
@@ -129,15 +132,5 @@ public class Register {
 			return null;
 	}
 
-	public static void addModelVersion(IIdentity id, IModel model) {
-		//TODO 
-	}
-
-	public static int addModelVersion(RelationalModel relationalModel) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	
 
 }

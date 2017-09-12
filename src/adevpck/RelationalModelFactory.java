@@ -2,6 +2,8 @@ package adevpck;
 
 import java.io.File;
 
+import relationalmodel.RelationalModel;
+
 public class RelationalModelFactory {
 
 	

@@ -4,7 +4,7 @@ import adevpck.IIdentity;
 import adevpck.IModel;
 import adevpck.Identity;
 import adevpck.ModelTree;
-import adevpck.RelationalModel;
+import relationalmodel.RelationalModel;
 
 public class MetaMeta {
 	private static final RelationalModel model = new RelationalModel(true);

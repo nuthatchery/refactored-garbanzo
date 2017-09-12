@@ -1,15 +1,15 @@
 package adevpck.models;
 
-import adevpck.RelationalModel;
+import relationalmodel.MutableModel;
+import relationalmodel.RelationalModel;
 
 public class Models {
 	public static final RelationalModel model;
 	
 	static{
-		model = new RelationalModel(true);
-		model.addNodes(Integers.getIdentity(), MetaMeta.getIdentity(), Ordering.getIdentity(), Numbers.getIdentity());
+		model = new MutableModel();
+		model.addNodes(Integers.getIdentity(), MetaMeta.getIdentity(), Ordering.getIdentity(), Ordinals.getIdentity());
 		
-		model.addEdge(Ordering.getIdentity(), MetaMeta.IS_REPRESENTATION_OF, to)
 	}
 
 }
