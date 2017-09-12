@@ -33,43 +33,32 @@ public class Operation implements IModel{
 		return 0;
 	}
 
-
 	public boolean hasPath(IIdentity startNode, IIdentity endNode) {
 		if(constraint.first() == startNode && constraint.third() == endNode)
 			return true;
 		return false;
 	}
 
-
-
 	@Override
 	public IIdentity addNode() {
 		return new Identity(this);
 	}
-
-
 
 	@Override
 	public IIdentity addNode(String name) {
 		return new Identity(this, name);
 	}
 
-
-
 	@Override
 	public IModel addEdge(IIdentity from, IIdentity label, IIdentity to) {
 		throw new UnsupportedOperationException();
 	}
-
-
 
 	@Override
 	public List<IIdentity> getNodes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 	@Override
 	public boolean hasNode(IIdentity node) {
@@ -78,14 +67,10 @@ public class Operation implements IModel{
 		return false;
 	}
 
-
-
 	@Override
 	public IModel removeNode(IIdentity node) {
 		throw new UnsupportedOperationException();
 	}
-
-
 
 	@Override
 	public List<Triple> getEdges() {
@@ -93,8 +78,6 @@ public class Operation implements IModel{
 		ret.add(constraint);
 		return ret;
 	}
-
-
 
 	@Override
 	public List<Tuple> getEdges(IIdentity from) {
