@@ -2,18 +2,16 @@ package adevpck.models;
 
 import java.math.BigInteger;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import adevpck.ElementHandle;
-import adevpck.IElementHandle;
 import adevpck.IIdentity;
 import relationalmodel.IModel;
 import adevpck.Identity;
 import adevpck.datastructures.Triple;
 import adevpck.datastructures.Tuple;
+import comp.ITreeModel;
 
-public class Integers implements IModel {
+public class Integers implements ITreeModel {
 	public static final IIdentity INT_MODEL_ID = new Identity("integer");
 	private static final Integers intModel = new Integers();
 	private static final List<IIdentity> prevNext = Arrays.asList(new Identity("prev"), new Identity("next"));
@@ -63,20 +61,6 @@ public class Integers implements IModel {
 	public static IIdentity getIdentity() {
 		return INT_MODEL_ID;
 	}
-	@Override
-	public IElementHandle get(IIdentity element) {
-		return new ElementHandle(this, element);
-	}
-
-	@Override
-	public Iterable<IIdentity> getChildren(IIdentity node) {
-		return Collections.EMPTY_LIST;
-	}
-
-	@Override
-	public int getNumChildren(IIdentity node) {
-		return 0;
-	}
 
 	public Iterable<IIdentity> getLinks(IIdentity node) {
 		return prevNext;
@@ -117,65 +101,45 @@ public class Integers implements IModel {
 	}
 
 	@Override
-	public IModel beginTransaction() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IModel commitTransaction() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IModel rollbackTransaction() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public IIdentity newNode() {
-		return new Identity(this);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IIdentity addNode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		throw new UnsupportedOperationException();	}
 
 	@Override
 	public IIdentity addNode(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IModel addEdge(IIdentity from, IIdentity label, IIdentity to) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public List<IIdentity> getNodes() {
-		// TODO Auto-generated method stub
-		return null;
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean hasNode(IIdentity node) {
-		// TODO Auto-generated method stub
-		return false;
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IModel removeNode(IIdentity node) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public List<Triple> getEdges() {
-		// TODO Auto-generated method stub
-		return null;
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -192,8 +156,18 @@ public class Integers implements IModel {
 
 	@Override
 	public IIdentity getId() {
+		return INT_MODEL_ID;
+	}
+
+	@Override
+	public boolean hasPath(IIdentity startNode, IIdentity endNode) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
+	}
+
+	@Override
+	public int getNumChildren(IIdentity node) {
+		return 0;
 	}
 
 }

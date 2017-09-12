@@ -320,4 +320,10 @@ public class RelationalModel implements ITransactableModel{
 	public IModel rollbackTransaction() {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public int getNumChildren(IIdentity node) {
+		assert containsNode(node) : "from node is not present in model " + node;
+		return getEdges(node).size();
+	}
 }

@@ -89,4 +89,10 @@ public interface IModel {
 	 */
 	IIdentity getId();
 
+	/**
+	 * Fetches the number of children of the argument node 
+	 * @param node a node in this model
+	 * @return the number of children, or 0 if none
+	 */
+	public int getNumChildren(IIdentity node);
 }
