@@ -56,15 +56,17 @@ public class Operation implements IModel{
 
 	@Override
 	public List<IIdentity> getNodes() {
-		// TODO Auto-generated method stub
-		return null;
+		List<IIdentity> ret = new ArrayList<>();
+		ret.add(OPERATOR);
+		ret.add(ARITY);
+		ret.add(OPERAND_ORDINAL_NUM);
+		ret.add(OPERAND);
+		return ret;
 	}
 
 	@Override
 	public boolean hasNode(IIdentity node) {
-		if(node == OPERATOR || node == ARITY || node == OPERAND_ORDINAL_NUM || node == OPERAND)
-			return true;
-		return false;
+		return getNodes().contains(node);
 	}
 
 	@Override
