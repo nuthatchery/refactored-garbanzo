@@ -1,21 +1,22 @@
 package adevpck;
 
 import java.util.HashMap;
+import relationalmodel.IModel;
 
-public class VersionMap extends HashMap<Integer, ModelTree> {
+public class VersionMap extends HashMap<Integer, IModel> {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer last=0;
 	
-	public VersionMap(int i, ModelTree modelTree) {
+	public VersionMap(int i, IModel modelTree) {
 		super();
 		put(i, modelTree);
 	}
 
 	@Override
-	public ModelTree put(Integer version, ModelTree m){
+	public IModel put(Integer version, IModel m){
 		last = version;
 		return super.put(version, m);
 	}
@@ -24,16 +25,16 @@ public class VersionMap extends HashMap<Integer, ModelTree> {
 		return last;
 	}
 
-	public int put(ModelTree modelTree) {
+	public int put(IModel modelTree) {
 		super.put(++last, modelTree);
 		return last;
 	}
 
-	public ModelTree getLast() {
+	public IModel getLast() {
 		return get(last);
 	}
 
-	public ModelTree removeLast() {
+	public IModel removeLast() {
 		return super.remove(last--);
 	}
 	

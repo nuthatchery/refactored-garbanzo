@@ -54,7 +54,7 @@ public class Register {
 	 * @param modelId
 	 * @return the last version of the model, null if no such is found
 	 */
-	public static ModelTree get(IIdentity modelId){
+	public static IModel get(IIdentity modelId){
 		if(reg.containsKey(modelId)){
 			return reg.get(modelId).getLast();
 		}
@@ -71,11 +71,11 @@ public class Register {
 	 * @param node
 	 * @return
 	 */
-	public static ModelTree getModelOf(IIdentity node){
+	public static IModel getModelOf(IIdentity node){
 		for(VersionMap v : reg.values()){
 			for(int i=v.getLastVersionNr(); i>=0; i--){
 				if(v.get(i)!=null){
-					if(v.get(i).containsNode(node)){
+					if(v.get(i).hasNode(node)){
 						assert node.getModelId().equals(v.get(i));
 						return v.get(i);
 					}
@@ -102,8 +102,8 @@ public class Register {
 	 * @param modelId
 	 * @return
 	 */
-	public static ModelTree removeLastVersion(IIdentity modelId){
-		ModelTree m = reg.get(modelId).removeLast();
+	public static IModel removeLastVersion(IIdentity modelId){
+		IModel m = reg.get(modelId).removeLast();
 		datainvariant();
 		return m;
 	}
@@ -125,7 +125,7 @@ public class Register {
 	 * @param version
 	 * @return
 	 */
-	public static ModelTree getVersion(IIdentity id, int version) {
+	public static IModel getVersion(IIdentity id, int version) {
 		if(reg.containsKey(id) && reg.get(id)!=null)
 			return reg.get(id).get(version);
 		else 
