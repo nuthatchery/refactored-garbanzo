@@ -1,15 +1,20 @@
 package adevpck;
 
+import relationalmodel.IModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import adevpck.datastructures.Triple;
 import adevpck.datastructures.Tuple;
+import comp.IIdentity;
+import comp.ITransactableTreeModel;
 
 
-public class ModelTree implements IModel{	
+public class ModelTree implements ITransactableTreeModel{	
 	private boolean mutable = false; 
 	private int previousVersion = -1; 
 
@@ -235,7 +240,7 @@ public class ModelTree implements IModel{
 	 * @return the new model
 	 */
 	public ModelTree addLink(IIdentity from, IIdentity to) {
-		return addLink(from, new Identity(this.id, "link"), to);
+		return addLink(from, new Identity(this, "link"), to);
 	}
 
 	public Iterable<IIdentity> getChildren(IIdentity parent){
@@ -259,7 +264,7 @@ public class ModelTree implements IModel{
 	 * @return the new model
 	 */
 	public ModelTree addChild(IIdentity parent, IIdentity child) {
-		return addChild(parent, new Identity(id, "edge"), child);
+		return addChild(parent, new Identity(this, "edge"), child);
 	}
 
 
@@ -377,12 +382,6 @@ public class ModelTree implements IModel{
 	}
 
 	@Override
-	public IElementHandle get(IIdentity element) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int getNumChildren(IIdentity node) {
 		assert children.containsKey(node) : "argument must be a node in this model " + node;
 		return children.get(node).size();
@@ -404,51 +403,15 @@ public class ModelTree implements IModel{
 		return false;
 	}
 
-	@Override
-	public boolean hasData(IIdentity node, Class<?> type) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public <T> T getData(IIdentity node, Class<T> type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> void setData(IIdentity node, T data) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public IIdentity makeIdentity() {
-		return new Identity(this);
-	}
-
-	@Override
-	public IIdentity makeIdentity(String name) {
-		return new Identity(this.id, name);
-	}
-
-	@Override
-	public IIdentity makeElement(IIdentity schema) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IIdentity makeElement(IIdentity schema, IIdentity parent) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IIdentity makeElement(IIdentity schema, IIdentity parent, IIdentity label) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public IIdentity makeIdentity() {
+//		return new Identity(this);
+//	}
+//
+//	@Override
+//	public IIdentity makeIdentity(String name) {
+//		return new Identity(this.id, name);
+//	}
 
 	@Override
 	public ModelTree beginTransaction() {
@@ -466,7 +429,7 @@ public class ModelTree implements IModel{
 	}
 
 	@Override
-	public ModelTree rollbackTransaction() {
+	public IModel rollbackTransaction() {
 		if(previousVersion == -1 )
 			return this;
 		assert Register.getVersion(id, previousVersion)!=null : "Previous version missing from register";
@@ -484,7 +447,9 @@ public class ModelTree implements IModel{
 	 * Copies all attributes from m to this 
 	 * @param m the model to copy from, another version of this 
 	 */
-	private void copyAllFrom(ModelTree m) {
+	private void copyAllFrom(IModel model) {
+		assert model instanceof ModelTree : "Cannot copy from different type than " + this.getClass() + " : " + model.getClass();
+		ModelTree m = (ModelTree) model;
 		children = m.children;
 		links = m.links;
 		root = m.root;
@@ -565,6 +530,72 @@ public class ModelTree implements IModel{
 	 */
 	public ModelTree addChildToRoot(IIdentity edge, IIdentity arg) {
 		return addChild(root, edge, arg);
+	}
+
+	@Override
+	public IIdentity newNode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IIdentity addNode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IIdentity addNode(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IModel addEdge(IIdentity from, IIdentity label, IIdentity to) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<IIdentity> getNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean hasNode(IIdentity node) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public IModel removeNode(IIdentity node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Triple> getEdges() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Tuple> getEdges(IIdentity from) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IModel removeEdge(IIdentity from, IIdentity label, IIdentity to) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean hasPath(IIdentity startNode, IIdentity endNode) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

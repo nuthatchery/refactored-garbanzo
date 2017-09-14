@@ -1,7 +1,12 @@
-package relationalmodel;
+package comp;
 
 import relationalmodel.IModel;
 
+/**
+ * A model that can be made mutable 	
+ * @author anna
+ *
+ */
 public interface ITransactableModel extends IModel {
 	
 	/**

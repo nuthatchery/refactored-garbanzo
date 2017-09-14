@@ -1,6 +1,5 @@
 package comp;
 
-import adevpck.IIdentity;
 import relationalmodel.IModel;
 
 public interface ITreeModel extends IModel {

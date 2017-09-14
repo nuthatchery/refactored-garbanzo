@@ -4,11 +4,11 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 
-import adevpck.IIdentity;
 import relationalmodel.IModel;
 import adevpck.Identity;
 import adevpck.datastructures.Triple;
 import adevpck.datastructures.Tuple;
+import comp.IIdentity;
 import comp.ITreeModel;
 
 public class Integers implements ITreeModel {

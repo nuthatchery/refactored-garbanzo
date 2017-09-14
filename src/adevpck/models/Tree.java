@@ -1,9 +1,9 @@
 package adevpck.models;
 
-import adevpck.IIdentity;
 import adevpck.IModel;
 import adevpck.Identity;
 import adevpck.ModelTree;
+import comp.IIdentity;
 
 public class Tree {
 	public static ModelTree model;

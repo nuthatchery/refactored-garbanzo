@@ -2,8 +2,8 @@ package relationalmodel;
 
 import java.util.List;
 
-import adevpck.IIdentity;
 import adevpck.datastructures.Tuple;
+import comp.IIdentity;
 import adevpck.datastructures.Triple;
 
 public interface IModel{

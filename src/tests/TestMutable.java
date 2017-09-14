@@ -2,9 +2,9 @@ package tests;
 
 import org.junit.Test;
 
-import adevpck.IIdentity;
 import adevpck.Identity;
 import adevpck.ModelTree;
+import comp.IIdentity;
 
 public class TestMutable {
 

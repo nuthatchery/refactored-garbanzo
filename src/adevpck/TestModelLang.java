@@ -2,6 +2,8 @@ package adevpck;
 
 import org.junit.Test;
 
+import comp.IIdentity;
+
 /**
  * If we have a language 
  * 

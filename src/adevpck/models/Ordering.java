@@ -1,11 +1,11 @@
 package adevpck.models;
 import java.util.List;
 
-import adevpck.IIdentity;
 import relationalmodel.IModel;
 import adevpck.Identity;
 import adevpck.datastructures.Triple;
 import adevpck.datastructures.Tuple;
+import comp.IIdentity;
 
 public class Ordering implements IModel{
 	private static final Ordering orderingModel = new Ordering();

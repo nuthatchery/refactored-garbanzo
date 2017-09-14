@@ -1,6 +1,6 @@
 package adevpck.models;
 
-import adevpck.IIdentity;
+import comp.IIdentity;
 
 /**
  * Natural numbers 

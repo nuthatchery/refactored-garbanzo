@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import adevpck.models.Integers;
 import adevpck.models.MetaMeta;
+import comp.IIdentity;
 import relationalmodel.MutableModel;
 import relationalmodel.RelationalModel;
 

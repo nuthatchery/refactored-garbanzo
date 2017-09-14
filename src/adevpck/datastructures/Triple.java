@@ -1,7 +1,7 @@
 package adevpck.datastructures;
 
-import adevpck.IIdentity;
 import adevpck.Identity;
+import comp.IIdentity;
 
 public class Triple {
 	private IIdentity first, second, third;

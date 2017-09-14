@@ -3,10 +3,10 @@ package adevpck.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import adevpck.IIdentity;
 import adevpck.Identity;
 import adevpck.datastructures.Triple;
 import adevpck.datastructures.Tuple;
+import comp.IIdentity;
 import relationalmodel.IModel;
 
 public class Operation implements IModel{
