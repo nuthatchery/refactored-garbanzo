@@ -10,13 +10,17 @@ public interface IModel{
 	/**
 	 * Adds a node to the model
 	 * same as addNode() 
+	 * NB Requires the model to be mutable
 	 * @return the ID of the added node 
+	 * TODO Add throws?
 	 */
 	IIdentity newNode();
 	
 	/**
 	 * Adds a node to the model 
-	 * @return the ID of the added node 
+	 * NB Requires the model to be mutable 
+	 * @return the ID of the added node
+	 *TODO Add throws?  
 	 */
 	IIdentity addNode();
 	
