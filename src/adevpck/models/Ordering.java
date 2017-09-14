@@ -2,6 +2,7 @@ package adevpck.models;
 import java.util.List;
 
 import relationalmodel.IModel;
+import relationalmodel.IModel;
 import adevpck.Identity;
 import adevpck.datastructures.Triple;
 import adevpck.datastructures.Tuple;

@@ -1,5 +1,6 @@
 package relationalmodel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import adevpck.datastructures.Tuple;
@@ -99,4 +100,12 @@ public interface IModel{
 	 * @return the number of children, or 0 if none
 	 */
 	public int getNumChildren(IIdentity node);
+
+	default List<IIdentity> getNodesPointingTo(IIdentity toNode){
+		assert toNode != null : "cannot find nodes pointing to null";
+		List <IIdentity> pointsTo = new ArrayList<>();
+		List <Triple> edges = getEdges();
+		edges.parallelStream().filter(triple -> toNode.equals(triple.last())).forEach(triple -> pointsTo.add(triple.first()));;
+		return pointsTo;
+	}
 }

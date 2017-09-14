@@ -6,6 +6,7 @@ import adevpck.datastructures.VersionMap;
 import comp.IIdentity;
 import relationalmodel.RelationalModel;
 import relationalmodel.IModel;
+import relationalmodel.IModel;
 
 public class Register {
 

@@ -2,6 +2,7 @@ package adevpck.datastructures;
 
 import java.util.HashMap;
 import relationalmodel.IModel;
+import relationalmodel.IModel;
 
 public class VersionMap extends HashMap<Integer, IModel> {
 	/**

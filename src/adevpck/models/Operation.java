@@ -7,9 +7,11 @@ import adevpck.Identity;
 import adevpck.datastructures.Triple;
 import adevpck.datastructures.Tuple;
 import comp.IIdentity;
+import comp.IUnchangeableModel;
 import relationalmodel.IModel;
+import relationalmodel.RelationalModel;
 
-public class Operation implements IModel{
+public class Operation implements IUnchangeableModel{
 	private static final Operation operation = new Operation();
 	private static final IIdentity modelid = new Identity(operation);
 	public static final IIdentity OPERATOR = operation.newNode();
@@ -100,5 +102,16 @@ public class Operation implements IModel{
 	@Override
 	public IIdentity getId() {
 		return modelid;
+	}
+
+
+	public static void setOperandOrder(IModel model, IIdentity... args){
+		//assert args.length eq model.getEdge(from=model.getNodePointingTo(Operator), to=ARITY).toInt()
+		List<IIdentity> operators = model.getNodesPointingTo(OPERATOR);
+		assert operators.size() > 0 : "No operators found ";
+		assert operators.size() <= 1 : "Multiple operators not supported";
+		for(int i=0; i<args.length; i++){
+			model.addEdge(operators.get(0), Ordinals.fromInt(Integers.identityOf(i)), OPERAND_ORDINAL_NUM);
+		}
 	}
 }

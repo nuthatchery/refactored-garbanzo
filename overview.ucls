@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.1" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
+  associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
+  <interface id="1" language="java" name="relationalmodel.IModel" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/relationalmodel/IModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1245" y="197"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="2" language="java" name="relationalmodel.IModelReadOnly" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/relationalmodel/IModelReadOnly.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="847" y="39"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="3" language="java" name="relationalmodel.RelationalModel" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/relationalmodel/RelationalModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="713" width="309" x="266" y="-138"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="relationalmodel.MutableModel" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/relationalmodel/MutableModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="867" y="292"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="5" language="java" name="comp.IUnchangeableModel" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/comp/IUnchangeableModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="986" y="598"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="6" language="java" name="adevpck.models.MetaMeta" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/adevpck/models/MetaMeta.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="473" y="1459"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="adevpck.models.Models" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/adevpck/models/Models.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="702" y="783"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="adevpck.models.Operation" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/adevpck/models/Operation.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="425" y="897"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="adevpck.models.Tree" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/adevpck/models/Tree.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="993" y="1659"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="adevpck.models.Ordinals" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/adevpck/models/Ordinals.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="982" y="1373"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="adevpck.models.Ordering" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/adevpck/models/Ordering.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1068" y="976"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="adevpck.models.Integers" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/adevpck/models/Integers.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1461" y="1383"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="adevpck.ModelTree" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/adevpck/ModelTree.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1786" y="1304"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="14" language="java" name="comp.ITransactableTreeModel" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/comp/ITransactableTreeModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1818" y="606"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="15" language="java" name="comp.ITransactableModel" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/comp/ITransactableModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1834" y="396"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="16" language="java" name="comp.ISimpleModel" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/comp/ISimpleModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1420" y="532"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <dependency id="17">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <association id="18">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="19" name="intModel"/>      
+      <multiplicity id="20" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="21">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <association id="22">    
+    <bendpoint x="1647" y="1692"/>    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="23" name="model">        
+        <position height="19" width="45" x="1591" y="1643"/>      
+      </attribute>      
+      <multiplicity id="24" minimum="0" maximum="1">        
+        <position height="17" width="25" x="1611" y="1668"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="25">    
+    <bendpoint x="746" y="-20"/>    
+    <bendpoint x="1374" y="-30"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <association id="26">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="27" name="ordinals"/>      
+      <multiplicity id="28" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="29">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <realization id="30">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <dependency id="31">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <association id="32">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="33" name="orderingModel"/>      
+      <multiplicity id="34" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="35">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="36" name="model"/>      
+      <multiplicity id="37" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="38">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="39">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="40" name="model"/>      
+      <multiplicity id="41" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="42">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="43">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <dependency id="44">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <dependency id="45">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="46">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="47">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <generalization id="48">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <realization id="49">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <realization id="50">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <dependency id="51">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="52">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <generalization id="53">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="54">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <dependency id="55">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="56">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="57">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="58">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <association id="59">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="60" name="operation"/>      
+      <multiplicity id="61" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

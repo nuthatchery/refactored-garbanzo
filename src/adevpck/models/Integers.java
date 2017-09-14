@@ -4,14 +4,15 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 
-import relationalmodel.IModel;
 import adevpck.Identity;
 import adevpck.datastructures.Triple;
 import adevpck.datastructures.Tuple;
 import comp.IIdentity;
 import comp.ITreeModel;
+import comp.IUnchangeableModel;
+import relationalmodel.IModel;
 
-public class Integers implements ITreeModel {
+public class Integers implements IUnchangeableModel {
 	public static final IIdentity INT_MODEL_ID = new Identity("integer");
 	private static final Integers intModel = new Integers();
 	private static final List<IIdentity> prevNext = Arrays.asList(new Identity("prev"), new Identity("next"));
@@ -66,10 +67,6 @@ public class Integers implements ITreeModel {
 		return prevNext;
 	}
 
-	@Override
-	public boolean isDescendantOf(IIdentity parentNode, IIdentity descendantNode) {
-		return false;
-	}
 
 	public boolean hasData(IIdentity node, Class<?> type) {
 		return type == Integer.class || type == Long.class || type == BigInteger.class;
@@ -101,27 +98,8 @@ public class Integers implements ITreeModel {
 	}
 
 	@Override
-	public IIdentity newNode() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IIdentity addNode() {
-		throw new UnsupportedOperationException();	}
-
-	@Override
-	public IIdentity addNode(String name) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IModel addEdge(IIdentity from, IIdentity label, IIdentity to) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public List<IIdentity> getNodes() {
-		//TODO
+		//TODO lazy eval list would work
 		throw new UnsupportedOperationException();
 	}
 
@@ -149,24 +127,13 @@ public class Integers implements ITreeModel {
 	}
 
 	@Override
-	public IModel removeEdge(IIdentity from, IIdentity label, IIdentity to) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public IIdentity getId() {
 		return INT_MODEL_ID;
 	}
 
 	@Override
-	public boolean hasPath(IIdentity startNode, IIdentity endNode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public int getNumChildren(IIdentity node) {
+		//TODO
 		return 0;
 	}
 

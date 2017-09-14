@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import adevpck.models.Integers;
 import adevpck.models.MetaMeta;
+import adevpck.models.Operation;
+import adevpck.models.Ordinals;
 import comp.IIdentity;
 import relationalmodel.MutableModel;
 import relationalmodel.RelationalModel;
@@ -15,14 +17,6 @@ public class RelationalModelTest {
 	@Test
 	public void test() {
 		
-		/* METAMETA */ 
-		RelationalModel operatormeta = new MutableModel();
-		IIdentity operator = operatormeta.newNode();
-		IIdentity arity = operatormeta.newNode();
-		IIdentity argument = operatormeta.newNode();
-		operatormeta.addEdge(operator, MetaMeta.REQUIRE_ONE, arity);
-
-		
 		/* META */
 		IIdentity plus = new Identity("plus");
 		IIdentity arg1 = new Identity("arg");
@@ -30,13 +24,11 @@ public class RelationalModelTest {
 		RelationalModel binoplang = new RelationalModel(true);
 		binoplang.addNodes(plus, arg1, arg2);
 		
-		binoplang.addEdge(plus, MetaMeta.CONFORMS_TO, operator);
+		binoplang.addEdge(plus, MetaMeta.CONFORMS_TO, Operation.OPERATOR);
 		
-		
-		binoplang.addEdge(arg1, MetaMeta.CONFORMS_TO, arg);
-		binoplang.addEdge(arg2, MetaMeta.CONFORMS_TO, arg);
-		binoplang.addEdge(plus, Integers.getRoot(), arg);
-		binoplang.addEdge(plus, Integers.succ(Integers.getRoot()), arg);
+		binoplang.addEdge(arg1, MetaMeta.CONFORMS_TO, Operation.OPERAND);
+		binoplang.addEdge(arg2, MetaMeta.CONFORMS_TO, Operation.OPERAND);
+		Operation.setOperandOrder(binoplang, arg1, arg2);
 		
 		System.out.println(binoplang);
 	}	

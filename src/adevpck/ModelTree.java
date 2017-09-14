@@ -1,6 +1,5 @@
 package adevpck;
 
-import relationalmodel.IModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -12,6 +11,7 @@ import adevpck.datastructures.Triple;
 import adevpck.datastructures.Tuple;
 import comp.IIdentity;
 import comp.ITransactableTreeModel;
+import relationalmodel.IModel;
 
 
 public class ModelTree implements ITransactableTreeModel{	
@@ -596,6 +596,12 @@ public class ModelTree implements ITransactableTreeModel{
 	public boolean hasPath(IIdentity startNode, IIdentity endNode) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<IIdentity> getNodesPointingTo(IIdentity operator) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

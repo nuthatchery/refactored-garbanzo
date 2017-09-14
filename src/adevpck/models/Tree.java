@@ -1,6 +1,6 @@
 package adevpck.models;
 
-import adevpck.IModel;
+import relationalmodel.IModel;
 import adevpck.Identity;
 import adevpck.ModelTree;
 import comp.IIdentity;

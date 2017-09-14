@@ -1,6 +1,7 @@
 package comp;
 
 import relationalmodel.IModel;
+import relationalmodel.IModel;
 
 /**
  * A model that can be made mutable 	
