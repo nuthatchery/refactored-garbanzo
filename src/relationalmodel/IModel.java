@@ -6,7 +6,7 @@ import adevpck.IIdentity;
 import adevpck.datastructures.Tuple;
 import adevpck.datastructures.Triple;
 
-public interface IModel {
+public interface IModel{
 	/**
 	 * Adds a node to the model
 	 * same as addNode() 
