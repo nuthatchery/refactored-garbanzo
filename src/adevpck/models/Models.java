@@ -8,7 +8,12 @@ public class Models {
 	
 	static{
 		model = new MutableModel();
-		model.addNodes(Integers.getIdentity(), MetaMeta.getIdentity(), Ordering.getIdentity(), Ordinals.getIdentity());
+		model.addNodes(Integers.getIdentity(), 
+				MetaMeta.getIdentity(), 
+				Tree.getIdentity(), 
+				Ordinals.getIdentity(),
+				Operation.getIdentity()
+				);
 		
 	}
 

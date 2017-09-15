@@ -13,7 +13,6 @@ import relationalmodel.RelationalModel;
 
 public class Operation implements IUnchangeableModel{
 	private static final Operation operation = new Operation();
-	private static final IIdentity modelid = new Identity(operation);
 	public static final IIdentity OPERATOR = operation.newNode();
 	public static final IIdentity ARITY = operation.newNode();
 	public static final IIdentity OPERAND_ORDINAL_NUM = operation.newNode();
@@ -101,7 +100,7 @@ public class Operation implements IUnchangeableModel{
 
 	@Override
 	public IIdentity getId() {
-		return modelid;
+		return operation.getId();
 	}
 
 
@@ -113,5 +112,10 @@ public class Operation implements IUnchangeableModel{
 		for(int i=0; i<args.length; i++){
 			model.addEdge(operators.get(0), Ordinals.fromInt(Integers.identityOf(i)), OPERAND_ORDINAL_NUM);
 		}
+	}
+
+
+	public static IIdentity getIdentity() {
+		return operation.getId();
 	}
 }

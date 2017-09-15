@@ -1,12 +1,18 @@
 package adevpck.models;
 
 import relationalmodel.IModel;
+
+import java.util.List;
+
 import adevpck.Identity;
 import adevpck.ModelTree;
+import adevpck.datastructures.Triple;
+import adevpck.datastructures.Tuple;
 import comp.IIdentity;
+import comp.IUnchangeableModel;
 
-public class Tree {
-	public static ModelTree model;
+public class Tree implements IUnchangeableModel{
+	public static ModelTree model = new  ModelTree();
 
 	public static final IIdentity NODE = id("node");
 	public static final IIdentity BRANCH = id("branch");
@@ -41,8 +47,8 @@ public class Tree {
 	}
 
 	private static IIdentity id(String string) {
-		IIdentity identity = new Identity(model.getId(), "Tree::" + string);
-		model.addChild(identity); //Anna: hva er meningen her?
+		IIdentity identity = new Identity(model, "Tree::" + string);
+		model.addNode(identity); //Anna: hva er meningen her?
 		return identity;
 	}
 
@@ -84,5 +90,55 @@ public class Tree {
 		}
 		// m.endTransaction();
 		return identity;
+	}
+
+	@Override
+	public IIdentity newNode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IIdentity addNode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<IIdentity> getNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean hasNode(IIdentity node) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<Triple> getEdges() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Tuple> getEdges(IIdentity from) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IIdentity getId() {
+		return model.getId();
+	}
+
+	@Override
+	public int getNumChildren(IIdentity node) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public static IIdentity getIdentity() {
+		return model.getId();
 	}
 }

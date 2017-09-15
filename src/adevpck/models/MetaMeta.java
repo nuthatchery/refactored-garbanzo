@@ -1,12 +1,18 @@
 package adevpck.models;
 
 import relationalmodel.IModel;
+
+import java.util.List;
+
 import adevpck.Identity;
 import adevpck.ModelTree;
+import adevpck.datastructures.Triple;
+import adevpck.datastructures.Tuple;
 import comp.IIdentity;
+import comp.IUnchangeableModel;
 import relationalmodel.RelationalModel;
 
-public class MetaMeta {
+public class MetaMeta implements IUnchangeableModel{
 	private static final RelationalModel model = new RelationalModel(true);
 	private static final IIdentity modelid = new Identity("MetaMeta");
 	
@@ -87,6 +93,48 @@ public class MetaMeta {
 
 	public static IIdentity getIdentity() {
 		return modelid;
+	}
+
+
+	@Override
+	public List<IIdentity> getNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public boolean hasNode(IIdentity node) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public List<Triple> getEdges() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Tuple> getEdges(IIdentity from) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public IIdentity getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public int getNumChildren(IIdentity node) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

@@ -12,9 +12,10 @@ import adevpck.datastructures.Tuple;
 import comp.IIdentity;
 import comp.ITransactableTreeModel;
 import relationalmodel.IModel;
+import relationalmodel.RelationalModel;
 
 
-public class ModelTree implements ITransactableTreeModel{	
+public class ModelTree extends RelationalModel implements ITransactableTreeModel{	
 	private boolean mutable = false; 
 	private int previousVersion = -1; 
 
@@ -165,8 +166,7 @@ public class ModelTree implements ITransactableTreeModel{
 			ModelTree m = new ModelTree(this);
 			m.links.get(from).add(new Tuple(link, to));
 
-			datainvariant(); //TODO not really needed
-			m.datainvariant();
+			assert m.datainvariant();
 			return m;
 		}
 	}
