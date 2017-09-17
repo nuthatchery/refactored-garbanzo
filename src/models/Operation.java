@@ -12,7 +12,7 @@ import relationalmodel.IModel;
 import relationalmodel.RelationalModel;
 
 public class Operation implements IUnchangeableModel{
-	private static final Operation operation = new Operation();
+	private static final IModel operation = new RelationalModel(true);
 	public static final IIdentity OPERATOR = operation.newNode();
 	public static final IIdentity ARITY = operation.newNode();
 	public static final IIdentity OPERAND_ORDINAL_NUM = operation.newNode();
@@ -110,7 +110,7 @@ public class Operation implements IUnchangeableModel{
 		assert operators.size() > 0 : "No operators found ";
 		assert operators.size() <= 1 : "Multiple operators not supported";
 		for(int i=0; i<args.length; i++){
-			model.addEdge(operators.get(0), Ordinals.fromInt(Integers.identityOf(i)), OPERAND_ORDINAL_NUM);
+			model.addEdge(operators.get(0), Ordinals.fromInt(Integers.identityOf(i+1)), OPERAND_ORDINAL_NUM);
 		}
 	}
 

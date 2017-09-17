@@ -66,6 +66,7 @@ public class RelationalModel implements ITransactableModel{
 		for(IIdentity node : nodes){
 			N.add(node);
 		}
+		assert datainvariant();
 	}
 
 	private void cloneNodesOf(RelationalModel m) {

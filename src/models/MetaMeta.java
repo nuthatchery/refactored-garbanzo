@@ -87,7 +87,7 @@ public class MetaMeta implements IUnchangeableModel{
 	
 	
 	private static IIdentity id(String string) {
-		return new Identity("MetaMeta::" + string);
+		return model.addNode("MetaMeta::" + string);
 	}
 
 

@@ -6,11 +6,8 @@ import org.junit.Test;
 
 import comp.IIdentity;
 import comp.Identity;
-import models.Integers;
 import models.MetaMeta;
 import models.Operation;
-import models.Ordinals;
-import relationalmodel.MutableModel;
 import relationalmodel.RelationalModel;
 
 public class RelationalModelTest {
@@ -24,11 +21,15 @@ public class RelationalModelTest {
 		IIdentity arg2 = new Identity("arg");
 		RelationalModel binoplang = new RelationalModel(true);
 		binoplang.addNodes(plus, arg1, arg2);
+		assert binoplang.containsNode(plus);
+		assert binoplang.containsNode(arg1);
+		assert binoplang.containsNode(arg2);
 		
-		binoplang.addEdge(plus, MetaMeta.CONFORMS_TO, Operation.OPERATOR);
-		
+		//edges out of graph
+		binoplang.addEdge(plus, MetaMeta.CONFORMS_TO, Operation.OPERATOR); 
 		binoplang.addEdge(arg1, MetaMeta.CONFORMS_TO, Operation.OPERAND);
 		binoplang.addEdge(arg2, MetaMeta.CONFORMS_TO, Operation.OPERAND);
+
 		Operation.setOperandOrder(binoplang, arg1, arg2);
 		
 		System.out.println(binoplang);
