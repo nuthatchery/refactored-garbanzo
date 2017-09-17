@@ -16,11 +16,10 @@ public class RelationalModelTest {
 	public void test() {
 		
 		/* META */
-		IIdentity plus = new Identity("plus");
-		IIdentity arg1 = new Identity("arg");
-		IIdentity arg2 = new Identity("arg");
 		RelationalModel binoplang = new RelationalModel(true);
-		binoplang.addNodes(plus, arg1, arg2);
+		IIdentity arg2 = binoplang.addNode("arg2");
+		IIdentity arg1 = binoplang.addNode("arg1");
+		IIdentity plus = binoplang.addNode("plus");
 		assert binoplang.containsNode(plus);
 		assert binoplang.containsNode(arg1);
 		assert binoplang.containsNode(arg2);

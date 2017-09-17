@@ -13,10 +13,10 @@ import relationalmodel.RelationalModel;
 
 public class Operation implements IUnchangeableModel{
 	private static final IModel operation = new RelationalModel(true);
-	public static final IIdentity OPERATOR = operation.newNode();
-	public static final IIdentity ARITY = operation.newNode();
-	public static final IIdentity OPERAND_ORDINAL_NUM = operation.newNode();
-	public static final IIdentity OPERAND = operation.newNode();
+	public static final IIdentity OPERATOR = operation.addNode("Operator");
+	public static final IIdentity ARITY = operation.addNode("Arity");
+	public static final IIdentity OPERAND_ORDINAL_NUM = operation.addNode("OperandOrdinalNum");
+	public static final IIdentity OPERAND = operation.addNode("Operand");
 	private static final Triple constraint = new Triple(OPERATOR, MetaMeta.REQUIRE_ONE, ARITY);
 
 	private Operation(){
@@ -106,11 +106,11 @@ public class Operation implements IUnchangeableModel{
 
 	public static void setOperandOrder(IModel model, IIdentity... args){
 		//assert args.length eq model.getEdge(from=model.getNodePointingTo(Operator), to=ARITY).toInt()
-		List<IIdentity> operators = model.getNodesPointingTo(OPERATOR);
+		List<IIdentity> operators = model.getNodesPointingTo(OPERATOR); //TODO why did I need this here?
 		assert operators.size() > 0 : "No operators found ";
 		assert operators.size() <= 1 : "Multiple operators not supported";
 		for(int i=0; i<args.length; i++){
-			model.addEdge(operators.get(0), Ordinals.fromInt(Integers.identityOf(i+1)), OPERAND_ORDINAL_NUM);
+			model.addEdge(args[i], Ordinals.fromInt(Integers.identityOf(i+1)), OPERAND_ORDINAL_NUM);
 		}
 	}
 
