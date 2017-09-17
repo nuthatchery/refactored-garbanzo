@@ -1,8 +1,7 @@
-package adevpck;
+package comp;
 
 import java.io.File;
 
-import comp.IIdentity;
 import relationalmodel.RelationalModel;
 
 public class RelationalModelFactory {

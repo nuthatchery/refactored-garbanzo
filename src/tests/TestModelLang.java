@@ -1,8 +1,10 @@
-package adevpck;
+package tests;
 
 import org.junit.Test;
 
 import comp.IIdentity;
+import comp.Identity;
+import comp.ModelTree;
 
 /**
  * If we have a language 

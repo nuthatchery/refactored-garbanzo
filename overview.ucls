@@ -46,8 +46,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="6" language="java" name="adevpck.models.MetaMeta" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/adevpck/models/MetaMeta.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="models.MetaMeta" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/models/MetaMeta.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="473" y="1459"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -55,8 +55,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="adevpck.models.Models" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/adevpck/models/Models.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="7" language="java" name="models.Models" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/models/Models.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="702" y="783"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -64,8 +64,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="adevpck.models.Operation" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/adevpck/models/Operation.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="8" language="java" name="models.Operation" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/models/Operation.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="425" y="897"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -73,8 +73,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="adevpck.models.Tree" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/adevpck/models/Tree.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="9" language="java" name="models.Tree" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/models/Tree.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="993" y="1659"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -82,8 +82,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="adevpck.models.Ordinals" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/adevpck/models/Ordinals.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="10" language="java" name="models.Ordinals" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/models/Ordinals.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="982" y="1373"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -100,8 +100,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="adevpck.models.Integers" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/adevpck/models/Integers.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="12" language="java" name="models.Integers" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/models/Integers.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1461" y="1383"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -109,8 +109,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="adevpck.ModelTree" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/adevpck/ModelTree.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="13" language="java" name="comp.ModelTree" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/comp/ModelTree.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1786" y="1304"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -149,73 +149,73 @@
     <end type="SOURCE" refId="11"/>    
     <end type="TARGET" refId="12"/>  
   </dependency>  
-  <association id="18">    
+  <dependency id="18">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="19">    
     <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="19" name="intModel"/>      
-      <multiplicity id="20" minimum="0" maximum="1"/>    
+      <attribute id="20" name="intModel"/>      
+      <multiplicity id="21" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="21">    
+  <realization id="22">    
     <end type="SOURCE" refId="10"/>    
     <end type="TARGET" refId="5"/>  
   </realization>  
-  <association id="22">    
+  <association id="23">    
     <bendpoint x="1647" y="1692"/>    
     <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="23" name="model">        
+      <attribute id="24" name="model">        
         <position height="19" width="45" x="1591" y="1643"/>      
       </attribute>      
-      <multiplicity id="24" minimum="0" maximum="1">        
+      <multiplicity id="25" minimum="0" maximum="1">        
         <position height="17" width="25" x="1611" y="1668"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="13" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="25">    
+  <realization id="26">    
     <bendpoint x="746" y="-20"/>    
     <bendpoint x="1374" y="-30"/>    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="15"/>  
   </realization>  
-  <association id="26">    
+  <association id="27">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="27" name="ordinals"/>      
-      <multiplicity id="28" minimum="0" maximum="1"/>    
+      <attribute id="28" name="ordinals"/>      
+      <multiplicity id="29" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="29">    
+  <dependency id="30">    
     <end type="SOURCE" refId="7"/>    
     <end type="TARGET" refId="4"/>  
   </dependency>  
-  <realization id="30">    
+  <realization id="31">    
     <end type="SOURCE" refId="13"/>    
     <end type="TARGET" refId="14"/>  
   </realization>  
-  <dependency id="31">    
+  <dependency id="32">    
     <end type="SOURCE" refId="13"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
-  <association id="32">    
+  <association id="33">    
     <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="33" name="orderingModel"/>      
-      <multiplicity id="34" minimum="0" maximum="1"/>    
+      <attribute id="34" name="orderingModel"/>      
+      <multiplicity id="35" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="35">    
+  <realization id="36">    
     <end type="SOURCE" refId="11"/>    
     <end type="TARGET" refId="1"/>  
   </realization>  
-  <dependency id="36">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
   <association id="37">    
     <end type="SOURCE" refId="7" navigable="false">      
       <attribute id="38" name="model"/>      
@@ -245,97 +245,101 @@
     <end type="TARGET" refId="1"/>  
   </dependency>  
   <dependency id="46">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="6"/>  
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="8"/>  
   </dependency>  
   <dependency id="47">    
-    <end type="SOURCE" refId="9"/>    
+    <end type="SOURCE" refId="8"/>    
     <end type="TARGET" refId="6"/>  
   </dependency>  
   <dependency id="48">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="12"/>  
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="6"/>  
   </dependency>  
   <dependency id="49">    
-    <end type="SOURCE" refId="9"/>    
+    <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="12"/>  
   </dependency>  
   <dependency id="50">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="51">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="4"/>  
   </dependency>  
-  <generalization id="51">    
+  <generalization id="52">    
     <end type="SOURCE" refId="15"/>    
     <end type="TARGET" refId="1"/>  
   </generalization>  
-  <dependency id="52">    
+  <dependency id="53">    
     <end type="SOURCE" refId="12"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
-  <realization id="53">    
+  <realization id="54">    
     <end type="SOURCE" refId="12"/>    
     <end type="TARGET" refId="5"/>  
   </realization>  
-  <generalization id="54">    
+  <generalization id="55">    
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="1"/>  
   </generalization>  
-  <realization id="55">    
+  <dependency id="56">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <realization id="57">    
     <end type="SOURCE" refId="8"/>    
     <end type="TARGET" refId="5"/>  
   </realization>  
-  <dependency id="56">    
+  <dependency id="58">    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
-  <dependency id="57">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
-  <dependency id="58">    
+  <dependency id="59">    
     <end type="SOURCE" refId="8"/>    
     <end type="TARGET" refId="10"/>  
   </dependency>  
-  <realization id="59">    
+  <realization id="60">    
     <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="5"/>  
   </realization>  
-  <dependency id="60">    
+  <dependency id="61">    
     <end type="SOURCE" refId="7"/>    
     <end type="TARGET" refId="6"/>  
   </dependency>  
-  <generalization id="61">    
+  <generalization id="62">    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="3"/>  
   </generalization>  
-  <generalization id="62">    
+  <generalization id="63">    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="1"/>  
   </generalization>  
-  <dependency id="63">    
+  <dependency id="64">    
     <end type="SOURCE" refId="7"/>    
     <end type="TARGET" refId="12"/>  
   </dependency>  
-  <dependency id="64">    
+  <dependency id="65">    
     <end type="SOURCE" refId="8"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
-  <realization id="65">    
+  <realization id="66">    
     <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="5"/>  
   </realization>  
-  <dependency id="66">    
+  <dependency id="67">    
     <end type="SOURCE" refId="7"/>    
     <end type="TARGET" refId="10"/>  
   </dependency>  
-  <dependency id="67">    
+  <dependency id="68">    
     <end type="SOURCE" refId="10"/>    
     <end type="TARGET" refId="12"/>  
   </dependency>  
-  <association id="68">    
+  <association id="69">    
     <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="69" name="operation"/>      
-      <multiplicity id="70" minimum="0" maximum="1"/>    
+      <attribute id="70" name="operation"/>      
+      <multiplicity id="71" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  

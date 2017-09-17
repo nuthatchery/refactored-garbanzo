@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import adevpck.Identity;
-import adevpck.ModelTree;
-import comp.IIdentity; 
+import comp.IIdentity;
+import comp.Identity;
+import comp.ModelTree; 
 
 public class TestModelTree {
 

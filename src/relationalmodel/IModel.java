@@ -3,9 +3,9 @@ package relationalmodel;
 import java.util.ArrayList;
 import java.util.List;
 
-import adevpck.datastructures.Tuple;
 import comp.IIdentity;
-import adevpck.datastructures.Triple;
+import datastructures.Triple;
+import datastructures.Tuple;
 
 public interface IModel{
 	/**

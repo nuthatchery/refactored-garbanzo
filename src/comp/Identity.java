@@ -1,8 +1,7 @@
-package adevpck;
+package comp;
 
 import java.util.UUID;
 
-import comp.IIdentity;
 import relationalmodel.IModel;
 
 /**

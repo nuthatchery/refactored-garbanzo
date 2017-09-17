@@ -37,8 +37,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="5" language="java" name="adevpck.models.Models" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/adevpck/models/Models.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="models.Models" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/models/Models.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="936" y="501"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -46,8 +46,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="adevpck.models.MetaMeta" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/adevpck/models/MetaMeta.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="models.MetaMeta" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/models/MetaMeta.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="478" width="225" x="1232" y="843"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -55,8 +55,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="adevpck.models.Operation" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/adevpck/models/Operation.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="7" language="java" name="models.Operation" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/models/Operation.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1368" y="598"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -64,8 +64,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="adevpck.models.Tree" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/adevpck/models/Tree.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="8" language="java" name="models.Tree" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/models/Tree.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="780" y="1506"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -73,8 +73,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="adevpck.models.Ordinals" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/adevpck/models/Ordinals.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="9" language="java" name="models.Ordinals" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/models/Ordinals.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1059" y="172"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -82,8 +82,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="adevpck.models.Integers" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/adevpck/models/Integers.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="10" language="java" name="models.Integers" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/models/Integers.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="946" y="1031"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -91,8 +91,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="adevpck.ModelTree" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/adevpck/ModelTree.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="11" language="java" name="comp.ModelTree" project="refactored-garbanzo" 
+    file="/refactored-garbanzo/src/comp/ModelTree.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="55" width="278" x="488" y="448"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

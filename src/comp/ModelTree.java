@@ -1,4 +1,4 @@
-package adevpck;
+package comp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,15 +7,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import adevpck.datastructures.Triple;
-import adevpck.datastructures.Tuple;
-import comp.IIdentity;
-import comp.ITransactableTreeModel;
+import datastructures.Triple;
+import datastructures.Tuple;
 import relationalmodel.IModel;
-import relationalmodel.RelationalModel;
 
 
-public class ModelTree extends RelationalModel implements ITransactableTreeModel{	
+public class ModelTree implements ITransactableTreeModel{	
 	private boolean mutable = false; 
 	private int previousVersion = -1; 
 

@@ -1,8 +1,8 @@
 package tests;
 
-import adevpck.Identity;
-import adevpck.ModelTree;
 import comp.IIdentity;
+import comp.Identity;
+import comp.ModelTree;
 
 public class TestData {
 

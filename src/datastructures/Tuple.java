@@ -1,7 +1,7 @@
-package adevpck.datastructures;
+package datastructures;
 
-import adevpck.Identity;
 import comp.IIdentity;
+import comp.Identity;
 
 /**
  * Immutable tuple class 

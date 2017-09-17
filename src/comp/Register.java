@@ -1,9 +1,8 @@
-package adevpck;
+package comp;
 
 import java.util.HashMap;
 
-import adevpck.datastructures.VersionMap;
-import comp.IIdentity;
+import datastructures.VersionMap;
 import relationalmodel.RelationalModel;
 import relationalmodel.IModel;
 import relationalmodel.IModel;

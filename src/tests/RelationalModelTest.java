@@ -1,14 +1,15 @@
-package adevpck;
+package tests;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import adevpck.models.Integers;
-import adevpck.models.MetaMeta;
-import adevpck.models.Operation;
-import adevpck.models.Ordinals;
 import comp.IIdentity;
+import comp.Identity;
+import models.Integers;
+import models.MetaMeta;
+import models.Operation;
+import models.Ordinals;
 import relationalmodel.MutableModel;
 import relationalmodel.RelationalModel;
 

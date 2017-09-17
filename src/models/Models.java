@@ -1,19 +1,21 @@
-package adevpck.models;
+package models;
 
+import relationalmodel.IModel;
 import relationalmodel.MutableModel;
 import relationalmodel.RelationalModel;
 
 public class Models {
-	public static final RelationalModel model;
+	private static IModel model;
 	
 	static{
-		model = new MutableModel();
+		RelationalModel model = new MutableModel();
 		model.addNodes(Integers.getIdentity(), 
 				MetaMeta.getIdentity(), 
 				Tree.getIdentity(), 
 				Ordinals.getIdentity(),
 				Operation.getIdentity()
 				);
+		Models.model = model.commitTransaction();
 		
 	}
 

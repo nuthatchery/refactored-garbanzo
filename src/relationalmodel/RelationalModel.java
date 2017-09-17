@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
-import adevpck.Identity;
-import adevpck.Register;
-import adevpck.datastructures.Triple;
-import adevpck.datastructures.Tuple;
 import comp.IIdentity;
 import comp.ITransactableModel;
+import comp.Identity;
+import comp.Register;
+import datastructures.Triple;
+import datastructures.Tuple;
 
 
 public class RelationalModel implements ITransactableModel{	

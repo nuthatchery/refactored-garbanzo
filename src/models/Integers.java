@@ -1,15 +1,15 @@
-package adevpck.models;
+package models;
 
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 
-import adevpck.Identity;
-import adevpck.datastructures.Triple;
-import adevpck.datastructures.Tuple;
 import comp.IIdentity;
 import comp.ITreeModel;
 import comp.IUnchangeableModel;
+import comp.Identity;
+import datastructures.Triple;
+import datastructures.Tuple;
 import relationalmodel.IModel;
 
 public class Integers implements IUnchangeableModel {

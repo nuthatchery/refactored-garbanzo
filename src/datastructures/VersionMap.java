@@ -1,4 +1,4 @@
-package adevpck.datastructures;
+package datastructures;
 
 import java.util.HashMap;
 import relationalmodel.IModel;

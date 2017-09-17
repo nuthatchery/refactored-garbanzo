@@ -1,15 +1,15 @@
-package adevpck.models;
+package models;
 
 import relationalmodel.IModel;
 
 import java.util.List;
 
-import adevpck.Identity;
-import adevpck.ModelTree;
-import adevpck.datastructures.Triple;
-import adevpck.datastructures.Tuple;
 import comp.IIdentity;
 import comp.IUnchangeableModel;
+import comp.Identity;
+import comp.ModelTree;
+import datastructures.Triple;
+import datastructures.Tuple;
 
 public class Tree implements IUnchangeableModel{
 	public static ModelTree model = new  ModelTree();
