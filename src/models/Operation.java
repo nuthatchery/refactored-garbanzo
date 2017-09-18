@@ -4,30 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import comp.IIdentity;
-import comp.IUnchangeableModel;
-import comp.Identity;
 import datastructures.Triple;
-import datastructures.Tuple;
 import relationalmodel.IModel;
-import relationalmodel.RelationalModel;
+import relationalmodel.MutableModel;
 
 public class Operation{
-	private static final IModel operation = new RelationalModel(true);
+	private static IModel operation = new MutableModel();
 	public static final IIdentity OPERATOR = operation.addNode("Operator");
 	public static final IIdentity ARITY = operation.addNode("Arity");
 	public static final IIdentity OPERAND_ORDINAL_NUM = operation.addNode("OperandOrdinalNum");
 	public static final IIdentity OPERAND = operation.addNode("Operand");
 	private static final Triple constraint = new Triple(OPERATOR, MetaMeta.REQUIRE_ONE, ARITY);
+	
+	static{
+		operation.addEdge(constraint);
+		assert operation instanceof MutableModel;
+		operation = ((MutableModel) operation).commitTransaction();
+	}
 
 	public int getNumChildren(IIdentity node) {
 		if(constraint.first() == node ) return 1; //if we add more constraints, expand to list + loop
 		return 0;
-	}
-
-	public boolean hasPath(IIdentity startNode, IIdentity endNode) {
-		if(constraint.first() == startNode && constraint.third() == endNode)
-			return true;
-		return false;
 	}
 
 	public List<IIdentity> getNodes() {
