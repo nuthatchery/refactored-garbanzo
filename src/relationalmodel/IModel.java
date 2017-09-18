@@ -108,4 +108,8 @@ public interface IModel{
 		edges.parallelStream().filter(triple -> toNode.equals(triple.last())).forEach(triple -> pointsTo.add(triple.first()));;
 		return pointsTo;
 	}
+
+	default void addEdge(Triple constraint){
+		addEdge(constraint.first(), constraint.second(), constraint.third());
+	}
 }
