@@ -1,19 +1,13 @@
 package models;
 
 import relationalmodel.IModel;
-
-import java.util.List;
+import relationalmodel.MutableModel;
 
 import comp.IIdentity;
-import comp.IUnchangeableModel;
 import comp.Identity;
-import comp.ModelTree;
-import datastructures.Triple;
-import datastructures.Tuple;
-import relationalmodel.RelationalModel;
 
 public class MetaMeta { //should not impl IModel
-	private static final RelationalModel model = new RelationalModel(true);
+	private static IModel model = new MutableModel(); //Should ideally be final.
 	private static final IIdentity modelid = new Identity("MetaMeta");
 	
 	// basic metametamodelling
@@ -83,6 +77,11 @@ public class MetaMeta { //should not impl IModel
 		model.addEdge(SUBTYPE_OF, IS, RELATION);
 		model.addEdge(SUBTYPE_OF, SRC_CONFORMS_TO, TYPE);
 		model.addEdge(SUBTYPE_OF, DEST_CONFORMS_TO, TYPE);
+	}
+	
+	static {
+		assert model instanceof MutableModel;
+		model = ((MutableModel) model).commitTransaction();
 	}
 	
 	
