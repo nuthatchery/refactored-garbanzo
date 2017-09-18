@@ -12,7 +12,7 @@ import datastructures.Triple;
 import datastructures.Tuple;
 import relationalmodel.RelationalModel;
 
-public class MetaMeta implements IUnchangeableModel{
+public class MetaMeta { //should not impl IModel
 	private static final RelationalModel model = new RelationalModel(true);
 	private static final IIdentity modelid = new Identity("MetaMeta");
 	
@@ -93,48 +93,6 @@ public class MetaMeta implements IUnchangeableModel{
 
 	public static IIdentity getIdentity() {
 		return modelid;
-	}
-
-
-	@Override
-	public List<IIdentity> getNodes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public boolean hasNode(IIdentity node) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public List<Triple> getEdges() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<Tuple> getEdges(IIdentity from) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public IIdentity getId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public int getNumChildren(IIdentity node) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 	
 }

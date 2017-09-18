@@ -16,7 +16,7 @@ import relationalmodel.IModel;
  *
  */
 public class Ordinals implements IUnchangeableModel{
-	private static final Ordinals ordinals = new Ordinals();
+	private static final Ordinals ordinals = new Ordinals(); //inner obj Integer
 	public static final IIdentity MODEL_ID = new Identity(ordinals, "ordinals");
 	public static final IIdentity FIRST = Integers.ONE;
 	
