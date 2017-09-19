@@ -96,7 +96,9 @@ public class RelationalModelTest {
 		RelationalModel model;
 		for(int i=0; i<N; i++){
 			model = getRandomModel();
+			model = model.beginTransaction();
 			IIdentity id = model.addNode();
+			model = model.commitTransaction();
 			assertTrue(model.containsNode(id));
 			assertTrue(model.getNodes().contains(id));
 			assertFalse(model.containsNode(new Identity(model)));
@@ -122,7 +124,7 @@ public class RelationalModelTest {
 			assertFalse(model.getEdges().contains(new Triple(id2, id2, id2)));
 			
 			assertTrue(model.getEdges(id1).contains(new Tuple(id2, id3)));
-			assertTrue(model.getEdges(id1).contains(new Tuple(id2, id2)));
+			assertFalse(model.getEdges(id1).contains(new Tuple(id2, id2)));
 		}
 	}
 
