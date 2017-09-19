@@ -20,6 +20,10 @@ public class Ordinals implements IUnchangeableModel{
 	public static final IIdentity MODEL_ID = new Identity(ordinals, "ordinals");
 	public static final IIdentity FIRST = Integers.ONE;
 	
+	private Ordinals(){
+		
+	}
+	
 	public static IIdentity getIdentity() {
 		return null;
 	}

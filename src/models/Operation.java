@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import comp.IIdentity;
-import datastructures.Triple;
 import relationalmodel.IModel;
 import relationalmodel.MutableModel;
 
@@ -14,17 +13,11 @@ public class Operation{
 	public static final IIdentity ARITY = operation.addNode("Arity");
 	public static final IIdentity OPERAND_ORDINAL_NUM = operation.addNode("OperandOrdinalNum");
 	public static final IIdentity OPERAND = operation.addNode("Operand");
-	private static final Triple constraint = new Triple(OPERATOR, MetaMeta.REQUIRE_ONE, ARITY);
 	
 	static{
-		operation.addEdge(constraint);
+		operation.addEdge(OPERATOR, MetaMeta.REQUIRE_ONE, ARITY);
 		assert operation instanceof MutableModel;
 		operation = ((MutableModel) operation).commitTransaction();
-	}
-
-	public int getNumChildren(IIdentity node) {
-		if(constraint.first() == node ) return 1; //if we add more constraints, expand to list + loop
-		return 0;
 	}
 
 	public List<IIdentity> getNodes() {

@@ -8,6 +8,7 @@ import comp.IIdentity;
 import comp.Identity;
 import models.MetaMeta;
 import models.Operation;
+import relationalmodel.MutableModel;
 import relationalmodel.RelationalModel;
 
 public class RelationalModelTest {
@@ -16,7 +17,7 @@ public class RelationalModelTest {
 	public void test() {
 		
 		/* META */
-		RelationalModel binoplang = new RelationalModel(true);
+		RelationalModel binoplang = new MutableModel();
 		IIdentity arg2 = binoplang.addNode("arg2");
 		IIdentity arg1 = binoplang.addNode("arg1");
 		IIdentity plus = binoplang.addNode("plus");
@@ -32,5 +33,12 @@ public class RelationalModelTest {
 		Operation.setOperandOrder(binoplang, arg1, arg2);
 		
 		System.out.println(binoplang);
+		
+		/* + 2 3 */ 
+		RelationalModel expr = new MutableModel();
+		IIdentity p = expr.addNode("+");
+		IIdentity to = expr.addNode("2");
+		IIdentity tre = expr.addNode("3");
+		expr.addEdge(p, MetaMeta.IS, binoplang.getSingleNodePointingTo(Operation.OPERATOR));
 	}	
 }

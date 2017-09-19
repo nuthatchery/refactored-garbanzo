@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import comp.IIdentity;
-import comp.ITreeModel;
 import comp.IUnchangeableModel;
 import comp.Identity;
 import datastructures.Triple;

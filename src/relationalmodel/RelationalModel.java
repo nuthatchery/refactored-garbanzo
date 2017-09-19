@@ -328,4 +328,10 @@ public class RelationalModel implements ITransactableModel{
 		assert containsNode(node) : "from node is not present in model " + node;
 		return getEdges(node).size();
 	}
+
+	public IIdentity getSingleNodePointingTo(IIdentity toNode) {
+		List<IIdentity> all = getNodesPointingTo(toNode);
+		assert all.size() == 1;
+		return all.get(0);
+	}
 }
