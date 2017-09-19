@@ -1,13 +1,14 @@
 package models;
 
 import relationalmodel.IModel;
-import relationalmodel.MutableModel;
-
+import relationalmodel.RelationalModel;
 import comp.IIdentity;
+import comp.ITransactableModel;
 import comp.Identity;
 
 public class MetaMeta { //should not impl IModel
-	private static IModel model = new MutableModel(); //Should ideally be final.
+	private static final IModel model;
+	private static ITransactableModel buildModel = new RelationalModel().beginTransaction(); //Should ideally be final.
 	private static final IIdentity modelid = new Identity("MetaMeta");
 	
 	// basic metametamodelling
@@ -34,11 +35,11 @@ public class MetaMeta { //should not impl IModel
 	
 
 	static {
-		model.addEdge(CONFORMS_TO, CONFORMS_TO, RELATION);
-		model.addEdge(RELATION, CONFORMS_TO, RELATION);
-		model.addEdge(ELEMENT_OF, CONFORMS_TO, RELATION);
-		model.addEdge(LINK, IS, FUNCTION);
-		model.addEdge(MULTILINK, IS, RELATION);
+		buildModel.addEdge(CONFORMS_TO, CONFORMS_TO, RELATION);
+		buildModel.addEdge(RELATION, CONFORMS_TO, RELATION);
+		buildModel.addEdge(ELEMENT_OF, CONFORMS_TO, RELATION);
+		buildModel.addEdge(LINK, IS, FUNCTION);
+		buildModel.addEdge(MULTILINK, IS, RELATION);
 	}
 	// from megamodelling
 	public static final IIdentity IS_REPRESENTATION_OF = id("representationOf");
@@ -51,15 +52,15 @@ public class MetaMeta { //should not impl IModel
 	public static final IIdentity ARITY = id("arity");
 
 	static {
-		model.addEdge(NODE, REQUIRE_ONE, ARITY);
-		model.addEdge(NODE, ZERO_OR_MORE, BRANCH);
-		model.addEdge(BRANCH, IS, FUNCTION);
-		model.addEdge(BRANCH, SRC_CONFORMS_TO, NODE);
-		model.addEdge(BRANCH, DEST_CONFORMS_TO, NODE);
+		buildModel.addEdge(NODE, REQUIRE_ONE, ARITY);
+		buildModel.addEdge(NODE, ZERO_OR_MORE, BRANCH);
+		buildModel.addEdge(BRANCH, IS, FUNCTION);
+		buildModel.addEdge(BRANCH, SRC_CONFORMS_TO, NODE);
+		buildModel.addEdge(BRANCH, DEST_CONFORMS_TO, NODE);
 		/*Number of branches should be equal to arity*/
-		model.addEdge(ARITY, IS, FUNCTION);
-		model.addEdge(ARITY, SRC_CONFORMS_TO, NODE);
-		model.addEdge(ARITY, DEST_CONFORMS_TO, Integers.INT_MODEL_ID); // TODO
+		buildModel.addEdge(ARITY, IS, FUNCTION);
+		buildModel.addEdge(ARITY, SRC_CONFORMS_TO, NODE);
+		buildModel.addEdge(ARITY, DEST_CONFORMS_TO, Integers.INT_MODEL_ID); // TODO
 		
 	}
 
@@ -69,24 +70,23 @@ public class MetaMeta { //should not impl IModel
 
 	static {
 		// a typed node 
-		model.addEdge(BRANCH, ZERO_OR_ONE, DEST_TYPE);
-		model.addEdge(DEST_TYPE, IS, FUNCTION);
-		model.addEdge(DEST_TYPE, DEST_CONFORMS_TO, TYPE);
+		buildModel.addEdge(BRANCH, ZERO_OR_ONE, DEST_TYPE);
+		buildModel.addEdge(DEST_TYPE, IS, FUNCTION);
+		buildModel.addEdge(DEST_TYPE, DEST_CONFORMS_TO, TYPE);
 		
 		// subtypeOf is a relation between two types
-		model.addEdge(SUBTYPE_OF, IS, RELATION);
-		model.addEdge(SUBTYPE_OF, SRC_CONFORMS_TO, TYPE);
-		model.addEdge(SUBTYPE_OF, DEST_CONFORMS_TO, TYPE);
+		buildModel.addEdge(SUBTYPE_OF, IS, RELATION);
+		buildModel.addEdge(SUBTYPE_OF, SRC_CONFORMS_TO, TYPE);
+		buildModel.addEdge(SUBTYPE_OF, DEST_CONFORMS_TO, TYPE);
 	}
 	
 	static {
-		assert model instanceof MutableModel;
-		model = ((MutableModel) model).commitTransaction();
+		model = buildModel.commitTransaction();
 	}
 	
 	
 	private static IIdentity id(String string) {
-		return model.addNode("MetaMeta::" + string);
+		return buildModel.addNode("MetaMeta::" + string);
 	}
 
 

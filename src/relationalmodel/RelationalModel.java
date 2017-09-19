@@ -237,13 +237,14 @@ public class RelationalModel implements ITransactableModel{
 	}
 
 	public IIdentity newNode() {
-		IIdentity node = new Identity(this);
-		N.add(node);
-		return node;
+		return addNode();
 	}
 
 	@Override
 	public IIdentity addNode() {
+		if(!mutable){
+			throw new IllegalStateException("Can only add node to mutable model");
+		}
 		IIdentity newnode = new Identity(this);
 		N.add(newnode);
 		assert datainvariant();
@@ -252,7 +253,9 @@ public class RelationalModel implements ITransactableModel{
 
 	@Override
 	public IIdentity addNode(String name) {
-		assert mutable : "Can only add node to mutable model";
+		if(!mutable){
+			throw new IllegalStateException("Can only add node to mutable model");
+		}
 		IIdentity newnode = new Identity(this, name);
 		N.add(newnode);
 		assert datainvariant();
@@ -318,20 +321,23 @@ public class RelationalModel implements ITransactableModel{
 	}
 
 	public RelationalModel beginTransaction() {
-		RelationalModel mutableTree = new MutableModel(this);
-		mutableTree.mutable = true;
-		mutableTree.previousVersion = Register.addModelVersion(this);
-		return mutableTree;
+		RelationalModel mutable = new RelationalModel(this, true);
+		mutable.mutable = true;
+		mutable.previousVersion = Register.addModelVersion(this);
+		return mutable;
 	}
 
 	@Override
-	public IModel commitTransaction() {
-		throw new UnsupportedOperationException();
+	public RelationalModel commitTransaction() {
+		if(!mutable){
+			throw new IllegalStateException("A transaction must excist");
+		}
+		return new RelationalModel(this, false);
 	}
 
 	@Override
-	public IModel rollbackTransaction() {
-		throw new UnsupportedOperationException();
+	public RelationalModel rollbackTransaction() {
+		throw new UnsupportedOperationException("Not yet implemented");
 	}
 
 	@Override

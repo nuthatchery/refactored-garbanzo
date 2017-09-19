@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import comp.IIdentity;
+import comp.ITransactableModel;
 import relationalmodel.IModel;
-import relationalmodel.MutableModel;
+import relationalmodel.RelationalModel;
 
 public class Operation{
-	private static IModel operation = new MutableModel();
+	private static ITransactableModel operation = new RelationalModel().beginTransaction();
 	public static final IIdentity OPERATOR = operation.addNode("Operator");
 	public static final IIdentity ARITY = operation.addNode("Arity");
 	public static final IIdentity OPERAND_ORDINAL_NUM = operation.addNode("OperandOrdinalNum");
@@ -16,8 +17,7 @@ public class Operation{
 	
 	static{
 		operation.addEdge(OPERATOR, MetaMeta.REQUIRE_ONE, ARITY);
-		assert operation instanceof MutableModel;
-		operation = ((MutableModel) operation).commitTransaction();
+		operation = operation.commitTransaction();
 	}
 
 	public List<IIdentity> getNodes() {

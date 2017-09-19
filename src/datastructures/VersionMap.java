@@ -1,23 +1,23 @@
 package datastructures;
 
 import java.util.HashMap;
-import relationalmodel.IModel;
-import relationalmodel.IModel;
 
-public class VersionMap extends HashMap<Integer, IModel> {
+import comp.ITransactableModel;
+
+public class VersionMap extends HashMap<Integer, ITransactableModel> {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer last=0;
 	
-	public VersionMap(int i, IModel modelTree) {
+	public VersionMap(int i, ITransactableModel modelTree) {
 		super();
 		put(i, modelTree);
 	}
 
 	@Override
-	public IModel put(Integer version, IModel m){
+	public ITransactableModel put(Integer version, ITransactableModel m){
 		last = version;
 		return super.put(version, m);
 	}
@@ -26,16 +26,16 @@ public class VersionMap extends HashMap<Integer, IModel> {
 		return last;
 	}
 
-	public int put(IModel modelTree) {
+	public int put(ITransactableModel modelTree) {
 		super.put(++last, modelTree);
 		return last;
 	}
 
-	public IModel getLast() {
+	public ITransactableModel getLast() {
 		return get(last);
 	}
 
-	public IModel removeLast() {
+	public ITransactableModel removeLast() {
 		return super.remove(last--);
 	}
 	

@@ -15,16 +15,16 @@ public interface ITransactableModel extends IModel {
 	 * This model will NOT be mutable after the call, but the returned object will.
 	 * @return a mutable version of this 
 	 */
-	IModel beginTransaction();
+	ITransactableModel beginTransaction();
 	
 	/**
 	 * Fetches the immutable version of this  
 	 * @return 
 	 */
-	IModel commitTransaction();
+	ITransactableModel commitTransaction();
 	
 	/**
 	 * @return the previous version of this model
 	 */
-	IModel rollbackTransaction();
+	ITransactableModel rollbackTransaction();
 }

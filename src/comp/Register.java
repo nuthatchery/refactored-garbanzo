@@ -3,9 +3,6 @@ package comp;
 import java.util.HashMap;
 
 import datastructures.VersionMap;
-import relationalmodel.RelationalModel;
-import relationalmodel.IModel;
-import relationalmodel.IModel;
 
 public class Register {
 
@@ -14,13 +11,13 @@ public class Register {
 	 */
 	private static HashMap<IIdentity, VersionMap> reg = new HashMap<>();
 
-	public static int addModelVersion(IModel modelTree){
+	public static int addModelVersion(ITransactableModel modelTree){
 		int version = addModelVersion(modelTree.getId(), modelTree);
 		datainvariant();
 		return version;
 	}
 
-	public static int addModelVersion(IIdentity modelid, IModel modelTree) {
+	public static int addModelVersion(IIdentity modelid, ITransactableModel modelTree) {
 		int version;
 		if(reg.containsKey(modelid) && reg.get(modelid)!=null){
 			version = reg.get(modelid).put(modelTree);
@@ -38,7 +35,7 @@ public class Register {
 	 * @param m
 	 * @return the non-negative versionnr if the model is found, -1 otherwise 
 	 */
-	public static int getVersionNrOf(IIdentity modelId, IModel m){
+	public static int getVersionNrOf(IIdentity modelId, ITransactableModel m){
 		if(!reg.containsKey(modelId))
 			return -1;
 		
@@ -56,7 +53,7 @@ public class Register {
 	 * @param modelId
 	 * @return the last version of the model, null if no such is found
 	 */
-	public static IModel get(IIdentity modelId){
+	public static ITransactableModel get(IIdentity modelId){
 		if(reg.containsKey(modelId)){
 			return reg.get(modelId).getLast();
 		}
@@ -73,7 +70,7 @@ public class Register {
 	 * @param node
 	 * @return
 	 */
-	public static IModel getModelOf(IIdentity node){
+	public static ITransactableModel getModelOf(IIdentity node){
 		for(VersionMap v : reg.values()){
 			for(int i=v.getLastVersionNr(); i>=0; i--){
 				if(v.get(i)!=null){
@@ -104,8 +101,8 @@ public class Register {
 	 * @param modelId
 	 * @return
 	 */
-	public static IModel removeLastVersion(IIdentity modelId){
-		IModel m = reg.get(modelId).removeLast();
+	public static ITransactableModel removeLastVersion(IIdentity modelId){
+		ITransactableModel m = reg.get(modelId).removeLast();
 		datainvariant();
 		return m;
 	}
@@ -127,7 +124,7 @@ public class Register {
 	 * @param version
 	 * @return
 	 */
-	public static IModel getVersion(IIdentity id, int version) {
+	public static ITransactableModel getVersion(IIdentity id, int version) {
 		if(reg.containsKey(id) && reg.get(id)!=null)
 			return reg.get(id).get(version);
 		else 

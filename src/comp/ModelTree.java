@@ -426,7 +426,7 @@ public class ModelTree implements ITransactableTreeModel{
 	}
 
 	@Override
-	public IModel rollbackTransaction() {
+	public ITransactableModel rollbackTransaction() {
 		if(previousVersion == -1 )
 			return this;
 		assert Register.getVersion(id, previousVersion)!=null : "Previous version missing from register";
