@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
+import Exceptions.NodeNotFoundException;
 import comp.IIdentity;
 import comp.ITransactableModel;
 import comp.Identity;
@@ -81,7 +82,8 @@ public class RelationalModel implements ITransactableModel{
 	 * @return a new model with the edge added
 	 */
 	public RelationalModel addEdge(final IIdentity from, final IIdentity edge, final IIdentity to){
-		assert N.contains(from) : "from node must be a node in this model " + N + " : " + from;
+		if(!N.contains(from))
+			throw new NodeNotFoundException("from node must be a node in this model " + N + " : " + from);
 
 		if(mutable){
 			relations.add(new Triple(from, edge, to));
@@ -151,15 +153,24 @@ public class RelationalModel implements ITransactableModel{
 	 * Searches the model for path of arbitrary length such that for nodes n0=from, .., ni, .., nk=to in N we have a path  
 	 * from -label-> ... -label-> ni ... -label-> to 
 	 * 
-	 * There must exist a node from and a node to and a path inbetween such that each edge in the path is equal to label
+	 * NB: The whole path must be found in this model 
+	 * 
+	 * There must exist a node from and a node to and a path between such that each edge in the path is equal to label
 	 *  
 	 * @param from a node in this model
 	 * @param label  
 	 * @param to a node in this model
-	 * @return true if such a path exists, false otherwise 
+	 * @return true if such a path exists, false otherwise (including if arguments are not nodes in this model)+ 
 	 */
 	public boolean hasPath(IIdentity from, IIdentity label, IIdentity to) {
-		assert containsNode(from) : "From parameter must be a node in this model" + from ;
+		if(!containsNode(from)){
+//			throw new NodeNotFoundException("From parameter must be a node in this model" + from );
+			return false;
+		}
+		if(!containsNode(to)){
+//			throw new NodeNotFoundException("From parameter must be a node in this model" + from );
+			return false;
+		}
 		for(Tuple child : getEdges(from)){
 			if(child.getArrow().equals(label)){
 				if(child.getTarget().equals(to))

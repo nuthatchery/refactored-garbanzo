@@ -3,6 +3,7 @@ package relationalmodel;
 import java.util.ArrayList;
 import java.util.List;
 
+import Exceptions.NodeNotFoundException;
 import comp.IIdentity;
 import datastructures.Triple;
 import datastructures.Tuple;
@@ -39,8 +40,9 @@ public interface IModel{
 	 * @param label the edge label ID 
 	 * @param to the to-node ID 
 	 * @return this model  
+	 * @throws NodeNotFoundException 
 	 */
-	IModel addEdge(IIdentity from, IIdentity label, IIdentity to);
+	IModel addEdge(IIdentity from, IIdentity label, IIdentity to) throws NodeNotFoundException;
 	
 	/**
 	 * Fetches all nodes in the model
@@ -109,7 +111,7 @@ public interface IModel{
 		return pointsTo;
 	}
 
-	default void addEdge(Triple constraint){
+	default void addEdge(Triple constraint) throws NodeNotFoundException{
 		addEdge(constraint.first(), constraint.second(), constraint.third());
 	}
 }
