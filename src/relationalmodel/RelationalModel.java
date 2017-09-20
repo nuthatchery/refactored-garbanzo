@@ -61,9 +61,7 @@ public class RelationalModel implements ITransactableModel{
 	}
 
 	/**
-	 * TODO allow duplicates? currently doesn't.
-	 * 
-	 * @param node
+	 * @param nodes 
 	 */
 	public void addNodes(IIdentity... nodes) {
 		assert mutable : "Can only add nodes to mutable model";

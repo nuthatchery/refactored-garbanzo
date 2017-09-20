@@ -3,7 +3,6 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -135,7 +134,7 @@ public class RelationalModelTest {
 	}
 
 	@Test
-	public void testAddNodeContainsNode(){
+	public void testMutableAddNodeContainsNode(){
 		RelationalModel model;
 		for(int i=0; i<N; i++){
 			model = getRandomImmutableModel();
@@ -150,7 +149,7 @@ public class RelationalModelTest {
 	}
 
 	@Test 
-	public void testAddEdgeContainsEdge(){
+	public void testMutableAddEdgeContainsEdge(){
 		RelationalModel model;
 		for(int i=0; i<N; i++){
 			model = getRandomImmutableModel();
@@ -181,8 +180,8 @@ public class RelationalModelTest {
 	}
 
 	@Test 
-	public void testEquals(){
-		RelationalModel m, m1, m2, m3;
+	public void testEqualsMutableImmutable(){
+		RelationalModel m, m1, m2;
 		for (int i = 0; i < N; i++) {
 			m = getRandomImmutableModel();
 			assertFalse(m.isMutable());
@@ -205,7 +204,7 @@ public class RelationalModelTest {
 	}
 
 	@Test
-	public void testConstantModelID(){
+	public void testMutableConstantModelID(){
 		RelationalModel m, m1;
 		for (int i = 0; i < N; i++) {
 			m = getRandomImmutableModel();
@@ -219,7 +218,7 @@ public class RelationalModelTest {
 	}
 
 	@Test
-	public void testAddContainsRemoveContainsSingleNode(){
+	public void testMutableAddContainsRemoveContainsSingleNode(){
 		RelationalModel m, m1;
 		for (int i = 0; i < N; i++) {
 			m = getRandomImmutableModel();
@@ -234,7 +233,7 @@ public class RelationalModelTest {
 	}
 
 	@Test
-	public void testAddRemoveHasPathSingleEdge(){
+	public void testMutableAddRemoveHasPathSingleEdge(){
 		RelationalModel m, m1;
 		for (int i = 0; i < N; i++) {
 			do{
@@ -259,7 +258,7 @@ public class RelationalModelTest {
 	}
 
 	@Test
-	public void testAddRemoveHasPathManyEdges(){
+	public void testMutableAddRemoveHasPathManyEdges(){
 		Random r = new Random();
 		RelationalModel m, m1;
 		int tested = 0;
@@ -292,7 +291,7 @@ public class RelationalModelTest {
 	}
 
 	@Test
-	public void testRemoveNodeIncludesEdgesFrom(){
+	public void testMutableRemoveNodeIncludesEdgesFrom(){
 		RelationalModel m, m1;
 		for (int i = 0; i < N; i++) {
 			do{
@@ -308,6 +307,7 @@ public class RelationalModelTest {
 			assertFalse(m1.getEdges().contains(new Triple(from, edge, to)));
 		}
 	}
+	
 	@Test
 	public void test() {
 
