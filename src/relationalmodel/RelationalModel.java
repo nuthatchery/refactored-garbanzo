@@ -16,6 +16,9 @@ import datastructures.Tuple;
 
 public class RelationalModel implements ITransactableModel{	
 	private boolean mutable = false; 
+	public boolean isMutable(){
+		return mutable;
+	}
 	private int previousVersion = -1; 
 
 	private List<Triple> relations = new ArrayList<Triple>();
@@ -203,8 +206,9 @@ public class RelationalModel implements ITransactableModel{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((N == null) ? 0 : N.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (Boolean.hashCode(mutable));
+		result = prime * result + ((N == null) ? 0 : N.hashCode());
 		result = prime * result + ((relations == null) ? 0 : relations.hashCode());
 		return result;
 	}
@@ -218,6 +222,13 @@ public class RelationalModel implements ITransactableModel{
 		if (getClass() != obj.getClass())
 			return false;
 		RelationalModel other = (RelationalModel) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (mutable!=other.mutable)
+			return false;
 		if (N == null) {
 			if (other.N != null)
 				return false;
@@ -227,11 +238,6 @@ public class RelationalModel implements ITransactableModel{
 			if (other.relations!= null)
 				return false;
 		} else if (!relations.equals(other.relations))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
@@ -290,12 +296,11 @@ public class RelationalModel implements ITransactableModel{
 	}
 
 	/**
-	 * Removes all edges of this model starting at the argument node
+	 * Removes all edges (if any) of this model starting at the argument node
 	 * NB: will change this even if immutable 
-	 * @param node a node in this model 
+	 * @param node a node that may or may not belong to this model model 
 	 */
 	private void removeEdgesFrom(IIdentity node) {
-		assert containsNode(node) : "Node is not present in model " + node;
 		relations.removeIf(triple -> triple.first().equals(node));
 	}
 
@@ -330,9 +335,10 @@ public class RelationalModel implements ITransactableModel{
 	@Override
 	public RelationalModel commitTransaction() {
 		if(!mutable){
-			throw new IllegalStateException("A transaction must excist");
+			throw new IllegalStateException("A transaction must exist");
 		}
-		return new RelationalModel(this, false);
+		mutable = false;
+		return this;
 	}
 
 	@Override

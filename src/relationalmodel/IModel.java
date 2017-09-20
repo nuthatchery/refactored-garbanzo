@@ -111,7 +111,7 @@ public interface IModel{
 		return pointsTo;
 	}
 
-	default void addEdge(Triple constraint) throws NodeNotFoundException{
-		addEdge(constraint.first(), constraint.second(), constraint.third());
+	default void addEdge(Triple edge) throws NodeNotFoundException{
+		addEdge(edge.first(), edge.second(), edge.third());
 	}
 }

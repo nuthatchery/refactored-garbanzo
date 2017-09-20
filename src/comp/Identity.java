@@ -84,7 +84,7 @@ public class Identity implements IIdentity{
 
 	@Override
 	public String toString(){
-		return name;
+		return name!=null ? name : id;
 	}
 
 	@Override
