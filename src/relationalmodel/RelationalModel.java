@@ -13,7 +13,11 @@ import comp.Register;
 import datastructures.Triple;
 import datastructures.Tuple;
 
-
+/**
+ * 
+ * @author anna
+ *
+ */
 public class RelationalModel implements ITransactableModel{	
 	private boolean mutable = false; 
 	public boolean isMutable(){

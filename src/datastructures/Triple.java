@@ -3,6 +3,13 @@ package datastructures;
 import comp.IIdentity;
 import comp.Identity;
 
+/**
+ * General purpose triples, commonly used for edges. 
+ * Contains several equivalent methods for getting the different data entries, 
+ * their relations expressed below 
+ * @author anna
+ *
+ */
 public class Triple {
 	private IIdentity first, second, third;
 
@@ -63,4 +70,17 @@ public class Triple {
 		}
 		return false;
 	}
+
+	public IIdentity from() {
+		return first;
+	}
+
+	public IIdentity label() {
+		return second;
+	}
+
+	public IIdentity to() {
+		return third;
+	}
 }
+

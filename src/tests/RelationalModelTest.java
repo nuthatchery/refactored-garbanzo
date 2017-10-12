@@ -18,7 +18,7 @@ import datastructures.Tuple;
 import models.MetaMeta;
 import models.Operation;
 import relationalmodel.RelationalModel;
-
+	
 public class RelationalModelTest {
 
 	private static final int N = 100;
@@ -26,7 +26,7 @@ public class RelationalModelTest {
 	private RelationalModel getRandomImmutableModel() {
 		RelationalModel model = new RelationalModel().beginTransaction();
 		Random r = new Random();
-		if(r.nextInt(10)==1) return model.commitTransaction(); //"guarantee" empty model 
+		if(r.nextInt(10)==1) return model.commitTransaction(); //"guarantee" some empty models
 		int num = r.nextInt(N)+1;
 		List<IIdentity> nodes = new ArrayList<>();
 		for(int i = 0; i<num; i++){
@@ -69,12 +69,34 @@ public class RelationalModelTest {
 		model = model.commitTransaction();
 		return model;
 	}
-
+	
+	/**
+	 * Finds and returns a random node in this model, if any. 
+	 * Returns null otherwise. 
+	 * @param model
+	 * @return A random node in the model if any, null otherwise 
+	 */
 	private IIdentity getRandomNodeFrom(RelationalModel model) {
 		Random r = new Random();
 		List<IIdentity> nodes = model.getNodes();
+		if(nodes.isEmpty())
+			return null;
 		IIdentity from = model.getNodes().get(r.nextInt(nodes.size()));
 		return from;
+	}
+
+	/**
+	 * Finds and returns a triple representing a random edge in this model, if any. 
+	 * Returns null otherwise. 
+	 * @param model
+	 * @return A random edge in the model if any, null otherwise 
+	 */
+	private Triple getRandomEdgeFromModel(RelationalModel model) {
+		Random r = new Random();
+		List<Triple> edges = model.getEdges();
+		if(edges.isEmpty())
+			return null;
+		return model.getEdges().get(r.nextInt(edges.size()));
 	}
 
 	@Test
@@ -112,16 +134,23 @@ public class RelationalModelTest {
 	}
 
 	@Test 
-	public void testMutableModel(){
+	public void testNewModelIsImmutable(){
 		RelationalModel model = new RelationalModel();
 		try{
 			model.addNode();
 			fail("Model should be immutable");
 		}catch(IllegalStateException e){
 		}
-		model = model.beginTransaction();
-		model.addNode();
-		model = model.commitTransaction();
+		try{
+			model.addNode("somename");
+			fail("Model should be immutable");
+		}catch(IllegalStateException e){
+		}
+		try{
+			model.newNode();
+			fail("Model should be immutable");
+		}catch(IllegalStateException e){
+		}
 	}
 
 	@Test 
@@ -132,19 +161,49 @@ public class RelationalModelTest {
 			assertEquals("Copied models should be equals: ", model, model.copy());
 		}
 	}
+	
+	@Test 
+	public void testCopyAddNotEquals(){
+		RelationalModel model, copy;
+		for(int i=0; i<N; i++){
+			model = getRandomImmutableModel();
+			model = model.beginTransaction();
+			copy = model.copy();
+			model.addNode();
+			assertNotEquals("Copied models should not be equals after one is changed: ", model, copy);
+		}
+	}
+	
+	@Test
+	public void testModelContainsAllGetNodeNodes(){
+		RelationalModel model;
+		for(int i=0; i<N; i++){
+			model = getRandomImmutableModel();
+			for(IIdentity node : model.getNodes()){
+				assertTrue(model.containsNode(node));
+			}
+		}
+	}
+	
+	@Test
+	public void testNewIdDoesNotChangeModelContainsNode(){
+		RelationalModel model;
+		for(int i=0; i<N; i++){
+			model = getRandomImmutableModel();
+			assertFalse(model.containsNode(new Identity(model)));
+			assertFalse(model.getNodes().contains(new Identity(model)));
+		}
+	}
 
 	@Test
-	public void testMutableAddNodeContainsNode(){
+	public void testMutableAddNodeGetNodesContainsNode(){
 		RelationalModel model;
 		for(int i=0; i<N; i++){
 			model = getRandomImmutableModel();
 			model = model.beginTransaction();
 			IIdentity id = model.addNode();
 			model = model.commitTransaction();
-			assertTrue(model.containsNode(id));
 			assertTrue(model.getNodes().contains(id));
-			assertFalse(model.containsNode(new Identity(model)));
-			assertFalse(model.getNodes().contains(new Identity(model)));
 		}
 	}
 
@@ -155,10 +214,10 @@ public class RelationalModelTest {
 			model = getRandomImmutableModel();
 			model = model.beginTransaction();
 			IIdentity id1 = model.addNode();
-			IIdentity id2 = model.addNode();
+			IIdentity id2 = new Identity("somenode");
 			IIdentity id3 = model.addNode();
 			model = model.addEdge(id1, id2, id3);
-			model = (RelationalModel) model.commitTransaction();
+			model = model.commitTransaction();
 			assertTrue(model.hasPath(id1, id2, id3));
 			assertFalse(model.hasPath(id2, id2, id2));
 
@@ -170,6 +229,19 @@ public class RelationalModelTest {
 		}
 	}
 
+	@Test
+	public void testEdgesArePaths(){
+		RelationalModel model;
+		for(int i=0; i<N; i++){
+			model = getRandomImmutableModel();
+			Triple edge = getRandomEdgeFromModel(model);
+			if(edge==null)
+				continue;
+			assertTrue(model.hasPath(edge.from(), edge.label(), edge.to()));
+		}
+	}
+	
+	
 	@Test 
 	public void testImmutableGenerator(){
 		RelationalModel m;
