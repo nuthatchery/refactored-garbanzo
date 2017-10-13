@@ -2,16 +2,7 @@
 <class-diagram version="1.2.1" icons="true" automaticImage="JPEG" always-add-relationships="false" 
   generalizations="true" realizations="true" associations="true" dependencies="true" nesting-relationships="true" 
   router="FAN">  
-  <class id="1" language="java" name="tests.RelationalModelTest" project="refactored-garbanzo" 
-    file="/refactored-garbanzo/src/tests/RelationalModelTest.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="551" width="354" x="-63" y="-7"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="2" language="java" name="relationalmodel.RelationalModel" project="refactored-garbanzo" 
+  <class id="1" language="java" name="relationalmodel.RelationalModel" project="refactored-garbanzo" 
     file="/refactored-garbanzo/src/relationalmodel/RelationalModel.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="454" y="221"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -20,10 +11,6 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <dependency id="3">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="2"/>  
-  </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

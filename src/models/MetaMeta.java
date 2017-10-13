@@ -8,7 +8,7 @@ import comp.Identity;
 
 public class MetaMeta { //should not impl IModel
 	private static final IModel model;
-	private static ITransactableModel buildModel = new RelationalModel().beginTransaction(); //Should ideally be final.
+	private static RelationalModel buildModel = new RelationalModel().beginTransaction(); //Should ideally be final.
 	private static final IIdentity modelid = new Identity("MetaMeta");
 	
 	// basic metametamodelling

@@ -25,6 +25,12 @@ public class Triple {
 		this.third = third;
 	}
 
+	public Triple(IIdentity first, Tuple t) {
+		this.first = first;
+		this.second = t.getArrow();
+		this.third = t.getTarget();
+	}
+
 	public IIdentity first(){
 		return first;
 	}

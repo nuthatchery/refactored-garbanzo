@@ -9,7 +9,7 @@ import relationalmodel.IModel;
 import relationalmodel.RelationalModel;
 
 public class Operation{
-	private static ITransactableModel operation = new RelationalModel().beginTransaction();
+	private static RelationalModel operation = new RelationalModel().beginTransaction();
 	public static final IIdentity OPERATOR = operation.addNode("Operator");
 	public static final IIdentity ARITY = operation.addNode("Arity");
 	public static final IIdentity OPERAND_ORDINAL_NUM = operation.addNode("OperandOrdinalNum");

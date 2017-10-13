@@ -6,4 +6,5 @@ Trying to express the properties of the model in the tests, as well as making ex
 There are errors in Tree that is due to an interface update where i was uncertain what the intention 
 of the original code was.
 
-  
+RelationalModel has a general API, while LanguageModel will build on RelationalModel but have 
+additionally language-related API options. 

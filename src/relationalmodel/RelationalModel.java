@@ -12,13 +12,14 @@ import comp.Identity;
 import comp.Register;
 import datastructures.Triple;
 import datastructures.Tuple;
+import languageTools.LanguageModel;
 
 /**
  * 
  * @author anna
  *
  */
-public class RelationalModel implements ITransactableModel{	
+public class RelationalModel implements LanguageModel{
 	private boolean mutable = false; 
 	public boolean isMutable(){
 		return mutable;
@@ -52,6 +53,7 @@ public class RelationalModel implements ITransactableModel{
 	public RelationalModel(RelationalModel m, boolean mutable) {
 		this(m);
 		this.mutable = mutable;
+		this.previousVersion = Register.addModelVersion(this);
 	}
 
 	public RelationalModel(boolean mutable) {
@@ -115,7 +117,6 @@ public class RelationalModel implements ITransactableModel{
 		RelationalModel m = new RelationalModel(this);
 		return m;
 	}
-
 
 	/**
 	 * Registers this modelTree in the register as the last version of its id
@@ -202,6 +203,13 @@ public class RelationalModel implements ITransactableModel{
 	@Override
 	public String toString() {
 		return "RelationalModel\n[relations=" + relations + ",\nN=" + N + ",\nid=" + id + "]";
+	}
+	
+	public String prettyPrintDFS() {
+		// assert acyclic (or else topsort doesn't make sense, come up with other sort later, if needed) 
+		// topologic sort, respective of points to ordinals 
+		// 
+		return null;
 	}
 
 	@Override
