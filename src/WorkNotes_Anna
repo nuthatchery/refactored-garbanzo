@@ -4,4 +4,6 @@ Currently working on the RelationalModel, and its tests.
 Trying to express the properties of the model in the tests, as well as making executable tests for them. 
 
 There are errors in Tree that is due to an interface update where i was uncertain what the intention 
-of the original code was.  
+of the original code was.
+
+  

@@ -19,7 +19,7 @@ import models.MetaMeta;
 import models.Operation;
 import relationalmodel.RelationalModel;
 	
-public class RelationalModelTest {
+public class TestRelationalModel {
 
 	private static final int N = 100;
 

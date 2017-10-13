@@ -4,6 +4,11 @@ import static org.junit.Assert.*;
 
 import datastructures.Triple;
 
+/**
+ * Expresses the properties of {@link datastructures.Triple}
+ * @author anna
+ *
+ */
 public class TestTriple {
 
 	public boolean firstIsFrom(Triple t){

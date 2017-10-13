@@ -6,7 +6,7 @@ import comp.Identity;
 /**
  * General purpose triples, commonly used for edges. 
  * Contains several equivalent methods for getting the different data entries, 
- * their relations expressed in testTriple
+ * their relations expressed in {@link tests.TestTriple}.
  * @author anna
  *
  */
