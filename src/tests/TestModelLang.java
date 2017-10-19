@@ -9,9 +9,9 @@ import comp.ModelTree;
 /**
  * If we have a language 
  * 
- * S -> INT + INT 
- * INT -> INT + INT 
- * INT -> num 
+ * S -> P 
+ * P -> P + P  
+ * P -> num 
  *  
  * @author anna
  *
