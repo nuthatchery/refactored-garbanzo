@@ -8,3 +8,11 @@ of the original code was.
 
 RelationalModel has a general API, while LanguageModel will build on RelationalModel but have 
 additionally language-related API options. 
+
+added graph visualization option:
+GraphViewer.view(RelationalModel model);
+ -> could have added some interactivity, but won't spend time on it 
+	now since graph library isn't particularly pretty and can't be used in browser. 
+This viewing option can be used for debugging instead of the sysout-tostring-call on graphs.
+
+ 
