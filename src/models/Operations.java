@@ -16,6 +16,7 @@ public class Operations {
 	public static RelationalModel BINARY_NUMBER_OPERATION; 
 	static {
 		RelationalModel temp = new RelationalModel().beginTransaction();
+		temp.addNode("MODEL:BINARY_NUMBER_OPERATION");
 		IIdentity binop = temp.addNode("BINARY_NUMBER_OPERATOR");
 		IIdentity NUM1 = temp.addNode("Arg1");
 		IIdentity NUM2 = temp.addNode("Arg2");

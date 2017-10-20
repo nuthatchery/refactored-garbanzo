@@ -29,9 +29,9 @@ public interface LanguageModel extends IModel, ITransactableModel<LanguageModel>
 		}
 		return null;
 	}
-	default IIdentity getAnyNodeLinkingToNodeByLabel(IIdentity id, IIdentity label){
+	default IIdentity getAnyNodeLinkingToNodeByLabel(IIdentity label, IIdentity node){
 		for(Triple t : getEdges()){
-			if(t.to().equals(id) && t.label().equals(label)){
+			if(t.to().equals(node) && t.label().equals(label)){
 				return t.from();
 			}
 		}
@@ -63,8 +63,8 @@ public interface LanguageModel extends IModel, ITransactableModel<LanguageModel>
 		return list;
 	}
 
-	default IIdentity getAnyNodeWithProperty(IIdentity attribute, IIdentity value){
-		return getAnyNodeLinkingToNodeByLabel(attribute, value);
+	default IIdentity getAnyNodeWithProperty(IIdentity label, IIdentity node){
+		return getAnyNodeLinkingToNodeByLabel(label, node);
 	}
 
 	/**
