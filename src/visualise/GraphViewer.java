@@ -17,7 +17,6 @@ import edu.uci.ics.jung.graph.DirectedSparseGraph;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
 import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
-import edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position;
 import models.Operations;
 import relationalmodel.RelationalModel;
 
@@ -28,7 +27,7 @@ public class GraphViewer {
 		view(Operations.BINARY_NUMBER_OPERATION);
 	}
 
-	static void view(RelationalModel model){
+	public static void view(RelationalModel model){
 
 		//TODO make view of model passed on
 		// make delegate method in relationalModel
@@ -67,7 +66,7 @@ public class GraphViewer {
 //				return Color.PINK;
 //			}
 //		});
-		vs.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
+//		vs.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
 
 		DefaultModalGraphMouse<IIdentity, Triple> gm = new DefaultModalGraphMouse<>();
 		gm.setMode(DefaultModalGraphMouse.Mode.TRANSFORMING);
@@ -100,4 +99,78 @@ public class GraphViewer {
 	}
 
 	private static HashMap<IIdentity, Paint> ColorMap = new HashMap<>();
+	
+//	/**
+//	 * @param model
+//	 */
+//	public static void viewWithEditingMouseNotWorking(RelationalModel model){
+//
+//		//TODO make view of model passed on
+//		// make delegate method in relationalModel
+//		DirectedSparseGraph<IIdentity, Triple> g = new DirectedSparseGraph<>();
+//		List<IIdentity> nodes = model.getNodes();
+////		nodes.sort(new ModelIdComparator());
+//		for(IIdentity id : nodes)
+//			g.addVertex(id);
+//		for(Triple edge : model.getEdges())
+//			g.addEdge(edge, edge.from(), edge.to());
+//		//TODO Javadoc API for added labels/names
+//
+////		CircleLayout<IIdentity, Triple> layout = new CircleLayout<IIdentity, Triple>(g);
+//		Layout<IIdentity, Triple> layout = new StaticLayout<IIdentity, Triple>(g);
+//		layout.setSize(new Dimension(350, 350));
+////		layout.setVertexOrder(new ModelIdComparator());
+//		VisualizationViewer<IIdentity, Triple> vs =
+//				new VisualizationViewer<>(
+//						layout, new Dimension(400, 400));
+//		
+//		vs.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller<Triple>(){
+//			@Override
+//			public String transform(Triple edge) {
+//				return edge.arrow().toString();
+//			}});
+//		vs.getRenderContext().setVertexLabelTransformer(new ToStringLabeller<IIdentity>() {
+//			@Override
+//			public String transform(IIdentity v) {
+//				return v.toString();
+//			}});
+//		vs.getRenderContext().setVertexFillPaintTransformer(new Transformer<IIdentity, Paint>(){
+//			public Paint transform(IIdentity id){
+//				return getModelPaint(id.getModelId());
+//			}
+//		});
+////		vs.getRenderContext().setVertexDrawPaintTransformer(new Transformer<IIdentity, Paint>(){
+////			public Paint transform(IIdentity id){
+////				return Color.PINK;
+////			}
+////		});
+////		vs.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
+//
+////		DefaultModalGraphMouse<IIdentity, Triple> gm = new DefaultModalGraphMouse<>();
+//		// Create a graph mouse and add it to the visualization viewer
+//		 //
+//		 EditingModalGraphMouse<IIdentity, Triple> gm =
+//		new EditingModalGraphMouse<IIdentity, Triple>(vs.getRenderContext(),
+//				vertexFactory, edgeFactory); 
+//		 JMenuBar menuBar = new JMenuBar();
+//		 JMenu modeMenu = gm.getModeMenu(); // Obtain mode menu from the mouse
+//		 modeMenu.setText("Mouse Mode");
+//		 modeMenu.setIcon(null); // I'm using this in a main menu
+//		 modeMenu.setPreferredSize(new Dimension(80,20)); // Change the size 
+//		 menuBar.add(modeMenu);
+//		 JFrame frame = new JFrame("Editing Graph Viewer 1");
+//		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		 frame.getContentPane().add(vs);
+//		 frame.setJMenuBar(menuBar);
+//		gm.setMode(DefaultModalGraphMouse.Mode.EDITING);
+//		vs.setGraphMouse(gm); 
+//		 
+////		JFrame frame = new JFrame();
+////		frame.getContentPane().add(vs);
+////		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.pack();
+//		frame.setVisible(true);
+//
+//	}
+
 }
