@@ -15,4 +15,5 @@ GraphViewer.view(RelationalModel model);
 	now since graph library isn't particularly pretty and can't be used in browser. 
 This viewing option can be used for debugging instead of the sysout-tostring-call on graphs.
 
+for related work: should check out eMoflon (https://dl.acm.org/citation.cfm?id=2807438&CFID=679665394&CFTOKEN=77061055)
  
