@@ -1,6 +1,7 @@
 package languageTools;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import comp.IIdentity;
@@ -96,6 +97,9 @@ public interface LanguageModel extends IModel, ITransactableModel<LanguageModel>
 					addPropertyToNode(correspondingNode, t);
 				}
 			}
+		}
+		for(Triple edge : edgesToBeAdded){
+			templateModel.addEdge(edge);
 		}
 	}
 

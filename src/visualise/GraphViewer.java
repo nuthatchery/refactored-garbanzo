@@ -24,7 +24,7 @@ public class GraphViewer {
 
 
 	public static void main(String[] args){
-		view(Operations.BINARY_NUMBER_OPERATION);
+		view(Operations.BINARY_NUMBER_OPERATION_GRAMMAR);
 	}
 
 	public static void view(RelationalModel model){
@@ -68,9 +68,13 @@ public class GraphViewer {
 //		});
 //		vs.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
 
-		DefaultModalGraphMouse<IIdentity, Triple> gm = new DefaultModalGraphMouse<>();
-		gm.setMode(DefaultModalGraphMouse.Mode.TRANSFORMING);
-		vs.setGraphMouse(gm); 
+//		DefaultModalGraphMouse<IIdentity, Triple> gm = new DefaultModalGraphMouse<>();
+//		gm.setMode(DefaultModalGraphMouse.Mode.TRANSFORMING);
+//		vs.setGraphMouse(gm); 
+		
+		 DefaultModalGraphMouse<IIdentity, Triple> graphMouse = new DefaultModalGraphMouse<>();
+		    graphMouse.setMode(DefaultModalGraphMouse.Mode.PICKING);
+		    vs.setGraphMouse(graphMouse);
 		 
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(vs);

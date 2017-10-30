@@ -67,6 +67,8 @@ public class MetaMeta { //should not impl IModel
 	public static final IIdentity DEST_TYPE = id("destType");
 	public static final IIdentity TYPE = id("type");
 	public static final IIdentity SUBTYPE_OF = id("subtypeOf");
+	public static final IIdentity CAN_BE = id("can_be");
+	public static final IIdentity REQUIRES_POINTS_TO = id("requires_points_to");
 
 	static {
 		// a typed node 
